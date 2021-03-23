@@ -7,8 +7,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
 @client.event
-async def on_message(message, ctx):
-    print(ctx)
+async def on_message(message):
     if message.author == client.user:
         return
     if message.content == "use for future":
@@ -22,12 +21,13 @@ async def on_message(message, ctx):
             return
         elif message.content.startswith('brew spam'):
             print(message)
-            numberOfTimes = str(message).split()[2]
+            numberOfTimes = int(str(message).split()[2])
             print(numberOfTimes)
-            for i in range(0, 1): #sends it 9 times
+            for i in range(0, numberOfTimes): #sends it 9 times
                 await message.channel.send('brew :beer:')
             return
         elif message.content.startswith('brew'):
             await message.channel.send('Brew!! :beer: :beer:')
+    time.sleep(0.2)
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
