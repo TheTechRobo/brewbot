@@ -18,7 +18,7 @@ async def test(context): #needs the context - Context means that it will send it
 @bot.command(name='spam')
 async def spam(context, END): #context is the content, end is the last thing
     """
-    Takes one parameter: how mahy times to spam.
+    Takes one parameter: how many times to spam.
     """
     channel = context.channel
     print(channel.name)
@@ -28,9 +28,12 @@ async def spam(context, END): #context is the content, end is the last thing
         print(channel.name == "brew-spamming") #logging
         await context.send('Please only use this command in the correct channel')
         return
-    for i in range(0, int(END)):
-        await context.send('Brew!! :beer:')
-        del i
+    if END <=15:
+        for i in range(0, int(END)):
+            await context.send('Brew!! :beer:')
+            del i
+    else:
+        await context.send(f'Hi {user}, you are senche raht :beer:')
 
 @commands.cooldown(1, 30, commands.BucketType.user)
 @bot.command(name='mine')
