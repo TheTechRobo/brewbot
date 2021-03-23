@@ -8,6 +8,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print(message.channel)
     if message.author == client.user:
         return
     if message.content == "use for future":
@@ -20,7 +21,7 @@ async def on_message(message):
             await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
             return
         elif message.content.startswith('brew spam'):
-            print(message)
+            if message.channel.name != "brew-spamming": return
             numberOfTimes = int(str(message.content).split()[2])
             print(numberOfTimes)
             for i in range(0, numberOfTimes): #sends it 9 times
