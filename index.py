@@ -18,7 +18,7 @@ async def spam(context): #needs the context - Context means that it will send it
     range = 4
     channel = context.channel
     if channel != 'brew-spamming':
-        await context.send(f'Please only use this command in the correct channel')
+        await context.send(f'Please only use this command in the correct channel') #cant figure this out. it does equal brew-spamming and it still does this...g
         return
     await context.send(f'Stamden')
     for i in range(0, range):
