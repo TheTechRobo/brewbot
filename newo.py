@@ -6,27 +6,28 @@ TODO: Fix scoring system
 TODO: Add more features
 """
 
-import discord, configparser
+import discord, configparser, logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 
 scores = configparser.ConfigParser()
 client = discord.Client()
 
 @client.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    logging.info(f'We have logged in as {client.user}')
 
 @client.event
 async def on_message(message):
-    print(f"\n\nMessage sent in {message.channel}")
-    print(f"{message.author} sent the message << {message.content} >>")
+    logging.debug(f"\n\nMessage sent in {message.channel}")
+    logging.debug(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
         return
     if message.content == "brew":
         scores.read("brewscores.ini")
         try:
             scores["scores"][message.author]
-            Iscores = int(scores["scores"][message.author])
-            Iscores += 1
+            Iscores = int(scores["scores"][message.author]) + 1
             scores["scores"][message.author] = str(Iscores)
         except:
             scores["scores"][str(message.author)] = "1"
@@ -48,6 +49,7 @@ async def on_message(message):
                         await message.channel.send('brew :beer:')
                     return
                 else:
+                    logging.info(f"Blocked message (metadata: {message})")
                     await message.channel.send("I don't want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...")
                     return
             except Exception:
