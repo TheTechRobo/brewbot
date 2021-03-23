@@ -21,7 +21,7 @@ async def on_message(message):
             return
         elif message.content.startswith('brew spam'):
             print(message)
-            numberOfTimes = int(str(message).split()[2])
+            numberOfTimes = int(str(message.content).split()[2])
             print(numberOfTimes)
             for i in range(0, numberOfTimes): #sends it 9 times
                 await message.channel.send('brew :beer:')
