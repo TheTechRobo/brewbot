@@ -8,7 +8,7 @@ TODO: Add more features
 
 import discord, configparser, logging
 
-logging.basicConfig(level=logging.info, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 
 scores = configparser.ConfigParser()
 client = discord.Client()
