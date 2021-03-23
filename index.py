@@ -11,7 +11,7 @@ bot = Bot(command_prefix='brew ') #makes the prefix << brew >>
 
 @bot.command(name='test')
 async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
-    user=context.author
+    user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
 @bot.command(name='spam')
