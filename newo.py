@@ -17,7 +17,12 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(m
 scores = configparser.ConfigParser()
 client = discord.Client()
 
-
+async def getScore():
+        scores.read("brewscores.ini")
+        name = message.author.name + "#" + message.author.discriminator
+        scores["scores"][name]
+        Iscores = int(scores["scores"][name])
+        return Iscores
 
 @client.event
 async def on_ready():
@@ -25,12 +30,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    def getScore():
-        scores.read("brewscores.ini")
-        name = message.author.name + "#" + message.author.discriminator
-        scores["scores"][name]
-        Iscores = int(scores["scores"][name])
-        return Iscores
     logging.info(f"\n\nMessage sent in {message.channel}")
     logging.info(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
