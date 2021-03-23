@@ -28,6 +28,8 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content == "brew":
+        if message.channel.name != "brew-spamming":
+            return
         logging.debug(message.author)
         scores.read("brewscores.ini")
         name = message.author.name + "#" + message.author.discriminator
