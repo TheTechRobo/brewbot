@@ -47,7 +47,7 @@ async def on_message(message):
                 else:
                     await message.channel.send("I don't want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...")
                     return
-            except:
+            except Exception:
                 await message.channel.send('brew :beer:')
                 return
         await message.channel.send('Brew!! :beer: :beer:')
