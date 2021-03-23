@@ -21,7 +21,9 @@ async def on_message(message):
             await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
             return
         elif message.content.startswith('brew spam'):
-            if message.channel.name != "brew-spamming": return
+            if message.channel.name != "brew-spamming":
+                await message.channel.send('Please only spam brews in the #brew-spamming channgl :beer:')
+                return
             numberOfTimes = int(str(message.content).split()[2])
             print(numberOfTimes)
             for i in range(0, numberOfTimes): #sends it 9 times
