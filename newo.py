@@ -79,27 +79,24 @@ async def BrewCoinMine(message):
        else:
            pass
     except Exception: pass
-    scores["cooldown"][str(name)] = str(int(time.time()))
-    if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
+    if  message.channel.name == "brewcoin-mining":
         logging.info("cd: %s time.time: %s" % (cd, time.time()))
-        try:
-            scores["scores"][name]
-            Iscores = int(scores["scores"][name])
-            Iscores += 1
-            scores["scores"][name] = str(Iscores)
-        except KeyError:
-            logging.warning("EXCEPTION IN SCORING: %s" % ename)
-            scores["scores"][str(name)] = "1"
-        print('hi')
-        print(scores["cooldown"])
-        with open('cookdown','w+') as cooldown:
-            cooldown.write(str(int(time.time())))
-        with open('brewscores.ini', 'w') as confs:
-            scores.write(confs)
+        if random.randint(0,4) == 0:
+            try:
+                scores["scores"][name]
+                Iscores = int(scores["scores"][name])
+                Iscores += 1
+                scores["scores"][name] = str(Iscores)
+            except KeyError:
+                logging.warning("EXCEPTION IN SCORING: %s" % ename)
+                scores["scores"][str(name)] = "1"
+                Iscores = 1
+            with open('brewscores.ini', 'w') as confs:
+                scores.write(confs)
         await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
         return
-    else:
-        await message.channel.send('Sorry, No luck...')
-        return
+    with open('cookdown','w+') as cooldown:
+        cooldown.write(str(int(time.time())))
+    await message.channel.send('Sorry, No luck...')
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
