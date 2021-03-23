@@ -71,28 +71,17 @@ async def BrewCoinMine(message):
     scores.read("brewscores.ini")
     name = message.author.name + "#" + message.author.discriminator
     try:
-       if (scores["cooldown"][name] + 5) >= int(time.time()):
+       with open("cookdown","r") as f:
+           cd = f.read()
+       if (int(cd) + 5) >= int(time.time()):
            await message.channel.send("cooldown")
            return
        else:
-           await message.channel.send("pass")
-    except KeyError: pass
+           pass
+    except Exception: pass
+    scores["cooldown"][str(name)] = str(int(time.time()))
     if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
-<<<<<<< HEAD
-=======
-        scores.read("brewscores.ini")
-        name = message.author.name + "#" + message.author.discriminator
-        try:
-           with open("cookdown","r") as f:
-               cd = f.read()
-           if (int(cd) + 5) >= int(time.time()):
-               await message.channel.send("cooldown")
-               return
-           else:
-               pass
-        except Exception: pass
         logging.info("cd: %s time.time: %s" % (cd, time.time()))
->>>>>>> a73cfffa2ede7b289ec605493a7b71d214168022
         try:
             scores["scores"][name]
             Iscores = int(scores["scores"][name])
@@ -101,15 +90,10 @@ async def BrewCoinMine(message):
         except KeyError:
             logging.warning("EXCEPTION IN SCORING: %s" % ename)
             scores["scores"][str(name)] = "1"
-<<<<<<< HEAD
         print('hi')
         print(scores["cooldown"])
-        scores["cooldown"][str(name)] = str(int(time.time()))
-
-=======
         with open('cookdown','w+') as cooldown:
             cooldown.write(str(int(time.time())))
->>>>>>> a73cfffa2ede7b289ec605493a7b71d214168022
         with open('brewscores.ini', 'w') as confs:
             scores.write(confs)
         await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
