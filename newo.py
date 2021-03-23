@@ -8,7 +8,11 @@ TODO: Add more features
 
 import discord, configparser, logging
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+# Logging format:
+# LEVEL @ DAY/MO/YEAR HOUR:MINUTE:SECOND: MESSAGE; Lineno LINENUMBER, func FUNCTION, file FILE.
+# Example:
+# INFO @ 23/03/2021 09:58:44: Cleaning up after 1 tasks; Lineno 71, func _cancel_tasks, file client.py.
 
 scores = configparser.ConfigParser()
 client = discord.Client()
