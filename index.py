@@ -4,6 +4,7 @@ This is the rewrite that is in progress for the Brew Discord bot. It uses the bo
 import discord, configparser
 from discord.ext import commands
 from discord.ext.commands import Bot
+import random
 
 bot = Bot(command_prefix='brew ') #makes the prefix << brew >>
 
@@ -36,7 +37,8 @@ async def test(context): #needs the context - Context means that it will send it
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        await ctx.send(f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.')
+        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in{int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait{int(error.retry_after)} more seconds before mining again... :ghost:']
+        await ctx.send(random.choice(potentialMessages))
     raise error
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
