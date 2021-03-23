@@ -8,7 +8,7 @@ TODO: Add more features
 
 import discord, configparser, logging
 
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(level=logging.info, format='%(levelname)s @ %(asctime)s: %(message)s. Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 
 scores = configparser.ConfigParser()
 client = discord.Client()
@@ -19,8 +19,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    logging.debug(f"\n\nMessage sent in {message.channel}")
-    logging.debug(f"{message.author} sent the message << {message.content} >>")
+    logging.info(f"\n\nMessage sent in {message.channel}")
+    logging.info(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
         return
     if message.content == "brew":
