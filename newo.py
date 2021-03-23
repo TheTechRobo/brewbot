@@ -1,6 +1,6 @@
 """
 BrewBot
-NOTE TO TRM : REMEMBER TO USE RETURN TO END THINGS
+NOTE TO TRM : REMEMBER TO USE RETURN TO END THINGS A
 TODO: Gettext
 TODO: Fix scoring system
 TODO: Add more features
