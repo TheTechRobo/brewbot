@@ -6,7 +6,7 @@ TODO: Fix scoring system
 TODO: Add more features
 """
 
-import discord, configparser, logging, random
+import discord, configparser, logging, random, time
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 # Logging format:
@@ -66,11 +66,12 @@ async def BrewCoinMine(message):
         scores.read("brewscores.ini")
         name = message.author.name + "#" + message.author.discriminator
         try:
-           if (scores["cooldown"][name] + 1) >= time.time():
+           if (scores["cooldown"][name] + 5) >= int(time.time()):
                await message.channel.send("cooldown")
                return
-        except KeyError:
-            pass
+           else:
+               await message.channel.send("pass")
+        except KeyError: pass
         try:
             scores["scores"][name]
             Iscores = int(scores["scores"][name])
@@ -79,7 +80,7 @@ async def BrewCoinMine(message):
         except KeyError:
             logging.warning("EXCEPTION IN SCORING: %s" % ename)
             scores["scores"][str(name)] = "1"
-        scores["cooldown"][str(name)] = time.time()
+        scores["cooldown"][str(name)] = str(int(time.time()))
         with open('brewscores.ini', 'w') as confs:
             scores.write(confs)
         await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
