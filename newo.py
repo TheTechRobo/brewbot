@@ -8,6 +8,10 @@ TODO: Add more features
 
 import discord, configparser, logging, random, time
 
+def Exit():
+    import sys
+    sys.exit(4)
+
 logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 # Logging format:
 # LEVEL @ DAY/MO/YEAR HOUR:MINUTE:SECOND: MESSAGE; Lineno LINENUMBER, func FUNCTION, file FILE.
@@ -59,6 +63,8 @@ async def on_message(message):
         elif message.content == "brew mine":
             await BrewCoinMine(message)
             return
+        elif message.content == "brew restart":
+            Exit()
         await message.channel.send('Brew!! :beer: :beer:')
 
 async def BrewCoinMine(message):
