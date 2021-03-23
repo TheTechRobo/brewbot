@@ -6,7 +6,7 @@ TODO: Fix scoring system
 TODO: Add more features
 """
 
-import discord, configparser, logging
+import discord, configparser, logging, random
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 # Logging format:
@@ -30,19 +30,20 @@ async def on_message(message):
     if message.content == "brew":
         if message.channel.name != "brew-spamming":
             return
-        logging.debug(message.author)
-        scores.read("brewscores.ini")
-        name = message.author.name + "#" + message.author.discriminator
-        try:
-            scores["scores"][name]
-            Iscores = int(scores["scores"][name])
-            Iscores += 1
-            scores["scores"][name] = str(Iscores)
-        except KeyError:
-            logging.warning("EXCEPTION IN SCORING: %s" % ename)
-            scores["scores"][str(message.author)] = "1"
-        with open('brewscores.ini', 'w') as confs:
-            scores.write(confs)
+        if random.randint(0,10) == 1:
+            logging.debug(message.author)
+            scores.read("brewscores.ini")
+            name = message.author.name + "#" + message.author.discriminator
+            try:
+                scores["scores"][name]
+                Iscores = int(scores["scores"][name])
+                Iscores += 1
+                scores["scores"][name] = str(Iscores)
+            except KeyError:
+                logging.warning("EXCEPTION IN SCORING: %s" % ename)
+                scores["scores"][str(message.author)] = "1"
+            with open('brewscores.ini', 'w') as confs:
+                scores.write(confs)
     if message.content.startswith('brew'):
         if message.content.startswith('brew bal'):
             await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
