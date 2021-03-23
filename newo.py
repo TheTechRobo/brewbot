@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(m
 scores = configparser.ConfigParser()
 client = discord.Client()
 
-def getScore():
+def getScore(message):
         scores.read("brewscores.ini")
         name = message.author.name + "#" + message.author.discriminator
         scores["scores"][name]
@@ -56,7 +56,7 @@ async def on_message(message):
             return
     if message.content.startswith('brew'):
         if message.content.startswith('brew bal'):
-            await message.channel.send(f'Your brewcoin balance is {getScore()}')
+            await message.channel.send(f'Your brewcoin balance is {getScore(message)}')
             return
         elif message.content.startswith('brew spam'):
             if message.channel.name != "brew-spamming":
