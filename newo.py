@@ -1,5 +1,7 @@
-import discord, brewscores
+import discord, configparser
 
+scores = configparser.ConfigParser()
+scores.read("brewscores.ini")
 client = discord.Client()
 
 @client.event
@@ -11,13 +13,16 @@ async def on_message(message):
     print(message.channel)
     if message.author == client.user:
         return
-    if message.content == "use for future":
+    if message.content == "brew":
         try:
-            brewscores.scores[message.author] += 1
-            return
+            scores["scores"][message.author]
+            Iscores = int(scores["scores"][message.author])
+            Iscores += "1"
+            scores["scores"][message.author] = Iscores
         except:
-            brewscores.scores[message.author] = 1
-            return
+            scores["scores"][str(message.author)] = "1"
+        with open('brewscores.ini', 'w') as confs:
+            scores.write(confs)
     if message.content.startswith('brew'):
         if message.content.startswith('brew bal'):
             await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
