@@ -8,7 +8,7 @@ TODO: Add more features
 
 import discord, configparser, logging
 
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 # Logging format:
 # LEVEL @ DAY/MO/YEAR HOUR:MINUTE:SECOND: MESSAGE; Lineno LINENUMBER, func FUNCTION, file FILE.
 # Example:
@@ -33,11 +33,8 @@ async def on_message(message):
         name = message.author.name + "#" + message.author.discriminator
         try:
             scores["scores"][name]
-            logging.debug("1")
             Iscores = int(scores["scores"][name])
-            logging.debug("IscoresNot+=1_Finished")
             Iscores += 1
-            logging.debug('2')
             scores["scores"][name] = str(Iscores)
         except KeyError:
             logging.warning("EXCEPTION IN SCORING: %s" % ename)
