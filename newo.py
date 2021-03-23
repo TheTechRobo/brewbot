@@ -8,7 +8,7 @@ TODO: Add more features
 
 import discord, configparser, logging
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 # Logging format:
 # LEVEL @ DAY/MO/YEAR HOUR:MINUTE:SECOND: MESSAGE; Lineno LINENUMBER, func FUNCTION, file FILE.
 # Example:
@@ -28,12 +28,19 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content == "brew":
+        logging.debug(message.author)
         scores.read("brewscores.ini")
+        name = message.author.name + "#" + message.author.discriminator
         try:
-            scores["scores"][message.author]
-            Iscores = int(scores["scores"][message.author]) + 1
-            scores["scores"][message.author] = str(Iscores)
-        except:
+            scores["scores"][name]
+            logging.debug("1")
+            Iscores = int(scores["scores"][name])
+            logging.debug("IscoresNot+=1_Finished")
+            Iscores += 1
+            logging.debug('2')
+            scores["scores"][name] = str(Iscores)
+        except KeyError:
+            logging.warning("EXCEPTION IN SCORING: %s" % ename)
             scores["scores"][str(message.author)] = "1"
         with open('brewscores.ini', 'w') as confs:
             scores.write(confs)
@@ -48,8 +55,8 @@ async def on_message(message):
             try:
                 numberOfTimes = int(str(message.content).split()[2])
                 print(numberOfTimes)
-                if numberOfTimes <= 15: #limits spamming to 15
-                    for i in range(0, numberOfTimes): #sends it 9 times
+                if numberOfTimes <= 16:
+                    for i in range(0, numberOfTimes):
                         await message.channel.send('brew :beer:')
                     return
                 else:
