@@ -71,13 +71,18 @@ async def BrewCoinMine(message):
     scores.read("brewscores.ini")
     name = message.author.name + "#" + message.author.discriminator
     try:
-       with open("cookdown","r") as f:
-           cd = f.read()
-       if (int(cd) + 5) >= int(time.time()):
-           await message.channel.send("cooldown")
-           return
-       else:
-           pass
+        with open("cookdown","r") as f:
+            cd = f.read()
+        await message.channel.send("Test magsorc")
+        await message.channel.send(cd)
+        if (int(cd) + 5) >= int(time.time()):
+            await message.channel.send("cooldown")
+            await message.channel.send("Test stamdk")
+            return
+        else:
+            await message.channel.send("Test stamplar")
+            pass
+        await message.channel.send("Test stamden")
     except Exception: pass
     if  message.channel.name == "brewcoin-mining":
         logging.info("cd: %s time.time: %s" % (cd, time.time()))
