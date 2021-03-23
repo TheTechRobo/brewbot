@@ -17,12 +17,20 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(m
 scores = configparser.ConfigParser()
 client = discord.Client()
 
+
+
 @client.event
 async def on_ready():
     logging.info(f'We have logged in as {client.user}')
 
 @client.event
 async def on_message(message):
+    def getScore():
+        scores.read("brewscores.ini")
+        name = message.author.name + "#" + message.author.discriminator
+        scores["scores"][name]
+        Iscores = int(scores["scores"][name])
+        return Iscores
     logging.info(f"\n\nMessage sent in {message.channel}")
     logging.info(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
@@ -42,9 +50,14 @@ async def on_message(message):
                 scores["scores"][str(message.author)] = "1"
             with open('brewscores.ini', 'w') as confs:
                 scores.write(confs)
+            await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
+            return
+        else:
+            await message.channel.send('Sorry, No luck...')
+            return
     if message.content.startswith('brew'):
         if message.content.startswith('brew bal'):
-            await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
+            await message.channel.send(f'Your brewcoin balance is {getScore()}')
             return
         elif message.content.startswith('brew spam'):
             if message.channel.name != "brew-spamming":
@@ -65,5 +78,7 @@ async def on_message(message):
                 await message.channel.send('brew :beer:')
                 return
         await message.channel.send('Brew!! :beer: :beer:')
+
+
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
