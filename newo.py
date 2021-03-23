@@ -34,29 +34,9 @@ async def on_message(message):
     logging.info(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
         return
-    if message.content == "brew mine":
-        if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
-            logging.debug(message.author)
-            scores.read("brewscores.ini")
-            name = message.author.name + "#" + message.author.discriminator
-            try:
-                scores["scores"][name]
-                Iscores = int(scores["scores"][name])
-                Iscores += 1
-                scores["scores"][name] = str(Iscores)
-            except KeyError:
-                logging.warning("EXCEPTION IN SCORING: %s" % ename)
-                scores["scores"][str(message.author)] = "1"
-            with open('brewscores.ini', 'w') as confs:
-                scores.write(confs)
-            await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
-            return
-        else:
-            await message.channel.send('Sorry, No luck...')
-            return
     if message.content.startswith('brew'):
         if message.content.startswith('brew bal'):
-            await message.channel.send(f'Your brewcoin balance is {getScore(message)}')
+            await message.channel.send(f'Your brewcoin balance is {getScore(message)} @{message.author}')
             return
         elif message.content.startswith('brew spam'):
             if message.channel.name != "brew-spamming":
@@ -76,8 +56,29 @@ async def on_message(message):
             except Exception:
                 await message.channel.send('brew :beer:')
                 return
+        elif message.content == "brew mine":
+            if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
+                logging.debug(message.author)
+                scores.read("brewscores.ini")
+                name = message.author.name + "#" + message.author.discriminator
+                try:
+                    scores["scores"][name]
+                    Iscores = int(scores["scores"][name])
+                    Iscores += 1
+                    scores["scores"][name] = str(Iscores)
+                except KeyError:
+                    logging.warning("EXCEPTION IN SCORING: %s" % ename)
+                    scores["scores"][str(message.author)] = "1"
+                with open('brewscores.ini', 'w') as confs:
+                    scores.write(confs)
+                await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
+                return
+            else:
+                await message.channel.send('Sorry, No luck...')
+                return
         await message.channel.send('Brew!! :beer: :beer:')
 
+#@commands.cooldown(1, 30, commands.BucketType.user)
 
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
