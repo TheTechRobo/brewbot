@@ -20,7 +20,10 @@ async def on_message(message):
             await message.channel.send('BALANCE: 0 because this bot isnt finished!!!!!!!111111')
             return
         elif message.content.startswith('brew spam'):
-            for i in range(0, 8): #sends it 9 times
+            print(message)
+            numberOfTimes = str(message).split()[2]
+            print(numberOfTimes)
+            for i in range(0, 1): #sends it 9 times
                 await message.channel.send('brew :beer:')
             return
         elif message.content.startswith('brew'):
