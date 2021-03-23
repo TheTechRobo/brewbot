@@ -1,6 +1,9 @@
 """
 BrewBot
 NOTE TO TRM : REMEMBER TO USE RETURN TO END THINGS
+TODO: Gettext
+TODO: Fix scoring system
+TODO: Add more features
 """
 
 import discord, configparser
@@ -10,12 +13,12 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print(f'We have logged in as {client.user}')
 
 @client.event
 async def on_message(message):
-    print("\n\nMessage sent in ", message.channel)
-    print(message.author, "sent the message <<", message.content, ">>")
+    print(f"\n\nMessage sent in {message.channel}")
+    print(f"{message.author} sent the message << {message.content} >>")
     if message.author == client.user:
         return
     if message.content == "brew":
