@@ -33,7 +33,7 @@ async def spam(context, END): #context is the content, end is the last thing
             await context.send('Brew!! :beer:')
             del i
     else:
-        await context.send(f'Hi {user}, you are senche raht :beer:')
+        await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
 @commands.cooldown(1, 30, commands.BucketType.user)
 @bot.command(name='mine')
