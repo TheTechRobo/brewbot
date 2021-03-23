@@ -57,26 +57,35 @@ async def on_message(message):
                 await message.channel.send('brew :beer:')
                 return
         elif message.content == "brew mine":
-            if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
-                logging.debug(message.author)
-                scores.read("brewscores.ini")
-                name = message.author.name + "#" + message.author.discriminator
-                try:
-                    scores["scores"][name]
-                    Iscores = int(scores["scores"][name])
-                    Iscores += 1
-                    scores["scores"][name] = str(Iscores)
-                except KeyError:
-                    logging.warning("EXCEPTION IN SCORING: %s" % ename)
-                    scores["scores"][str(message.author)] = "1"
-                with open('brewscores.ini', 'w') as confs:
-                    scores.write(confs)
-                await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
-                return
-            else:
-                await message.channel.send('Sorry, No luck...')
-                return
+            await BrewCoinMine(message)
+            return
         await message.channel.send('Brew!! :beer: :beer:')
 
+async def BrewCoinMine(message):
+    if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
+        scores.read("brewscores.ini")
+        name = message.author.name + "#" + message.author.discriminator
+        try:
+           if (scores["cooldown"][name] + 1) >= time.time():
+               await message.channel.send("cooldown")
+               return
+        except KeyError:
+            pass
+        try:
+            scores["scores"][name]
+            Iscores = int(scores["scores"][name])
+            Iscores += 1
+            scores["scores"][name] = str(Iscores)
+        except KeyError:
+            logging.warning("EXCEPTION IN SCORING: %s" % ename)
+            scores["scores"][str(name)] = "1"
+        scores["cooldown"][str(name)] = time.time()
+        with open('brewscores.ini', 'w') as confs:
+            scores.write(confs)
+        await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
+        return
+    else:
+        await message.channel.send('Sorry, No luck...')
+        return
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
