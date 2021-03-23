@@ -22,7 +22,7 @@ async def on_message(message):
             return
         elif message.content.startswith('brew spam'):
             if message.channel.name != "brew-spamming":
-                await message.channel.send('Please only spam brews in the #brew-spamming channgl :beer:')
+                await message.channel.send('Please only spam brews in the #brew-spamming channel :beer:')
                 return
             numberOfTimes = int(str(message.content).split()[2])
             print(numberOfTimes)
