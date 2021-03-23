@@ -14,5 +14,5 @@ async def on_message(message):
     if message.content.startswith('brew'):
         await message.channel.send('brew!')
 
-client.run('ODIzNzIwNjY5MjgzMzUyNjI3.YFk7pw.jgUCv0ig0_oc2u4H5rQ16dXyhaQ')
+client.run('your token here!')
 
