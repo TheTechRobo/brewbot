@@ -35,7 +35,7 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content == "brew mine":
-        if random.randint(2,10) == 1 and message.channel.name == "brewcoin-mining":
+        if random.randint(0,4) == 2 and message.channel.name == "brewcoin-mining":
             logging.debug(message.author)
             scores.read("brewscores.ini")
             name = message.author.name + "#" + message.author.discriminator
