@@ -13,15 +13,17 @@ async def test(context): #needs the context - Context means that it will send it
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
 @bot.command(name='spam')
-async def spam(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
+async def spam(context, END): #needs the context - Context means that it will send it in the channel that the message was sent in.
     await context.send(f'Magden')
-    range = 4
     channel = context.channel
-    if channel != 'brew-spamming':
+    print(channel.name)
+    if channel.name == 'brew-spamming':
+        pass
+    else: 
+        print(channel.name == "brew-spamming")
         await context.send(f'Please only use this command in the correct channel') #cant figure this out. it does equal brew-spamming and it still does this...g
         return
-    await context.send(f'Stamden')
-    for i in range(0, range):
+    for i in range(0, int(END)):
         await context.send(f'Brew!! :beer:')
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
