@@ -78,7 +78,5 @@ async def on_message(message):
                 return
         await message.channel.send('Brew!! :beer: :beer:')
 
-#@commands.cooldown(1, 30, commands.BucketType.user)
-
 
 client.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
