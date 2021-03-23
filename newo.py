@@ -1,7 +1,6 @@
 import discord, configparser
 
 scores = configparser.ConfigParser()
-scores.read("brewscores.ini")
 client = discord.Client()
 
 @client.event
@@ -14,11 +13,12 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content == "brew":
+        scores.read("brewscores.ini")
         try:
             scores["scores"][message.author]
             Iscores = int(scores["scores"][message.author])
-            Iscores += "1"
-            scores["scores"][message.author] = Iscores
+            Iscores += 1
+            scores["scores"][message.author] = str(Iscores)
         except:
             scores["scores"][str(message.author)] = "1"
         with open('brewscores.ini', 'w') as confs:
