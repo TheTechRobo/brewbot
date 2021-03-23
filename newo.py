@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(m
 scores = configparser.ConfigParser()
 client = discord.Client()
 
-async def getScore():
+def getScore():
         scores.read("brewscores.ini")
         name = message.author.name + "#" + message.author.discriminator
         scores["scores"][name]
