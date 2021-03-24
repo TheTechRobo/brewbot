@@ -4,8 +4,8 @@ This is the rewrite that is in progress for the Brew Discord bot.
 It uses the bot.command rather than the client.event since it's much
 easier to maintain.
 """
-import configparser
-from logging import *
+import configparser, logging
+from loggingE import *
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
