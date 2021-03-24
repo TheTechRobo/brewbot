@@ -79,8 +79,9 @@ async def bal(context, user=None):
         colours = []
         for i in range(0,3):
             colours.append(random.randint(0,255))
-        balEmbed = discord.Embed(title="Balance", url="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
+        balEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
         balEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
+        balEmbed.set_footer(text="Senche raht",)
         await context.send(embed = balEmbed)
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
