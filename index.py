@@ -45,9 +45,9 @@ async def mine(context):
     """
     scores.read("brewscores.ini")
     name = context.author.name + "#" + context.author.discriminator
+    name = name.lower()
     if random.randint(0,4) == 0:
         try:
-            scores["scores"][name]
             Iscores = int(scores["scores"][name])
             Iscores += 1
             scores["scores"][name] = str(Iscores)
@@ -60,6 +60,21 @@ async def mine(context):
         await context.send(f'You got a brewcoin!! You now have {Iscores}')
     else:
         await context.send(f'Sorry, you have rotten luck... You did not get a brewcoin... :cry:')
+
+@commands.cooldown(1,4,commands.BucketType.guild)
+@bot.command(name='bal')
+async def bal(context, user=None):
+    name = context.author.name + "#" + context.author.discriminator
+    name = name.lower()
+    scores.read("brewscores.ini")
+    if user is None:
+        try:
+            Iscores = int(scores["scores"][name])
+        except KeyError:
+            Iscores = 0
+        await context.send(f'Your current balance is {Iscores}!')
+    else:
+        await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
 @bot.event
 async def on_command_error(ctx, error):
