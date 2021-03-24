@@ -25,16 +25,22 @@ def TheColoursOfTheRainbow():
         colours.append(random.randint(0,255))
     return colours
 
-@bot.command(name='test')
+@bot.command(name='ping')
 async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
+    """
+    tests if the bot exists
+    """
     user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
-#@bot.command(name='helpe')
-#async def help(context):
-    #cs = TheColoursOfTheRainbow()
-    #await context.send(discord.Embed(title='Help Menu', description='Try "brew mine"!', color=discord.Color.from_rgb(*cs)))
+@bot.command(name='test')
+async def OldTEst(context):
+    """
+    Deprecated. Use ping instead.
+    """
+    await context.send('PREFIX test is deprecated; please use PREFIX ping. This placeholder will be removed in brewbot 0.2.')
 
+@commands.cooldown(1,1,commands.BucketType.user)
 @bot.command(name='spam')
 async def spam(context, END): #context is the content, end is the last thing
     """
@@ -138,5 +144,11 @@ async def mount(context):
     mountEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
     mountEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
     await context.send(embed = mountEmbed)
+
+@bot.command(name='version')
+async def v(context):
+    sencheEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
+    sencheEmbed.set_footer(text=hi,)
+    await context.send(embed = sencheEmbed)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
