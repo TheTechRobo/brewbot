@@ -4,7 +4,7 @@ This is the rewrite that is in progress for the Brew Discord bot.
 It uses the bot.command rather than the client.event since it's much
 easier to maintain.
 """
-import configparser
+import configparser, logging
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
@@ -58,7 +58,7 @@ async def mine(context):
             Iscores = int(scores["scores"][name])
             Iscores += 1
             scores["scores"][name] = str(Iscores)
-        except KeyError:
+        except KeyError as ename:
             logging.warning("EXCEPTION IN SCORING: %s" % ename)
             scores["scores"][str(name)] = "1"
             Iscores = 1
