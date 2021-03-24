@@ -60,7 +60,10 @@ async def mine(context):
             scores.write(confs)
         await context.send(f'You got a brewcoin!! You now have {Iscores}')
     else:
-        await context.send(f'Sorry, you have rotten luck... You did not get a brewcoin... :cry:')
+        balEmbed = discord.Embed(title="No", description='You did not get brewcoin') #todo add random colouring here
+        balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
+        await context.send(embed = balEmbed)
+        await context.send('no brew coin for you')
 
 @commands.cooldown(1,4,commands.BucketType.guild)
 @bot.command(name='bal')
