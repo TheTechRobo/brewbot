@@ -43,6 +43,7 @@ async def mine(context):
     Brewcoin Mining
     """
     scores.read("brewscores.ini")
+    name = context.author.name + "#" + context.author.discriminator
     if random.randint(0,4) == 0:
         try:
             scores["scores"][name]
