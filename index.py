@@ -13,6 +13,12 @@ import discord
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
 
+@bot.event #writes in terminal if the bot logs in
+async def on_ready():
+    print("Logged in")
+    await bot.change_presence(activity=discord.Game(name='Brew'))
+
+
 def TheColoursOfTheRainbow():
     colours = []
     for i in range(0,3):
@@ -35,15 +41,14 @@ async def spam(context, END): #context is the content, end is the last thing
     Takes one parameter: how many times to spam.
     """
     channel = context.channel
-    print(channel.name)
     if channel.name == 'brew-spamming':
         pass
     else:
-        print(channel.name == "brew-spamming") #logging
+        print(f"wrong channel, they in {channel.name}") #logging
         await context.send('Please only use this command in the correct channel')
         return
-    if int(END) <=30:
-        for i in range(0, int(END) + 1):
+    if int(END) <= 15:
+        for i in range(0, int(END)):
             await context.send('Brew!! :beer:')
             del i
     else:
@@ -58,6 +63,14 @@ async def mine(context):
     scores.read("brewscores.ini")
     name = context.author.name + "#" + context.author.discriminator
     name = name.lower()
+    channel = context.channel
+    if channel.name == 'brewcoin-mining':
+        pass
+    else:
+        print(f"wrong channel, user in {channel.name}") #logging
+        await context.send('Please only use this command in the correct channel')
+        mine.reset_cooldown(context)
+        return
     if random.randint(0,6) == 0:
         try:
             Iscores = int(scores["scores"][name])
@@ -74,8 +87,8 @@ async def mine(context):
         cs = TheColoursOfTheRainbow()
         balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=discord.Color.from_rgb(*cs)) #todo add random colouring here
         balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
+        balEmbed.set_footer(text="no brew coin for you")
         await context.send(embed = balEmbed)
-        await context.send('no brew coin for you')
 
 @commands.cooldown(1,4,commands.BucketType.guild)
 @bot.command(name='bal')
@@ -103,11 +116,14 @@ async def on_command_error(ctx, error):
     Does some stuff in case of cooldown error.
     """
     if isinstance(error, commands.CommandOnCooldown):
-        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
-        await ctx.send(random.choice(potentialMessages))
+        if ctx.message == "brew mine": #need to find a way to actually do this. This currently does not work (ctx.message)
+            potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
+            await ctx.send(random.choice(potentialMessages))
+        else:
+            await ctx.send(f"This command is on cooldown. Please wait {int(error.retry_after)} seconds before trying again.")
     raise error
 
-@commands.cooldown(1,3600,commands.BucketType.guild) #Funny senche raht thing
+@commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
 @bot.command(name='senche')
 async def senche(context):
     sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
@@ -115,7 +131,7 @@ async def senche(context):
     sencheEmbed.set_footer(text="Senche raht",)
     await context.send(embed = sencheEmbed)
 
-@commands.cooldown(1,3600,commands.BucketType.guild)
+@commands.cooldown(1,30,commands.BucketType.guild)
 @bot.command(name='mount')
 async def senche(context):
     sencheEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)', color=0xffffff)
