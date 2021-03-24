@@ -7,6 +7,7 @@ import configparser
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
+import discord
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
