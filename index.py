@@ -148,7 +148,7 @@ async def mount(context):
 @bot.command(name='version')
 async def v(context):
     sencheEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
-    sencheEmbed.set_footer(text=hi,)
+    sencheEmbed.set_footer(text="Currently BrewBot is closed source.")
     await context.send(embed = sencheEmbed)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
