@@ -36,7 +36,7 @@ async def spam(context, END): #context is the content, end is the last thing
     else:
         await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
-@commands.cooldown(1, 30, commands.BucketType.user)
+@commands.cooldown(1, 30, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
     """
@@ -55,9 +55,9 @@ async def mine(context):
             Iscores = 1
         with open('brewscores.ini', 'w') as confs:
             scores.write(confs)
-        await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
+        await context.send(f'You got a brewcoin!! You now have {Iscores}')
     else:
-        await message.channel.send(f'Sorry, you have rotten luck... You did not get a brewcoin... :cry:')
+        await context.send(f'Sorry, you have rotten luck... You did not get a brewcoin... :cry:')
 
 @bot.event
 async def on_command_error(ctx, error):
