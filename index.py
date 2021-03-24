@@ -9,6 +9,7 @@ from discord.ext.commands import Bot
 import random
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
+scores = configparser.ConfigParser()
 
 @bot.command(name='test')
 async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
