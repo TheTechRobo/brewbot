@@ -36,17 +36,14 @@ async def spam(context, END): #context is the content, end is the last thing
     else:
         await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
-<<<<<<< HEAD
-@commands.cooldown(1, 30, commands.BucketType.guild)
-=======
-@commands.cooldown(1, 15, commands.BucketType.user)
->>>>>>> fdf92aa0e2e4def60ff48cc347cb6c1b6187f7f5
+@commands.cooldown(1, 300, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
     """
     Brewcoin Mining
     """
     scores.read("brewscores.ini")
+    name = context.author.name + "#" + context.author.discriminator
     if random.randint(0,4) == 0:
         try:
             scores["scores"][name]
