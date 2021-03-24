@@ -39,10 +39,24 @@ async def spam(context, END): #context is the content, end is the last thing
 @bot.command(name='mine')
 async def mine(context):
     """
-    Nobody except TRM knows why the HECK this is here.
+    Brewcoin Mining
     """
-    user = context.author
-    await context.send(f'Hi {user}, this is testing')
+    scores.read("brewscores.ini")
+    if random.randint(0,4) == 0:
+        try:
+            scores["scores"][name]
+            Iscores = int(scores["scores"][name])
+            Iscores += 1
+            scores["scores"][name] = str(Iscores)
+        except KeyError:
+            logging.warning("EXCEPTION IN SCORING: %s" % ename)
+            scores["scores"][str(name)] = "1"
+            Iscores = 1
+        with open('brewscores.ini', 'w') as confs:
+            scores.write(confs)
+        await message.channel.send(f'You got a brewcoin!! You now have {Iscores}')
+    else:
+        await message.channel.send(f'Sorry, you have rotten luck... You did not get a brewcoin... :cry:')
 
 @bot.event
 async def on_command_error(ctx, error):
