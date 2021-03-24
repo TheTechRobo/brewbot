@@ -29,18 +29,14 @@ async def spam(context, END): #context is the content, end is the last thing
         print(channel.name == "brew-spamming") #logging
         await context.send('Please only use this command in the correct channel')
         return
-    if int(END) <=15:
+    if int(END) <=30:
         for i in range(0, int(END) + 1):
             await context.send('Brew!! :beer:')
             del i
     else:
         await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
-<<<<<<< HEAD
-@commands.cooldown(1, 30, commands.BucketType.guild)
-=======
-@commands.cooldown(1, 15, commands.BucketType.user)
->>>>>>> fdf92aa0e2e4def60ff48cc347cb6c1b6187f7f5
+@commands.cooldown(1, 15, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
     """
