@@ -92,9 +92,7 @@ async def bal(context, user=None):
         except KeyError:
             Iscores = 0
         colours = TheColoursOfTheRainbow()
-        balEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
-        balEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
-        balEmbed.set_footer(text="Senche raht")
+        balEmbed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
         await context.send(embed = balEmbed)
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
