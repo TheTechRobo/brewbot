@@ -67,7 +67,7 @@ async def mine(context):
         await context.send(f'You got a brewcoin!! You now have {Iscores}')
     else:
         cs = TheColoursOfTheRainbow()
-        balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=color=discord.Color.from_rgb(*cs)) #todo add random colouring here
+        balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=discord.Color.from_rgb(*cs)) #todo add random colouring here
         balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
         await context.send(embed = balEmbed)
         await context.send('no brew coin for you')
