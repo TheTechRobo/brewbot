@@ -24,6 +24,11 @@ async def test(context): #needs the context - Context means that it will send it
     user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
+#@bot.command(name='helpe')
+#async def help(context):
+    #cs = TheColoursOfTheRainbow()
+    #await context.send(discord.Embed(title='Help Menu', description='Try "brew mine"!', color=discord.Color.from_rgb(*cs)))
+
 @bot.command(name='spam')
 async def spam(context, END): #context is the content, end is the last thing
     """
@@ -44,11 +49,11 @@ async def spam(context, END): #context is the content, end is the last thing
     else:
         await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
-@commands.cooldown(1, 50, commands.BucketType.guild)
+@commands.cooldown(1, 45, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
     """
-    Brewcoin Mining
+    Small chance of getting a brewcoin! 45 second cooldown.
     """
     scores.read("brewscores.ini")
     name = context.author.name + "#" + context.author.discriminator
@@ -75,6 +80,9 @@ async def mine(context):
 @commands.cooldown(1,4,commands.BucketType.guild)
 @bot.command(name='bal')
 async def bal(context, user=None):
+    """
+    Check your balance!
+    """
     name = context.author.name + "#" + context.author.discriminator
     name = name.lower()
     scores.read("brewscores.ini")
