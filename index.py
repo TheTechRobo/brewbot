@@ -13,6 +13,12 @@ import discord
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
 
+def TheColoursOfTheRainbow():
+    colours = []
+    for i in range(0,3):
+        colours.append(random.randint(0,255))
+    return colours
+
 @bot.command(name='test')
 async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
     user = context.author
@@ -47,7 +53,7 @@ async def mine(context):
     scores.read("brewscores.ini")
     name = context.author.name + "#" + context.author.discriminator
     name = name.lower()
-    if random.randint(0,4) == 0:
+    if random.randint(0,6) == 0:
         try:
             Iscores = int(scores["scores"][name])
             Iscores += 1
@@ -60,7 +66,8 @@ async def mine(context):
             scores.write(confs)
         await context.send(f'You got a brewcoin!! You now have {Iscores}')
     else:
-        balEmbed = discord.Embed(title="No", description='You did not get brewcoin') #todo add random colouring here
+        cs = TheColoursOfTheRainbow()
+        balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=*cs) #todo add random colouring here
         balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
         await context.send(embed = balEmbed)
         await context.send('no brew coin for you')
@@ -76,9 +83,7 @@ async def bal(context, user=None):
             Iscores = int(scores["scores"][name])
         except KeyError:
             Iscores = 0
-        colours = []
-        for i in range(0,3):
-            colours.append(random.randint(0,255))
+        colours = TheColoursOfTheRainbow()
         balEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
         balEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
         balEmbed.set_footer(text="Senche raht",)
