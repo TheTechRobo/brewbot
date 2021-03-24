@@ -72,7 +72,7 @@ async def bal(context, user=None):
             Iscores = int(scores["scores"][name])
         except KeyError:
             Iscores = 0
-        await context.send(f'Your current balance is {Iscores}!')
+        await context.send(embed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores}!', color=0xf5f50a))
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
