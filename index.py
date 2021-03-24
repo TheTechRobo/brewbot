@@ -25,16 +25,22 @@ def TheColoursOfTheRainbow():
         colours.append(random.randint(0,255))
     return colours
 
-@bot.command(name='test')
+@bot.command(name='ping')
 async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
+    """
+    tests if the bot exists
+    """
     user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
-#@bot.command(name='helpe')
-#async def help(context):
-    #cs = TheColoursOfTheRainbow()
-    #await context.send(discord.Embed(title='Help Menu', description='Try "brew mine"!', color=discord.Color.from_rgb(*cs)))
-
+@bot.command(name='test')
+async def OldTEst(context):
+    """
+    Deprecated. Use ping instead.
+    """
+    await context.send('PREFIX test is deprecated; please use PREFIX ping. This placeholder will be removed in brewbot 0.2.')
+    
+@commands.cooldown(1,1,commands.BucketType.user)
 @bot.command(name='spam')
 async def spam(context, END): #context is the content, end is the last thing
     """
@@ -133,10 +139,16 @@ async def senche(context):
 
 @commands.cooldown(1,30,commands.BucketType.guild)
 @bot.command(name='mount')
-async def senche(context):
+async def raht(context):
     sencheEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)', color=0xffffff)
     sencheEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
     sencheEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
+    await context.send(embed = sencheEmbed)
+
+@bot.command(name='version')
+async def v(context):
+    sencheEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
+    sencheEmbed.set_footer(text="brewbot is unfortunately closed-source at the request of the rat named \" TRM \"! It goes against all of thetechrobo's values but TRM doesn't care!",)
     await context.send(embed = sencheEmbed)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
