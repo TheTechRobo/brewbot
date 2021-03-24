@@ -112,7 +112,7 @@ async def senche(context):
 @commands.cooldown(1,3600,commands.BucketType.guild)
 @bot.command(name='mount')
 async def senche(context):
-    sencheEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
+    sencheEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)', color=0xffffff)
     sencheEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
     sencheEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
     await context.send(embed = sencheEmbed)
