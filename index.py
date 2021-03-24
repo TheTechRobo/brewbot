@@ -1,4 +1,5 @@
 """
+https://stackoverflow.com/a/65436253/9654083
 This is the rewrite that is in progress for the Brew Discord bot.
 It uses the bot.command rather than the client.event since it's much
 easier to maintain.
@@ -72,7 +73,10 @@ async def bal(context, user=None):
             Iscores = int(scores["scores"][name])
         except KeyError:
             Iscores = 0
-        balEmbed = discord.Embed(title="Balance", url="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1", description=f'Your current balance is {Iscores}!', color=0xf5f50a)
+        colours = []
+        for i in range(0,3):
+            colours.append(random.randint(0,255))
+        balEmbed = discord.Embed(title="Balance", url="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
         balEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
         await context.send(embed = balEmbed)
     else:
