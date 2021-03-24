@@ -63,7 +63,7 @@ async def mine(context):
 @bot.event
 async def on_command_error(ctx, error):
     """
-    Does some stuff.
+    Does some stuff in case of cooldown error.
     """
     if isinstance(error, commands.CommandOnCooldown):
         potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', 'Searching for more coins to excavate...', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
