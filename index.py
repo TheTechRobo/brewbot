@@ -79,9 +79,7 @@ async def bal(context, user=None):
         colours = []
         for i in range(0,3):
             colours.append(random.randint(0,255))
-        balEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
-        balEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
-        balEmbed.set_footer(text="Senche raht",)
+        balEmbed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
         await context.send(embed = balEmbed)
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
@@ -96,12 +94,20 @@ async def on_command_error(ctx, error):
         await ctx.send(random.choice(potentialMessages))
     raise error
 
-@commands.cooldown(1,3600,commands.BucketType.guild)
+@commands.cooldown(1,3600,commands.BucketType.guild) #Funny senche raht thing
 @bot.command(name='senche')
 async def senche(context):
-    sencheEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", 	description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
+    sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
     sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
     sencheEmbed.set_footer(text="Senche raht",)
+    await context.send(embed = sencheEmbed)
+
+@commands.cooldown(1,3600,commands.BucketType.guild)
+@bot.command(name='mount')
+async def senche(context):
+    sencheEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
+    sencheEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
+    sencheEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
     await context.send(embed = sencheEmbed)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
