@@ -28,7 +28,7 @@ async def spam(context, END): #context is the content, end is the last thing
         print(channel.name == "brew-spamming") #logging
         await context.send('Please only use this command in the correct channel')
         return
-    if END <=15:
+    if int(END) <=15:
         for i in range(0, int(END)):
             await context.send('Brew!! :beer:')
             del i
