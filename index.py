@@ -98,7 +98,7 @@ async def on_command_error(ctx, error):
 
 @commands.cooldown(1,3600,commands.BucketType.guild)
 @bot.command(name='senche')
-async def bal(context):
+async def senche(context):
     sencheEmbed = discord.Embed(title="Balance", url="https://en.uesp.net/wiki/Online:Senche-raht", 	description=f'Your current balance is {Iscores}!', color=discord.Color.from_rgb(*colours))
     sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
     sencheEmbed.set_footer(text="Senche raht",)
