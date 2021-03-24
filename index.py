@@ -36,7 +36,7 @@ async def spam(context, END): #context is the content, end is the last thing
     else:
         await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
 
-@commands.cooldown(1, 15, commands.BucketType.guild)
+@commands.cooldown(1, 50, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
     """
