@@ -4,7 +4,8 @@ This is the rewrite that is in progress for the Brew Discord bot.
 It uses the bot.command rather than the client.event since it's much
 easier to maintain.
 """
-import configparser, logging
+import configparser
+from logging import *
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
@@ -148,7 +149,7 @@ async def raht(context):
 @bot.command(name='version')
 async def v(context):
     sencheEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
-    sencheEmbed.set_footer(text="brewbot is unfortunately closed-source at the request of the rat named \" TRM \"! It goes against all of thetechrobo's values but TRM doesn't care!",)
+    sencheEmbed.set_footer(text=hi,)
     await context.send(embed = sencheEmbed)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
