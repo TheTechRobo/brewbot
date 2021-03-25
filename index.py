@@ -1,5 +1,6 @@
 """
 https://stackoverflow.com/a/65436253/9654083
+https://stackoverflow.com/questions/60055037/how-make-custom-status-discord-py
 This is the rewrite that is in progress for the Brew Discord bot.
 It uses the bot.command rather than the client.event since it's much
 easier to maintain.
