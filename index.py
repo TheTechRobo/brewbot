@@ -19,26 +19,20 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='Brew'))
 
 
-def TheColoursOfTheRainbow():
+def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
     for i in range(0,3):
         colours.append(random.randint(0,255))
     return colours
 
-@bot.command(name='ping')
-async def test(context): #needs the context - Context means that it will send it in the channel that the message was sent in.
+@bot.command(name='ping', aliases=['test'])
+async def test(context):
     """
     tests if the bot exists
     """
     user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:')
 
-@bot.command(name='test')
-async def OldTEst(context):
-    """
-    Deprecated. Use ping instead.
-    """
-    await context.send('PREFIX test is deprecated; please use PREFIX ping. This placeholder will be removed in brewbot 0.2.')
 
 @commands.cooldown(1,1,commands.BucketType.user)
 @bot.command(name='spam')
@@ -96,6 +90,16 @@ async def mine(context):
         balEmbed.set_footer(text="no brew coin for you")
         await context.send(embed = balEmbed)
 
+@bot.event
+async def on_command_error(ctx, error):
+    """
+    Does some stuff in case of cooldown error.
+    """
+    if isinstance(error, commands.CommandOnCooldown):
+        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
+        await ctx.send(random.choice(potentialMessages))
+        raise error
+
 @commands.cooldown(1,4,commands.BucketType.guild)
 @bot.command(name='bal')
 async def bal(context, user=None):
@@ -116,18 +120,7 @@ async def bal(context, user=None):
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
-@bot.event
-async def on_command_error(ctx, error):
-    """
-    Does some stuff in case of cooldown error.
-    """
-    if isinstance(error, commands.CommandOnCooldown):
-        if ctx.message == "brew mine": #need to find a way to actually do this. This currently does not work (ctx.message)
-            potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
-            await ctx.send(random.choice(potentialMessages))
-        else:
-            await ctx.send(f"This command is on cooldown. Please wait {int(error.retry_after)} seconds before trying again.")
-    raise error
+
 
 @commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
 @bot.command(name='senche')
@@ -147,8 +140,12 @@ async def mount(context):
 
 @bot.command(name='version')
 async def v(context):
-    sencheEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
-    sencheEmbed.set_footer(text=hi)
-    await context.send(embed = sencheEmbed)
+    versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
+    versionEmbed.set_footer(text=hi)
+    await context.send(embed = versionEmbed)
+
+@bot.command(name='rat') #testing for the message.send
+async def on_message(message):
+    await message.send("RAT RECIEVE")
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
