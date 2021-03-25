@@ -16,8 +16,7 @@ scores = configparser.ConfigParser()
 @bot.event #writes in terminal if the bot logs in
 async def on_ready():
     print("Logged in")
-    await bot.change_presence(activity=discord.Game(name='Brew'))
-
+    await bot.change_presence(activity=discord.Activity(discord.ActivityType.watching, name="you"))
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
@@ -143,9 +142,5 @@ async def v(context):
     versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
     versionEmbed.set_footer(text=hi)
     await context.send(embed = versionEmbed)
-
-@bot.command(name='rat') #testing for the message.send
-async def on_message(message):
-    await message.send("RAT RECIEVE")
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
