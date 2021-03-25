@@ -19,7 +19,7 @@ scores = configparser.ConfigParser()
 async def on_ready():
     print("Logged in")
     choices = ["a river","brew out of the faucet"]
-    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=xvFZjo5PgG0", name=random.choice(choices)))
+    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=PwnAH42gsm8", name=random.choice(choices)))
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
