@@ -19,7 +19,7 @@ scores = configparser.ConfigParser()
 async def on_ready():
     print("Logged in")
     choices = ["a river","brew out of the faucet"]
-    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=PwnAH42gsm8", name=random.choice(choices)))
+    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
@@ -145,5 +145,13 @@ async def v(context):
     versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
     versionEmbed.set_footer(text=hi)
     await context.send(embed = versionEmbed)
+
+@bot.command(name='wash')
+async def wash(context):
+    await context.send("https://www.youtube.com/watch?v=ivSOrKAsPss")
+
+@bot.command(name='sponsor')
+async def Raid(context):
+    await context.send('''Today's video is sponsored by The Runting Moomoo, one of the biggest rats of 2019 and it's totally weird! Currently almost 10 million users have joined Moomoo over the last six months, and it's one of the most impressive rats in its class with detailed models, environments and smooth 1 frames per second animations! All the weirdos in the game can be customized with unique gear that changes your strategic buffs and abilities! The dungeon bosses have some ridiculous skills of their own and figuring out the perfect party and strategy to overtake them's a lot of fun!''');await context.send('''Currently with over 1 review, Moomoo has almost a perfect score on trm.ddns.net (the website)! The community is growing fast and the highly anticipated new faction wars feature is now live, you might even find my squad out there in the arena! It's easier to start now than ever with rates program for new players you get a new daily login reward for the first 90 days that you play in the game! So what are you waiting for? Go to the video description, click on the special links and you'll get 50,000 dollars and a free epic champion as part of the new player program to start your journey! Good luck and I'll see you there!''')
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
