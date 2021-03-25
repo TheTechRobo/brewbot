@@ -152,7 +152,7 @@ async def wash(context):
 
 @bot.command(name='sponsor')
 async def sponsor(context):
-    sponsor = discord.Embed(title="Sponsors" description="This bot is sponsored by TheRuntingMuumuu from trm.ddns.net, and TheTechRobo from (IDK). \nWell it is not actually sponsored by them but it is made by them, and hosted by them, and paid for by them (for the power for hosting, and time for deving) and so on.")
+    sponsor = discord.Embed(title="Sponsors", description="This bot is sponsored by TheRuntingMuumuu from trm.ddns.net, and TheTechRobo from (IDK). \nWell it is not actually sponsored by them but it is made by them, and hosted by them, and paid for by them (for the power for hosting, and time for deving) and so on.")
     await context.send(embed = sponsor)
 
 
