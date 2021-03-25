@@ -9,6 +9,7 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 import random
 import discord
+from store_data import *
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
@@ -16,7 +17,7 @@ scores = configparser.ConfigParser()
 @bot.event #writes in terminal if the bot logs in
 async def on_ready():
     print("Logged in")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="you"))
+    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=xvFZjo5PgG0", name="a river"))
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
