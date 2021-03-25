@@ -16,7 +16,7 @@ scores = configparser.ConfigParser()
 @bot.event #writes in terminal if the bot logs in
 async def on_ready():
     print("Logged in")
-    await bot.change_presence(activity=discord.Activity(discord.ActivityType.watching, name="you"))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="you"))
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
