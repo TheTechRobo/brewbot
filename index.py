@@ -29,11 +29,16 @@ def TheColoursOfTheRainbow(): #to choose a random RGB value
         colours.append(random.randint(0,255))
     return colours
 
+async def Stuff():
+    print("doing the thing")
+    choices = ["a river","brew out of the faucet"]
+    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
+
 setup(TheColoursOfTheRainbow) #allows this function to be used in other documents
 
 
 #--ON LOAD--
-@bot.event #writes in terminal if the bot logs in
+@bot.event
 async def on_ready():
     print("Logged in")
     while True:
@@ -53,7 +58,8 @@ async def on_command_error(ctx, error):
         raise error
 
 #--ON COMMANDS--
-@bot.command(name='ping', aliases=['test'])
+@bot.command(name='ping')
+@commands.cooldown(1,1,commands.BucketType.user)
 async def test(context):
     """
     tests if the bot exists
@@ -62,7 +68,7 @@ async def test(context):
     user = context.author
     await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.\n\n*devs note - Yes it went through*')
 
-@commands.cooldown(1,1,commands.BucketType.user)
+@commands.cooldown(1,2,commands.BucketType.user)
 @bot.command(name='spam')
 async def spam(context, END): #context is the content, end is the last thing
     """
@@ -85,7 +91,7 @@ async def spam(context, END): #context is the content, end is the last thing
 
 @bot.command(name='version')
 async def v(context):
-    versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
+    versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0x00abf3)
     versionEmbed.set_footer(text="brewbot is closed source because of the rat TheRuntingMuumuu. Ping him a million times to get his attention!")
     await context.send(embed = versionEmbed)
 
