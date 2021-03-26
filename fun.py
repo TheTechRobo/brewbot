@@ -4,15 +4,11 @@ from discord.ext.commands import Bot
 import random
 import discord
 
-print("MagDK")
-
 bot = Bot(command_prefix=('brew ', 'Brew ')) #needs to also be here so that these commands know what to listen for
 
 @bot.command(name='wash')
 async def wash(context):
-    print("Stamden")
     await context.send("https://www.youtube.com/watch?v=ivSOrKAsPss")
-print("Magplar")
 
 @commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
 @bot.command(name='senche')
