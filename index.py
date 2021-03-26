@@ -10,7 +10,6 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from store_data import *
 import asyncio, heapq, configparser, logging, discord, random
-
 async def Stuff():
     print("doing the thing")
     choices = ["a river","brew out of the faucet"]
@@ -145,18 +144,20 @@ async def sponsor(context):
 
 @bot.command(name='top')
 async def top(context):
-    await context.send("1")
     scores.read("brewscores.ini")
-    await context.send("2")
-    tops = list(scores['scores'])
-    await context.send("3")
+    tops = scores['scores']
     print('hi\n', tops)
     print('sotred')
     colours = TheColoursOfTheRainbow()
     from collections import Counter #todo : move this somewhere else
     c = Counter(tops)
     a = c.most_common(5) #//https://stackoverflow.com/a/40496562/9654083
-    em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{a[0]}\n{a[1]}\n{a[2]}\n{a[3]}\n{a[4]}\n', color=discord.Color.from_rgb(*colours))
-    await context.send(embed=em)
+    await context.send("Loading balancers...")
+    for item in a:
+        print(item)
+        g, s = item
+        await context.send(f"{g}: {s}")
+    #em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{a[0]}\n{a[1]}\n{a[2]}\n{a[3]}\n{a[4]}\n', color=discord.Color.from_rgb(*colours))
+    #await context.send(embed=em)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
