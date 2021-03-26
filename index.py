@@ -149,16 +149,14 @@ async def top(context):
     print('hi\n', tops)
     print('sotred')
     colours = TheColoursOfTheRainbow()
-    from collections import Counter #todo : move this somewhere else
-    c = Counter(tops)
-    a = c.most_common(5) #//https://stackoverflow.com/a/40496562/9654083
+    a = sorted(tops, key=lambda k: int(tops[k]), reverse=True)
     string = """"""
     await context.send("Loading balancers...")
     for item in a:
         print(item)
-        g, s = item
-        string += (f"{g}: {s}\n")
-    em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:{string}', color=discord.Color.from_rgb(*colours))
+        g = item
+        string += (f"{g}: {tops[g]}\n")
+    em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', color=discord.Color.from_rgb(*colours))
     await context.send(embed=em)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
