@@ -11,7 +11,12 @@ from discord.ext.commands import Bot
 import random
 import discord
 from store_data import *
+import asyncio
 
+async def Stuff():
+    print("doing the thing")
+    choices = ["a river","brew out of the faucet"]
+    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
@@ -19,12 +24,12 @@ scores = configparser.ConfigParser()
 #--The other files with @bot.event need to be HERE not at the start or they wont work.--
 from fun import *
 
-
 @bot.event #writes in terminal if the bot logs in
 async def on_ready():
     print("Logged in")
-    choices = ["a river","brew out of the faucet"]
-    await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
+    while True:
+        await Stuff()
+        await asyncio.sleep(10)
 
 def TheColoursOfTheRainbow(): #to choose a random RGB value
     colours = []
