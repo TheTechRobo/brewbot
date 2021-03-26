@@ -12,8 +12,13 @@ import random
 import discord
 from store_data import *
 
+
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 scores = configparser.ConfigParser()
+
+#--The other files with @bot.event need to be HERE not at the start or they wont work.--
+from fun import *
+
 
 @bot.event #writes in terminal if the bot logs in
 async def on_ready():
@@ -33,7 +38,7 @@ async def test(context):
     tests if the bot exists
     """
     user = context.author
-    await context.send(f'Hi {user}, you are senche raht :beer:')
+    await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.')
 
 
 @commands.cooldown(1,1,commands.BucketType.user)
@@ -100,6 +105,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
         await ctx.send(random.choice(potentialMessages))
+        await ctx.send(bot.command())
         raise error
 
 @commands.cooldown(1,4,commands.BucketType.guild)
@@ -122,33 +128,12 @@ async def bal(context, user=None):
     else:
         await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
-
-
-@commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
-@bot.command(name='senche')
-async def senche(context):
-    sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
-    sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
-    sencheEmbed.set_footer(text="Senche raht",)
-    await context.send(embed = sencheEmbed)
-
-@commands.cooldown(1,30,commands.BucketType.guild)
-@bot.command(name='mount')
-async def mount(context):
-    mountEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)', color=0xffffff)
-    mountEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
-    mountEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
-    await context.send(embed = mountEmbed)
-
 @bot.command(name='version')
 async def v(context):
     versionEmbed = discord.Embed(title="brewbot 0.1-wip", color=0xafdfff)
     versionEmbed.set_footer(text=hi)
     await context.send(embed = versionEmbed)
 
-@bot.command(name='wash')
-async def wash(context):
-    await context.send("https://www.youtube.com/watch?v=ivSOrKAsPss")
 
 @bot.command(name='sponsor')
 async def sponsor(context):
