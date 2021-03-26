@@ -10,9 +10,12 @@ def setup(rainbowcolours): #imports the function from index.py
     global TheColoursOfTheRainbow
     TheColoursOfTheRainbow = rainbowcolours
 
+print('stamblade')
+
 @commands.cooldown(1, 45, commands.BucketType.guild)
 @bot.command(name='mine')
 async def mine(context):
+    await context.send('magden')
     """
     Small chance of getting a brewcoin! 45 second cooldown.
     """
@@ -93,3 +96,5 @@ async def top(context):
         string += (f"{g}: {tops[g]}\n")
     em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', color=discord.Color.from_rgb(*colours))
     await context.send(embed=em)
+
+#@bot.command(name="shop")

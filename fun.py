@@ -1,4 +1,3 @@
-import configparser, logging
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
@@ -9,17 +8,6 @@ bot = Bot(command_prefix=('brew ', 'Brew ')) #needs to also be here so that thes
 @bot.command(name='wash')
 async def wash(context):
     await context.send("https://www.youtube.com/watch?v=ivSOrKAsPss")
-
-@commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
-@bot.command(name='senche')
-async def senche(context):
-    """
-    Try this command out!! It is fun!!
-    """
-    sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
-    sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
-    sencheEmbed.set_footer(text="Senche raht",)
-    await context.send(embed = sencheEmbed)
 
 @commands.cooldown(1,30,commands.BucketType.guild)
 @bot.command(name='mount')
@@ -43,3 +31,12 @@ async def wraith(context):
     wrathEmbed = discord.Embed(title="Wraith", description=wrathText[wrathRand], color=0xffffff)
     wrathEmbed.set_image(url=wrathImage[wrathRand])
     await context.send(embed = wrathEmbed)
+
+@bot.command(name="penguin")
+async def penguin(context):
+    """
+    Fun and random
+    """
+    penguinRand = random.randint(0, 1)
+    penguin = ["https://th.bing.com/th/id/R7e4c84e00512f9c7fb0fd957a51c124e?rik=fxMWjFQbKozUcA&riu=http%3a%2f%2falanzeichick.com%2fwp-content%2fuploads%2fLinux-Penguin.png&ehk=fk6wjB%2bmV%2bkEVDkXRm4tGOcQKRm0RhUjEX1RwqeeQu8%3d&risl=&pid=ImgRaw", "https://youtu.be/PwnAH42gsm8"]
+    await context.send(penguin[penguinRand])

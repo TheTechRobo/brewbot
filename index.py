@@ -12,15 +12,15 @@ from discord.ext.commands import Bot
 from store_data import *
 import asyncio, heapq, configparser, logging, discord, random
 async def Stuff():
-    print("doing the thing")
+    print("Changing the status")
     choices = ["a river","brew out of the faucet"]
     await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 
 #--The other files with @bot.event need to be HERE not at the start or they wont work.--
-from fun import *
 from brewcoin import *
+from fun import *
 
 #--FUNCTIONS--
 def TheColoursOfTheRainbow(): #to choose a random RGB value
@@ -38,8 +38,19 @@ async def on_ready():
     print("Logged in")
     while True:
         await Stuff()
-        await asyncio.sleep(10)
+        await asyncio.sleep(20)
 
+#--ON COOLDOWN--
+@bot.event
+async def on_command_error(ctx, error):
+    """
+    Does some stuff in case of cooldown error.
+    """
+    if isinstance(error, commands.CommandOnCooldown):
+        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
+        await ctx.send(random.choice(potentialMessages))
+        await ctx.send(bot.command())
+        raise error
 
 #--ON COMMANDS--
 @bot.command(name='ping', aliases=['test'])
@@ -47,8 +58,9 @@ async def test(context):
     """
     tests if the bot exists
     """
+    print(f'Console got the message')
     user = context.author
-    await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.')
+    await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.\n\n*devs note - Yes it went through*')
 
 @commands.cooldown(1,1,commands.BucketType.user)
 @bot.command(name='spam')
