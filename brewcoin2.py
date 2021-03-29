@@ -1,4 +1,3 @@
-print(5)
 import discord
 from discord.ext import commands
 import configparser
