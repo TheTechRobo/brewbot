@@ -1,6 +1,8 @@
+print(5)
 import discord
 from discord.ext import commands
 import configparser
+import random
 
 from miscfunc import *
 
@@ -13,7 +15,6 @@ class brewcoinCog(commands.Cog):
     @commands.cooldown(1, 45, commands.BucketType.guild)
     @commands.command(name='mine')
     async def mine(self, context):
-        await context.send('magden')
         """
         Small chance of getting a brewcoin! 45 second cooldown.
         """
@@ -41,11 +42,14 @@ class brewcoinCog(commands.Cog):
                 scores.write(confs)
             await context.send(f'You got a brewcoin!! You now have {Iscores}')
         else:
-            cs = TheColoursOfTheRainbow()
-            balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=discord.Color.from_rgb(*cs)) #todo add random colouring here
-            balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
-            balEmbed.set_footer(text="no brew coin for you")
-            await context.send(embed = balEmbed)
+            try:
+              cs = TheColoursOfTheRainbow()
+              balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=discord.Color.from_rgb(*cs))
+              balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
+              balEmbed.set_footer(text="no brew coin for you")
+              await context.send(embed = balEmbed)
+            except Exception as ename:
+                await context.send(str(ename))
 
     #@commands.event
 #    async def on_command_error(self, ctx, error):

@@ -4,8 +4,8 @@ https://stackoverflow.com/a/59555898/9654083
 https://stackoverflow.com/a/65436253/9654083
 https://stackoverflow.com/questions/60055037/how-make-custom-status-discord-py
 This is the rewrite that is in progress for the Brew Discord bot.
-It uses the bot.command rather than the client.event since it's much
-easier to maintain.
+It uses cogs instead of imports to fix a few bugs and to make 
+it easier to maintain.
 """
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -26,6 +26,9 @@ async def Stuff():
     print("doing the thing")
     choices = ["a river","brew out of the faucet"]
     await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
+
+bot.load_extension("brewcoin2")
+bot.load_extension("fun2")
 
 #--ON LOAD--
 @bot.event
