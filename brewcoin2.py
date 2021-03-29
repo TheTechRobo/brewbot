@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 import configparser
-import random
+
+from miscfunc import *
 
 scores = configparser.ConfigParser()
 

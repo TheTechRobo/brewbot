@@ -2,10 +2,11 @@ import discord
 from discord.ext import commands
 import random
 
+from miscfunc import *
+
 class funCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
 
     @commands.command(name='wash')
     async def wash(self, ctx):
@@ -34,14 +35,13 @@ class funCog(commands.Cog):
         wrathEmbed.set_image(url=wrathImage[wrathRand])
         await context.send(embed = wrathEmbed)
 
-    @commands.command(name="penguin")
-    async def penguin(self, context):
+    @commands.command(name="tux")
+    async def tux(self, context):
         """
         Fun and random
         """
-        penguinRand = random.randint(0, 1)
         penguin = ["https://th.bing.com/th/id/R7e4c84e00512f9c7fb0fd957a51c124e?rik=fxMWjFQbKozUcA&riu=http%3a%2f%2falanzeichick.com%2fwp-content%2fuploads%2fLinux-Penguin.png&ehk=fk6wjB%2bmV%2bkEVDkXRm4tGOcQKRm0RhUjEX1RwqeeQu8%3d&risl=&pid=ImgRaw", "https://youtu.be/PwnAH42gsm8"]
-        await context.send(penguin[penguinRand])
+        await context.send(random.choice(penguin))
 
 def setup(bot):
     bot.add_cog(funCog(bot))

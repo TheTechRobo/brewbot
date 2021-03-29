@@ -18,24 +18,14 @@ async def Stuff():
 
 bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 
-#--The other files with @bot.event need to be HERE not at the start or they wont work.--
-from brewcoin import *
-from fun import *
+from miscfunc import *
 
-#--FUNCTIONS--
-def TheColoursOfTheRainbow(): #to choose a random RGB value
-    colours = []
-    for i in range(0,3):
-        colours.append(random.randint(0,255))
-    return colours
+#--FUNCS--
 
 async def Stuff():
     print("doing the thing")
     choices = ["a river","brew out of the faucet"]
     await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices)))
-
-setup(TheColoursOfTheRainbow) #allows this function to be used in other documents
-
 
 #--ON LOAD--
 @bot.event
