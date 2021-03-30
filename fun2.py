@@ -35,7 +35,7 @@ class funCog(commands.Cog):
         wrathEmbed.set_image(url=wrathImage[wrathRand])
         await context.send(embed = wrathEmbed)
 
-    @commands.command(name="tux")
+    @commands.command(name="tux", alias="penguin")
     async def tux(self, context):
         """
         Fun and random
@@ -43,5 +43,15 @@ class funCog(commands.Cog):
         penguin = ["https://th.bing.com/th/id/R7e4c84e00512f9c7fb0fd957a51c124e?rik=fxMWjFQbKozUcA&riu=http%3a%2f%2falanzeichick.com%2fwp-content%2fuploads%2fLinux-Penguin.png&ehk=fk6wjB%2bmV%2bkEVDkXRm4tGOcQKRm0RhUjEX1RwqeeQu8%3d&risl=&pid=ImgRaw", "https://youtu.be/PwnAH42gsm8"]
         await context.send(random.choice(penguin))
 
+    @commands.cooldown(1,30,commands.BucketType.guild) #Funny senche raht thing
+    @commands.command(name='senche')
+    async def senche(self, context):
+        """
+        Try this command out!! It is fun!!
+        """
+        sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
+        sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
+        sencheEmbed.set_footer(text="Senche raht",)
+        await context.send(embed = sencheEmbed)
 def setup(bot):
     bot.add_cog(funCog(bot))
