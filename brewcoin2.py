@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import configparser
 import random
-
+from store_data import *
 from miscfunc import *
 
 scores = configparser.ConfigParser()
@@ -28,7 +28,7 @@ class brewcoinCog(commands.Cog):
             await context.send('Please only use this command in the correct channel')
             mine.reset_cooldown(context)
             return
-        if random.randint(0,0) == 0:
+        if random.randint(0,4) == 0:
             try: #tries to find their multiplyer
                 BCmultiplyer = int(scores["multiplyers"][name])
             except KeyError as ename: #if they do not have a multiplyer, set one
@@ -85,25 +85,28 @@ class brewcoinCog(commands.Cog):
             except KeyError:
                 Iscores = 0
             colours = TheColoursOfTheRainbow()
-            balEmbed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
+            balEmbed = discord.Embed(title="Balance", description=f'{context.author.mention}\'s current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
             await context.send(embed = balEmbed)
         else:
             await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
-    @commands.command(name='multiplyer', alias="doubler")
+    @commands.command(name='mult')
     async def multiplyer(self, context):
+        print('stamplar')
         """
         Check your BrewCoin multiplyer
         """
         name = context.author.name + "#" + context.author.discriminator
         name = name.lower()
+        print('magplar')
         scores.read("brewscores.ini")
         try:
             multiplyerBal = int(scores["multiplyers"][name])
+            print('stamdk')
         except KeyError:
             multiplyerBal = 1
         colours = TheColoursOfTheRainbow()
-        multEmbed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
+        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multipluer is {multiplyerBal} \nIt will last for {"{multiplyerTime}"}', color=discord.Color.from_rgb(*colours))
         await context.send(embed = multEmbed)
 
     @commands.command(name='top')
@@ -123,5 +126,17 @@ class brewcoinCog(commands.Cog):
         em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', color=discord.Color.from_rgb(*colours))
         await context.send(embed=em)
 
+    @commands.command(name="shop")
+    async def shop(self, context):
+        shopItems = StoreItemsVar
+        print(shopItems)
+        for i in shopItems:
+            try:
+                q = 0
+                await context.send(i)
+                await context.send(shopItems[1])
+                q = q + 1
+            except BaseException as ename:
+                await context.send(f"ERROR: {ename}")
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
