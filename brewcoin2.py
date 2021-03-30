@@ -28,10 +28,11 @@ class brewcoinCog(commands.Cog):
             await context.send('Please only use this command in the correct channel')
             mine.reset_cooldown(context)
             return
-        if random.randint(0,6) == 0:
+        if random.randint(0,0) == 0:
             try:
+                BCmultiplyer = int(scores["multiplyers"][name])
                 Iscores = int(scores["scores"][name])
-                Iscores += 1
+                Iscores += (1 * BCmultiplyer)
                 scores["scores"][name] = str(Iscores)
             except KeyError as ename:
                 logging.warning("EXCEPTION IN SCORING: %s" % ename)
@@ -39,7 +40,10 @@ class brewcoinCog(commands.Cog):
                 Iscores = 1
             with open('brewscores.ini', 'w') as confs:
                 scores.write(confs)
-            await context.send(f'You got a brewcoin!! You now have {Iscores}')
+            if BCmultiplyer == 1:
+                await context.send(f'You got a brewcoin!! You now have {Iscores}')
+            else:
+                await context.send(f'You got {1*BCmultiplyer} brewcoins because of your {"{multiplyer name}"}!! You now have {Iscores}')
         else:
             try:
               cs = TheColoursOfTheRainbow()
