@@ -29,20 +29,25 @@ class brewcoinCog(commands.Cog):
             mine.reset_cooldown(context)
             return
         if random.randint(0,0) == 0:
-            try:
+            try: #tries to find their multiplyer
                 BCmultiplyer = int(scores["multiplyers"][name])
+            except KeyError as ename: #if they do not have a multiplyer, set one
+                scores["multiplyers"][str(name)] = "1"
+                BCmultiplyer = 1
+            try: #assignes 1 brewcoin UNLESS the user has none to begin with
                 Iscores = int(scores["scores"][name])
                 Iscores += (1 * BCmultiplyer)
                 scores["scores"][name] = str(Iscores)
-            except KeyError as ename:
-                logging.warning("EXCEPTION IN SCORING: %s" % ename)
-                scores["scores"][str(name)] = "1"
-                Iscores = 1
-            with open('brewscores.ini', 'w') as confs:
+            except KeyError as ename: #if the user has no brewcoins, they will get 1
+                print(f'A stamblade assigned the value {BCmultiplyer*1} to {context.author.name}.')
+                scores["scores"][str(name)] = str(BCmultiplyer*1)
+                Iscores = BCmultiplyer*1
+            with open('brewscores.ini', 'w') as confs: #writes to file
                 scores.write(confs)
-            if BCmultiplyer == 1:
+                print("stamplar")
+            if BCmultiplyer == 1: #message for no multiplyer
                 await context.send(f'You got a brewcoin!! You now have {Iscores}')
-            else:
+            else: #message if they have a multiplyer
                 await context.send(f'You got {1*BCmultiplyer} brewcoins because of your {"{multiplyer name}"}!! You now have {Iscores}')
         else:
             try:
@@ -84,6 +89,22 @@ class brewcoinCog(commands.Cog):
             await context.send(embed = balEmbed)
         else:
             await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
+
+    @commands.command(name='multiplyer', alias="doubler")
+    async def multiplyer(self, context):
+        """
+        Check your BrewCoin multiplyer
+        """
+        name = context.author.name + "#" + context.author.discriminator
+        name = name.lower()
+        scores.read("brewscores.ini")
+        try:
+            multiplyerBal = int(scores["multiplyers"][name])
+        except KeyError:
+            multiplyerBal = 1
+        colours = TheColoursOfTheRainbow()
+        multEmbed = discord.Embed(title="Balance", description=f'Your current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
+        await context.send(embed = multEmbed)
 
     @commands.command(name='top')
     async def top(self, context):
