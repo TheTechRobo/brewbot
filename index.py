@@ -20,8 +20,6 @@ bot = Bot(command_prefix=('brew ', 'Brew ')) #makes the prefix << brew >>
 
 from miscfunc import *
 
-#--FUNCS--
-
 async def Stuff():
     print("doing the thing")
     choices = ["a river","brew out of the faucet"]
