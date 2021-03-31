@@ -5,6 +5,7 @@ import random
 from store_data import *
 from miscfunc import *
 import logging
+import datetime
 
 scores = configparser.ConfigParser()
 
@@ -133,6 +134,63 @@ class brewcoinCog(commands.Cog):
         #em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
         await context.send(embed=em)
 
-
+    @commands.command(name="daily")
+    async def daily(self, context):
+        try:
+            nowDate = datetime.datetime.now()
+            print(nowDate.strftime("%Y%m%d"))
+            name = context.author.name + "#" + context.author.discriminator
+            name = name.lower()
+            scores.read("brewscores.ini")
+            try: #tries to find their multiplyer
+                print('stamden')
+                BCmultiplyer = int(scores["multiplyers"][name])
+                print('stamcro')
+            except KeyError as ename: #if they do not have a multiplyer, set one
+                print('stamsorc')
+                scores["multiplyers"][str(name)] = "1"
+                BCmultiplyer = 1
+                print('stamblade')
+            try: #tries to find their last date
+                dailyDate = scores["daily"][name]
+                print('stamDK')
+            except KeyError as ename: #if they do not have a multiplyer, set one
+                print('magsorc')
+                scores["daily"][str(name)] = str(nowDate)
+                dailyDate = scores["daily"][name]
+                print('magDK')
+            print(dailyDate)
+            print(nowDate)
+            if dailyDate != nowDate: #if it is not the same date as their last daily claim
+                dailyDate = scores["daily"][name]
+                dailyRoll = random.randint(0, 20)
+                Iscores = scores["scores"][name]
+                try:
+                    if dailyRoll in (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) :
+                        print("1 brewcoin for the magplar\n")
+                        BCmultiplyer = int(BCmultiplyer)
+                        Iscores += (1 * BCmultiplyer)
+                        await context.send(f"You got {1 * BCmultiplyer} brewcoin!!")
+                    elif dailyRoll in (10, 11, 12, 13) :
+                        print("2 brewcoin for the magplar\n")
+                        Iscores += (2 * BCmultiplyer)
+                        await context.send(f"You got {2 * BCmultiplyer} brewcoins!!")
+                    elif dailyRoll in (14) :
+                        print("3 brewcoin for the magplar\n")
+                        Iscores += (3 * BCmultiplyer)
+                        await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
+                    else:
+                        print("0 brewcoin for the magplar\n")
+                        await context.send("You did not get any brewcoins... :sad:")
+                    scores["scores"][name] = str(Iscores)
+                except KeyError as ename: #if the user has no brewcoins, they will get 1
+                    await context.send("You need to mine before claiming a daily...\nPlease use the command `brew mine` before you claim a daily.")
+                with open('brewscores.ini', 'w') as confs: #writes to file
+                    scores.write(confs)
+                    print("stamplar")
+            else:
+                await context.send("You have already claimed your daily today.")
+        except Exception as ename:
+            print(f'ERROR: < {ename} >')
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
