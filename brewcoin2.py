@@ -60,17 +60,6 @@ class brewcoinCog(commands.Cog):
             except Exception as ename:
                 await context.send(str(ename))
 
-    #@commands.event
-#    async def on_command_error(self, ctx, error):
-    #    """
-    #    Does some stuff in case of cooldown error.
-    #    """
-    #    if isinstance(error, commands.CommandOnCooldown):
-    #        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to excavate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one... {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after)}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
-    #        await ctx.send(random.choice(potentialMessages))
-    #        await ctx.send(bot.command())
-    #        raise error
-
     @commands.cooldown(1,4,commands.BucketType.guild)
     @commands.command(name='bal')
     async def bal(self, context, user=None):
@@ -91,7 +80,7 @@ class brewcoinCog(commands.Cog):
         else:
             await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
 
-    @commands.command(name='mult')
+    @commands.command(name='mult', aliases=("multiplier",))
     async def multiplyer(self, context):
         print('stamplar')
         """
