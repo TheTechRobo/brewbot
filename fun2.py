@@ -23,7 +23,7 @@ class funCog(commands.Cog):
         mountEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
         await context.send(embed = mountEmbed)
 
-    @commands.command(name='wraith', aliases=['wrath'])
+    @commands.command(name='wraith', aliases=('wrath',))
     async def wraith(self, context):
         """
         As is this one
