@@ -45,9 +45,6 @@ class funCog(commands.Cog):
         """
         Try this command out!! It is fun!!
         """
-        sencheEmbed = discord.Embed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f'This is a senche raht. Not a mount. (if you are curious, search up \"Senche Raht\'s, Not Mounts\")', color=0xffffff)
-        sencheEmbed.set_image(url = "https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1")
-        sencheEmbed.set_footer(text="Senche raht",)
-        await context.send(embed = sencheEmbed)
+        await context.send(embed=SetEmbed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description="This is a senche raht. Not a mount. (if you are curious, enter brew mount)", footer="Senche raht", img="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1"))
 def setup(bot):
     bot.add_cog(funCog(bot))
