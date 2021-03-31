@@ -18,10 +18,8 @@ class funCog(commands.Cog):
         """
         This one is also fun!!
         """
-        mountEmbed = discord.Embed(title="WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description=f'WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)', color=0xffffff)
-        mountEmbed.set_image(url = "https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613")
-        mountEmbed.set_footer(text="Riders dont \"Own\" us, they are our \"Partners\".",)
-        await context.send(embed = mountEmbed)
+        try: await context.send(embed = SetEmbed("WE ARE NOT MOUNTS", url="https://en.uesp.net/wiki/Online:Senche-rahts:_Not_Just_Mounts", description="WE ARE NOT MOUNTS, We are intelligent beings who are not just mounts. See more information at the link above.)", img="https://cdna.artstation.com/p/assets/covers/images/017/378/304/large/meg-steckler-shot97thumb.jpg?1555712613", footer="""Riders don't "Own" us, they are our "Partners"."""))
+        except Exception as ename: await context.send(ename)
 
     @commands.command(name='wraith', aliases=('wrath',))
     async def wraith(self, context):
