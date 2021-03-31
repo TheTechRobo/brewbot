@@ -16,6 +16,12 @@ from discord.ext.commands import Bot
 from store_data import *
 import asyncio, heapq, configparser, logging, discord, random
 from miscfunc import *
+import logging
+
+#--LOGGING TO SHOW ERRORS--
+ErrorsOn = True #CHANGE THAT TO FALSE TO ENABLE USER FRIENDLY ERRORS
+if ErrorsOn == True:
+    logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 
 #--The prefix for the bot--
 bot = commands.Bot(command_prefix="brew ")

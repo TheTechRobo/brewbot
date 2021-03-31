@@ -4,6 +4,7 @@ import configparser
 import random
 from store_data import *
 from miscfunc import *
+import logging
 
 scores = configparser.ConfigParser()
 
@@ -130,13 +131,17 @@ class brewcoinCog(commands.Cog):
     async def shop(self, context):
         shopItems = StoreItemsVar
         print(shopItems)
+        q = 0
+        string = ""
+        colours = TheColoursOfTheRainbow()
         for i in shopItems:
-            try:
-                q = 0
-                await context.send(i)
-                await context.send(shopItems[1])
-                q = q + 1
-            except BaseException as ename:
-                await context.send(f"ERROR: {ename}")
+            price = shopItems[list(shopItems)[q]]
+            item = list(shopItems)[q]
+            string += f"**{q+1}.** {item} \t\t--> {price} Brewcoins.\n"
+            q += 1
+        em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
+        await context.send(embed=em)
+
+
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
