@@ -20,6 +20,7 @@ class systemCog(commands.Cog):
     @commands.cooldown(1,2,commands.BucketType.user)
     @commands.command(name='spam')
     async def spam(self, context, END): #context is the content, end is the last thing
+
         """
         Takes one parameter: how many times to spam.
         """
@@ -34,9 +35,13 @@ class systemCog(commands.Cog):
             for i in range(0, int(END)):
                 await context.send('Brew!! :beer:')
                 del i
+            #To assign the Mini Brew role to people who write brew spam for the first time
+            user = context.author
+            role = discord.utils.find(lambda r: r.name == 'Mini Brew', context.message.guild.roles)
+            if not role in user.roles:
+                await user.add_roles(role)
         else:
             await context.send(f'I don\'t want to block this, but it will probably really lag the server... So please limit auto spamming brew to 15...')
-
 
     @commands.command(name='version')
     async def v(self, context):

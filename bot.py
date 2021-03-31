@@ -54,4 +54,5 @@ async def on_command_error(ctx, error):
         await ctx.send(random.choice(potentialMessages))
         print('\nAn anonymous magcro tried to do a command that was on cooldown')
 
+
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')

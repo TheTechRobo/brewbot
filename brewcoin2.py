@@ -134,12 +134,14 @@ class brewcoinCog(commands.Cog):
         q = 0
         string = ""
         colours = TheColoursOfTheRainbow()
+        em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n', color=discord.Color.from_rgb(*colours))
         for i in shopItems:
             price = shopItems[list(shopItems)[q]]
             item = list(shopItems)[q]
-            string += f"**{q+1}.** {item} \t\t--> {price} Brewcoins.\n"
+            em.add_field(name = item, value= price, inline = False)
+            #string += f"**{q+1}.** {item} \t\t--> {price} Brewcoins.\n"
             q += 1
-        em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
+        #em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
         await context.send(embed=em)
 
 
