@@ -29,9 +29,7 @@ class funCog(commands.Cog):
         wrathRand = random.randint(0, 2)
         wrathText = ["This is a wraith from ESO.", "This is a scary wraith", "This is wraith from Apex Legends"]
         wrathImage = ["https://th.bing.com/th/id/Rc930387dd1629d1285808a19da20c327?rik=9lR%2fB6vEbuFq3A&riu=http%3a%2f%2fvignette2.wikia.nocookie.net%2felderscrolls%2fimages%2f7%2f7c%2fWraith.png%2frevision%2flatest%3fcb%3d20160207025617&ehk=a0crJjrw3xwAap1mOQIXVJC73tfBiqhw%2fXEqvr2vJho%3d&risl=&pid=ImgRaw", "https://vignette.wikia.nocookie.net/romanticallyapocalyptic/images/7/7c/Wraith.png/revision/latest/scale-to-width-down/370?cb=20120724162754", "https://d1fs8ljxwyzba6.cloudfront.net/assets/article/2019/02/21/wraith-guide-header-apex-legends_feature.jpg"]
-        wrathEmbed = discord.Embed(title="Wraith", description=wrathText[wrathRand], color=0xffffff)
-        wrathEmbed.set_image(url=wrathImage[wrathRand])
-        await context.send(embed = wrathEmbed)
+        await context.send(embed = SetEmbed(title="Wraith", description=wrathText[wrathRand], img=wrathImage[wrathRand]))
 
     @commands.command(name="tux", alias="penguin")
     async def tux(self, context):
