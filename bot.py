@@ -1,6 +1,6 @@
 """
-FILE: BrewBot 0.2
-VERSION: Rewrite 2.0
+FILE: BrewBot
+VERSION: v.0.2-wip
 AUTHORS: TheRuntingMuumuu, TheTechRobo
 LICENSE: Proprietary
 SOURCE STATUS: Closed Source
@@ -9,14 +9,12 @@ SOURCES: in the comments or in sources.txt
 """
 
 #--Lots of module imports--
-import discord
 from discord.ext import commands
 import sys, traceback
 from discord.ext.commands import Bot
 from store_data import *
-import asyncio, heapq, configparser, logging, discord, random
+import asyncio, configparser, logging, discord, random
 from miscfunc import *
-import logging
 
 #--LOGGING TO SHOW ERRORS--
 ErrorsOn = True #CHANGE THAT TO FALSE TO ENABLE USER FRIENDLY ERRORS
