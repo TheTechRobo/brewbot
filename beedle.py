@@ -11,6 +11,9 @@ class beeedleCog(commands.Cog):
     @commands.command(name='beedle')
     async def wash(self, context):
         await context.send("You have found the beedle game...")
+        beedleAmount = random.randint(2, 20)
+        for i in range(2, beedleAmount):
+            
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))
