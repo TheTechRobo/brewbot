@@ -20,3 +20,5 @@ def SetEmbed(title, description, url=False, colour=False, img=False, footer=Fals
     if not footer: pass
     else: mountEmbed.set_footer(text=footer)
     return mountEmbed
+
+prefix = "brew "
