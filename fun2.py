@@ -45,6 +45,6 @@ class funCog(commands.Cog):
         """
         Try this command out!! It is fun!!
         """
-        await context.send(embed=SetEmbed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description="This is a senche raht. Not a mount. (if you are curious, enter brew mount)", footer="Senche raht", img="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1"))
+        await context.send(embed=SetEmbed(title="Senche Raht", url="https://en.uesp.net/wiki/Online:Senche-raht", description=f"This is a senche raht. Not a mount. (if you are curious, enter {prefix}mount)", footer="Senche raht", img="https://th.bing.com/th/id/OIP.E_zqHOXGiW7RjFR8rLndhAHaJb?pid=ImgDet&rs=1"))
 def setup(bot):
     bot.add_cog(funCog(bot))

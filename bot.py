@@ -54,5 +54,11 @@ async def on_command_error(ctx, error):
         await ctx.send(random.choice(potentialMessages))
         print('\nAn anonymous magcro tried to do a command that was on cooldown')
 
+@bot.command("status")
+async def setstats(ctx, to, url=False):
+    if not url:
+        await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=to))
+    else:
+        await bot.change_presence(activity=discord.Streaming(url=url, name=to))
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
