@@ -137,11 +137,14 @@ class brewcoinCog(commands.Cog):
     @commands.command(name="daily")
     async def daily(self, context):
         try:
-            nowDate = datetime.datetime.now()
-            print(nowDate.strftime("%Y%m%d"))
+            nowDate = datetime.datetime.now() #nowdate is the date right now
+            nowDate = nowDate.strftime("%Y%m%d") #formats nowDate into proper date
             name = context.author.name + "#" + context.author.discriminator
-            name = name.lower()
+            name = name.lower() #lowercases the name
+            print(f'Author name {name}')
             scores.read("brewscores.ini")
+
+            #<<<MULTIPLYER>>>
             try: #tries to find their multiplyer
                 print('stamden')
                 BCmultiplyer = int(scores["multiplyers"][name])
@@ -151,46 +154,67 @@ class brewcoinCog(commands.Cog):
                 scores["multiplyers"][str(name)] = "1"
                 BCmultiplyer = 1
                 print('stamblade')
+            #<<<MULTIPLYER>>>
+
+            #<<<GETS DATE>>>
             try: #tries to find their last date
-                dailyDate = scores["daily"][name]
-                print('stamDK')
-            except KeyError as ename: #if they do not have a multiplyer, set one
+                dailyDate = scores["daily"][name] #gets what their last sent date was
+                print(f'Last daily was claimed on {dailyDate}')
+            except KeyError as ename:
                 print('magsorc')
-                scores["daily"][str(name)] = str(nowDate)
-                dailyDate = scores["daily"][name]
+                scores["daily"][str(name)] = str(nowDate) #saves the current date as their date
+                dailyDate = scores["daily"][name] #Then defines daily date
+                dailyDate -= 1 #removes 1 from it so that it is a different date from today
                 print('magDK')
+            #<<<GETS DATE>>>
+
             print(dailyDate)
             print(nowDate)
             if dailyDate != nowDate: #if it is not the same date as their last daily claim
                 dailyDate = scores["daily"][name]
                 dailyRoll = random.randint(0, 20)
                 Iscores = scores["scores"][name]
+                print(f'Iscores = {Iscores}')
+                print(f'BCmultiplyer = {BCmultiplyer}')
                 try:
                     if dailyRoll in (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) :
                         print("1 brewcoin for the magplar\n")
-                        BCmultiplyer = int(BCmultiplyer)
-                        Iscores += (1 * BCmultiplyer)
+                        print("stamDK???\n")
+                        Iscores = int(Iscores) #sets Iscores as ints rather than strings
+                        BCmultiplyer = int(BCmultiplyer)  #sets BCmultiplyer as int rather than string
+                        Iscores = Iscores + (int(1) * BCmultiplyer)
+                        print("stamRAT???\n")
                         await context.send(f"You got {1 * BCmultiplyer} brewcoin!!")
                     elif dailyRoll in (10, 11, 12, 13) :
                         print("2 brewcoin for the magplar\n")
+                        Iscores = int(Iscores)
+                        BCmultiplyer = int(BCmultiplyer)
                         Iscores += (2 * BCmultiplyer)
                         await context.send(f"You got {2 * BCmultiplyer} brewcoins!!")
                     elif dailyRoll in (14) :
                         print("3 brewcoin for the magplar\n")
                         Iscores += (3 * BCmultiplyer)
+                        Iscores = int(Iscores)
+                        BCmultiplyer = int(BCmultiplyer)
                         await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
                     else:
                         print("0 brewcoin for the magplar\n")
+                        Iscores += 0
+                        Iscores = int(Iscores)
+                        BCmultiplyer = int(BCmultiplyer)
                         await context.send("You did not get any brewcoins... :sad:")
-                    scores["scores"][name] = str(Iscores)
-                except KeyError as ename: #if the user has no brewcoins, they will get 1
+                    scores["scores"][name] = str(Iscores) #Adds their scores to the brewscores.ini
+                    scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
+                    print(f'\tOld date {dailyDate}')
+                    print(f'\tScore on file {scores["daily"][name]}')
+                except KeyError as ename: #if the user has no brewcoins, they will need to mine to get one
                     await context.send("You need to mine before claiming a daily...\nPlease use the command `brew mine` before you claim a daily.")
                 with open('brewscores.ini', 'w') as confs: #writes to file
                     scores.write(confs)
                     print("stamplar")
             else:
                 await context.send("You have already claimed your daily today.")
-        except Exception as ename:
+        except Exception as ename: #if it errors out
             print(f'ERROR: < {ename} >')
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
