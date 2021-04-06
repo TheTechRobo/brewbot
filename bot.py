@@ -55,10 +55,15 @@ async def on_command_error(ctx, error):
         print('\nAn anonymous magcro tried to do a command that was on cooldown')
 
 @bot.command("status")
-async def setstats(ctx, to, url=False):
-    if not url:
-        await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=to))
-    else:
-        await bot.change_presence(activity=discord.Streaming(url=url, name=to))
+async def setstats(ctx):
+    try: await status()
+    except Exception as ename:
+        await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}') #https://stackoverflow.com/a/62856886/9654083
+        await ctx.send(ename)
+    else: 
+        try:
+            await ctx.message.add_reaction('👍')
+        except Exception as ename:
+            await ctx.send(ename)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
