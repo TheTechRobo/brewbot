@@ -134,14 +134,13 @@ class brewcoinCog(commands.Cog):
         #em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
         await context.send(embed=em)
 
-    @commands.command(name="daily")
+    @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
         try:
             nowDate = datetime.datetime.now() #nowdate is the date right now
             nowDate = nowDate.strftime("%Y%m%d") #formats nowDate into proper date
             name = context.author.name + "#" + context.author.discriminator
             name = name.lower() #lowercases the name
-            print(f'Author name {name}')
             scores.read("brewscores.ini")
 
             #<<<MULTIPLYER>>>
@@ -168,22 +167,17 @@ class brewcoinCog(commands.Cog):
                 print('magDK')
             #<<<GETS DATE>>>
 
-            print(dailyDate)
-            print(nowDate)
+            #<<<Actually gives them the brewcoins if they are deserving :evillaugh:>>>
             if dailyDate != nowDate: #if it is not the same date as their last daily claim
                 dailyDate = scores["daily"][name]
                 dailyRoll = random.randint(0, 20)
                 Iscores = scores["scores"][name]
-                print(f'Iscores = {Iscores}')
-                print(f'BCmultiplyer = {BCmultiplyer}')
                 try:
                     if dailyRoll in (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) :
                         print("1 brewcoin for the magplar\n")
-                        print("stamDK???\n")
                         Iscores = int(Iscores) #sets Iscores as ints rather than strings
                         BCmultiplyer = int(BCmultiplyer)  #sets BCmultiplyer as int rather than string
                         Iscores = Iscores + (int(1) * BCmultiplyer)
-                        print("stamRAT???\n")
                         await context.send(f"You got {1 * BCmultiplyer} brewcoin!!")
                     elif dailyRoll in (10, 11, 12, 13) :
                         print("2 brewcoin for the magplar\n")
@@ -191,22 +185,20 @@ class brewcoinCog(commands.Cog):
                         BCmultiplyer = int(BCmultiplyer)
                         Iscores += (2 * BCmultiplyer)
                         await context.send(f"You got {2 * BCmultiplyer} brewcoins!!")
-                    elif dailyRoll in (14) :
+                    elif dailyRoll == 14 :
                         print("3 brewcoin for the magplar\n")
+                        Iscores = int(Iscores)
+                        BCmultiplyer = int(BCmultiplyer)
                         Iscores += (3 * BCmultiplyer)
-                        Iscores = int(Iscores)
-                        BCmultiplyer = int(BCmultiplyer)
                         await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
-                    else:
-                        print("0 brewcoin for the magplar\n")
-                        Iscores += 0
+                    elif dailyRoll in (15, 16, 17, 18, 19, 20):
+                        print("2 brewcoin for the magplar\n")
                         Iscores = int(Iscores)
                         BCmultiplyer = int(BCmultiplyer)
-                        await context.send("You did not get any brewcoins... :sad:")
+                        Iscores += (2 * BCmultiplyer)
+                        await context.send("You did not get any brewcoins... :cry:")
                     scores["scores"][name] = str(Iscores) #Adds their scores to the brewscores.ini
                     scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
-                    print(f'\tOld date {dailyDate}')
-                    print(f'\tScore on file {scores["daily"][name]}')
                 except KeyError as ename: #if the user has no brewcoins, they will need to mine to get one
                     await context.send("You need to mine before claiming a daily...\nPlease use the command `brew mine` before you claim a daily.")
                 with open('brewscores.ini', 'w') as confs: #writes to file
@@ -214,7 +206,9 @@ class brewcoinCog(commands.Cog):
                     print("stamplar")
             else:
                 await context.send("You have already claimed your daily today.")
+            #<<<Done giving them brewcoins (or not)>>>
         except Exception as ename: #if it errors out
             print(f'ERROR: < {ename} >')
+            await context.send('There was an unexpected error. It\'s not you, it\'s us.')
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
