@@ -192,10 +192,10 @@ class brewcoinCog(commands.Cog):
                         Iscores += (3 * BCmultiplyer)
                         await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
                     elif dailyRoll in (15, 16, 17, 18, 19, 20):
-                        print("2 brewcoin for the magplar\n")
+                        print("0 brewcoin for the magplar\n")
                         Iscores = int(Iscores)
                         BCmultiplyer = int(BCmultiplyer)
-                        Iscores += (2 * BCmultiplyer)
+                        Iscores += (0 * BCmultiplyer)
                         await context.send("You did not get any brewcoins... :cry:")
                     scores["scores"][name] = str(Iscores) #Adds their scores to the brewscores.ini
                     scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
