@@ -25,7 +25,7 @@ if ErrorsOn:
 bot = commands.Bot(command_prefix=prefix)
 
 #--Loads all the additional files using cogs--
-initial_extensions = ('fun2', 'system', 'brewcoin2')
+initial_extensions = ('fun2', 'system', 'brewcoin2', 'beedle')
 
 for extension in initial_extensions: #runs the amount of times of files to load
     bot.load_extension(extension) #loads
@@ -60,7 +60,7 @@ async def setstats(ctx):
     except Exception as ename:
         await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}') #https://stackoverflow.com/a/62856886/9654083
         await ctx.send(ename)
-    else: 
+    else:
         try:
             await ctx.message.add_reaction('👍')
         except Exception as ename:
