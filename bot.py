@@ -40,7 +40,7 @@ async def on_ready():
     print("\n-----------------------------------------------\n<----Hits-Head-on-Cabinet has logged in...---->\n-----------------------------------------------") #tell console bot is logged in
     while True: #repeat forever
         await status()
-        await asyncio.sleep(5)
+        await asyncio.sleep(15)
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -63,5 +63,7 @@ async def setstats(ctx):
             await ctx.message.add_reaction('👍')
         except Exception as ename:
             await ctx.send(ename)
+    await asyncio.sleep(5)
+    await status()
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')

@@ -114,22 +114,19 @@ class brewcoinCog(commands.Cog):
             print(item)
             g = item
             string += (f"{g}: {tops[g]}\n")
-        em = discord.Embed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', color=discord.Color.from_rgb(*colours))
-        await context.send(embed=em)
+        await context.send(embed=SetEmbed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
 
     @commands.command(name="shop")
     async def shop(self, context):
         shopItems = StoreItemsVar
         print(shopItems)
         q = 0
-        string = ""
         colours = TheColoursOfTheRainbow()
         em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n', color=discord.Color.from_rgb(*colours))
         for i in shopItems:
             price = shopItems[list(shopItems)[q]]
             item = list(shopItems)[q]
             em.add_field(name = item, value= price, inline = False)
-            #string += f"**{q+1}.** {item} \t\t--> {price} Brewcoins.\n"
             q += 1
         await context.send(embed=em)
 
