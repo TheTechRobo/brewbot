@@ -162,11 +162,11 @@ class brewcoinCog(commands.Cog):
                 print('magsorc')
                 scores["daily"][str(name)] = str(nowDate) #saves the current date as their date
                 dailyDate = scores["daily"][name] #Then defines daily date
-                dailyDate -= 1 #removes 1 from it so that it is a different date from today
+                dailyDate = str(int(dailyDate) - 1) #removes 1 from it so that it is a different date from today
                 print('magDK')
             #<<<GETS DATE>>>
 
-            #<<<Actually gives them the brewcoins if they are deserving :evillaugh:>>>
+            #<<<Actually gives them the brewcoins if they are deserving :smiling_imp:>>>
             if dailyDate != nowDate: #if it is not the same date as their last daily claim
                 dailyDate = scores["daily"][name]
                 dailyRoll = random.randint(0, 20)

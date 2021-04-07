@@ -25,9 +25,7 @@ if ErrorsOn:
 bot = commands.Bot(command_prefix=prefix)
 
 #--Loads all the additional files using cogs--
-initial_extensions = ('fun2', 'system', 'brewcoin2', 'beedle')
-
-for extension in initial_extensions: #runs the amount of times of files to load
+for extension in ('fun2', 'system', 'brewcoin2', 'beedle'): #runs the amount of times of files to load
     bot.load_extension(extension) #loads
     print(f'\n{extension} has loaded')
 
@@ -42,7 +40,7 @@ async def on_ready():
     print("\n-----------------------------------------------\n<----Hits-Head-on-Cabinet has logged in...---->\n-----------------------------------------------") #tell console bot is logged in
     while True: #repeat forever
         await status()
-        await asyncio.sleep(20.00001)
+        await asyncio.sleep(5)
 
 @bot.event
 async def on_command_error(ctx, error):
