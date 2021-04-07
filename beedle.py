@@ -13,7 +13,7 @@ class beeedleCog(commands.Cog):
         await context.send("You have found the beedle game...")
         beedleAmount = random.randint(2, 20)
         for i in range(2, beedleAmount):
-            
+            pass
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))
