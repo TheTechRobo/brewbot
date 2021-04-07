@@ -131,7 +131,6 @@ class brewcoinCog(commands.Cog):
             em.add_field(name = item, value= price, inline = False)
             #string += f"**{q+1}.** {item} \t\t--> {price} Brewcoins.\n"
             q += 1
-        #em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n{string}', color=discord.Color.from_rgb(*colours))
         await context.send(embed=em)
 
     @commands.command(name="daily") #wow this is a big one...
