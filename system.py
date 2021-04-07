@@ -15,7 +15,7 @@ class systemCog(commands.Cog):
         """
         print(f'Console got the message')
         user = context.author
-        await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.\n\n*devs note - Yes it went through*')
+        await context.send(f'Hi {user}, you are senche raht :beer:\nAnd btw, I exist.\n\n\n\u200b')
 
     @commands.cooldown(1,2,commands.BucketType.user)
     @commands.command(name='spam')
@@ -31,10 +31,9 @@ class systemCog(commands.Cog):
             print(f"wrong channel, they in {channel.name}") #logging
             await context.send('Please only use this command in the correct channel')
             return
-        if int(END) <= 15:
+        if int(END) <= 16:
             for i in range(0, int(END)):
                 await context.send('Brew!! :beer:')
-                del i
             #To assign the Mini Brew role to people who write brew spam for the first time
             user = context.author
             role = discord.utils.find(lambda r: r.name == 'Mini Brew', context.message.guild.roles)
@@ -51,8 +50,7 @@ class systemCog(commands.Cog):
 
     @commands.command(name='sponsor')
     async def sponsor(self, context):
-        sponsor = discord.Embed(title="Sponsors", description="This bot is sponsored by TheRuntingMuumuu from trm.ddns.net, and TheTechRobo from thetechrobo.github.io. \nWell it is not actually sponsored by them but it is made by them, and hosted by them, and paid for by them (for the power for hosting, and time for deving) and so on.")
-        await context.send(embed = sponsor)
+        await context.send(embed=SetEmbed(title="Sponsors", description="This bot is sponsored by TheRuntingMuumuu from trm.ddns.net, and TheTechRobo from thetechrobo.github.io. \nWell it is not actually sponsored by them but it is made by them, and hosted by them, and paid for by them (for the power for hosting, and time for deving) and so on."))
 
 def setup(bot):
     bot.add_cog(systemCog(bot))

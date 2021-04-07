@@ -13,7 +13,7 @@ class funCog(commands.Cog):
         wrathText = ["Windows is the best OS ever... --TRM", "Windows is completely bloatware, spyware, and garbage and it terrible... USE ELIVE!!! --TTR", "Linux is better than windows --TRM & TTR", ":window:"]
         await context.send(random.choice(wrathText))
 
-    @commands.command(name='wash')
+    @commands.command(name='wash', aliases=('wosh',))
     async def wash(self, ctx):
         await ctx.send("https://www.youtube.com/watch?v=ivSOrKAsPss")
 
