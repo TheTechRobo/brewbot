@@ -21,4 +21,9 @@ def SetEmbed(title, description, url=False, colour=False, img=False, footer=Fals
     else: mountEmbed.set_footer(text=footer)
     return mountEmbed
 
+async def thumbsup(ctx):
+    await ctx.message.add_reaction('👍')
+async def thumbsdown(ctx):
+    await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}') #https://stackoverflow.com/a/62856886/9654083
+
 prefix = "brew "

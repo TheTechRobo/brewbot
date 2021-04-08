@@ -25,9 +25,7 @@ if ErrorsOn:
 bot = commands.Bot(command_prefix=prefix)
 
 #--Loads all the additional files using cogs--
-initial_extensions = ('fun2', 'system', 'brewcoin2', 'beedle')
-
-for extension in initial_extensions: #runs the amount of times of files to load
+for extension in ('fun2', 'system', 'brewcoin2', 'beedle'): #runs the amount of times of files to load
     bot.load_extension(extension) #loads
     print(f'\n{extension} has loaded')
 
@@ -42,7 +40,7 @@ async def on_ready():
     print("\n-----------------------------------------------\n<----Hits-Head-on-Cabinet has logged in...---->\n-----------------------------------------------") #tell console bot is logged in
     while True: #repeat forever
         await status()
-        await asyncio.sleep(20.00001)
+        await asyncio.sleep(15)
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -56,14 +54,31 @@ async def on_command_error(ctx, error):
 
 @bot.command("status")
 async def setstats(ctx):
-    try: await status()
+    try: 
+        await status()
+        await ctx.message.add_reaction('👍')
     except Exception as ename:
         await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}') #https://stackoverflow.com/a/62856886/9654083
         await ctx.send(ename)
+    await asyncio.sleep(5)
+    await status()
+
+@bot.command("fff")
+async def TheClear_Wrapper(ctx, user: discord.Member):
+    try: await Clearchat(ctx, user)
+    except Exception as ename: await ctx.send(ename)
+
+async def Clearchat(ctx, user: discord.Member):
+    role = discord.utils.find(lambda r: r.name == 'Mega Brew', ctx.message.guild.roles)
+    print(role)
+    print(user.roles)
+    if role in user.roles:
+        string = ""
+        for i in range(0,51):#repeat 50 times
+            string += "\u200b\n" #add zero width space to string
     else:
-        try:
-            await ctx.message.add_reaction('👍')
-        except Exception as ename:
-            await ctx.send(ename)
+        string = "Permission denied."
+    print(string)
+    await ctx.send(string)
 
 bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')

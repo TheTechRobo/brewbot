@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 from miscfunc import *
+import asyncio
 
 
 class beeedleCog(commands.Cog):
