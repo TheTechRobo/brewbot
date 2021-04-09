@@ -54,11 +54,11 @@ async def on_command_error(ctx, error):
 
 @bot.command("status")
 async def setstats(ctx):
-    try: 
+    try:
         await status()
-        await ctx.message.add_reaction('👍')
+        await thumbsup(ctx)
     except Exception as ename:
-        await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}') #https://stackoverflow.com/a/62856886/9654083
+        await thumbsdown(ctx) #https://stackoverflow.com/a/62856886/9654083
         await ctx.send(ename)
     await asyncio.sleep(5)
     await status()
