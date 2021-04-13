@@ -156,31 +156,23 @@ class brewcoinCog(commands.Cog):
                 dailyDate = scores["daily"][name]
                 dailyRoll = random.randint(0, 20)
                 Iscores = scores["scores"][name]
-                try:
-                    if dailyRoll in (0, 1, 2, 4, 5, 6, 7, 8, 9) :
-                        print("1 brewcoin for the magplar\n")
-                        Iscores = int(Iscores) #sets Iscores as ints rather than strings
-                        BCmultiplyer = int(BCmultiplyer)  #sets BCmultiplyer as int rather than string
-                        Iscores = Iscores + (int(1) * BCmultiplyer)
+                try: #todo: use floats instead of ints so that multiplyer 1.1, 0.9, etc work
+                    Iscores = int(Iscores) #sets Iscores as ints rather than strings
+                    BCmultiplyer = int(BCmultiplyer)
+                    if dailyRoll in (0, 1, 2, 4, 5, 6, 7, 8, 9):
+                        bc2Get = 1
                         await context.send(f"You got {1 * BCmultiplyer} brewcoin!!")
                     elif dailyRoll in (3, 10, 11, 12, 13) :
-                        print("2 brewcoin for the magplar\n")
-                        Iscores = int(Iscores)
-                        BCmultiplyer = int(BCmultiplyer)
-                        Iscores += (2 * BCmultiplyer)
+                        bc2Get = 2
                         await context.send(f"You got {2 * BCmultiplyer} brewcoins!!")
                     elif dailyRoll == 14 :
-                        print("3 brewcoin for the magplar\n")
-                        Iscores = int(Iscores)
-                        BCmultiplyer = int(BCmultiplyer)
-                        Iscores += (3 * BCmultiplyer)
+                        bc2Get = 3
                         await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
                     elif dailyRoll in (15, 16, 17, 18, 19, 20):
-                        print("0 brewcoin for the magplar\n")
-                        Iscores = int(Iscores)
-                        BCmultiplyer = int(BCmultiplyer)
-                        Iscores += (0 * BCmultiplyer)
+                        bc2Get = 0
                         await context.send("You did not get any brewcoins... :cry:")
+                    Iscores += (int(bc2Get) * BCmultiplyer)
+                    print(f"{bc2Get} brewcoin for the magplar\n")
                     scores["scores"][name] = str(Iscores) #Adds their scores to the brewscores.ini
                     scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
                 except KeyError as ename: #if the user has no brewcoins, they will need to mine to get one
