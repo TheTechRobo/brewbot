@@ -26,7 +26,7 @@ class brewcoinCog(commands.Cog):
             await context.send('Please only use this command in the correct channel')
             mine.reset_cooldown(context)
             return
-        if random.randint(0,4) == 0:
+        if random.randint(0,3) == 0:
             try: #tries to find their multiplyer
                 BCmultiplyer = int(scores["multiplyers"][name])
             except KeyError as ename: #if they do not have a multiplyer, set one
@@ -127,11 +127,10 @@ class brewcoinCog(commands.Cog):
     @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
         try:
-            nowDate = datetime.datetime.now() #nowdate is the date right now
-            nowDate = nowDate.strftime("%Y%m%d") #formats nowDate into proper date
+            nowDate = datetime.datetime.now().strftime("%Y%m%d") #nowdate is the date right now
             name = context.author.name + "#" + context.author.discriminator
             name = name.lower() #lowercases the name
-            scores.read("brewscores.ini")
+            scores.read("brewscores.ini") #reads the ini file into ram
 
             #<<<MULTIPLYER>>>
             try: #tries to find their multiplyer
@@ -168,7 +167,7 @@ class brewcoinCog(commands.Cog):
                     elif dailyRoll == 14 :
                         bc2Get = 3
                         await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
-                    elif dailyRoll in (15, 16, 17, 18, 19, 20):
+                    else:
                         bc2Get = 0
                         await context.send("You did not get any brewcoins... :cry:")
                     Iscores += (int(bc2Get) * BCmultiplyer)
