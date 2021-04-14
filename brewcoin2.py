@@ -19,7 +19,7 @@ class brewcoinCog(commands.Cog):
         name = context.author.name + "#" + context.author.discriminator
         name = name.lower()
         channel = context.channel
-        if channel.name == 'brewcoin-mining':
+        if channel.name == 'brewbot':
             pass
         else:
             print(f"wrong channel, user in {channel.name}") #logging
@@ -32,7 +32,7 @@ class brewcoinCog(commands.Cog):
             except KeyError as ename: #if they do not have a multiplyer, set one
                 scores["multiplyers"][str(name)] = "1"
                 BCmultiplyer = 1
-            try: #assignes 1 brewcoin UNLESS the user has none to begin with
+            try: #assigns 1 brewcoin UNLESS the user has none to begin with
                 Iscores = int(scores["scores"][name])
                 Iscores += (1 * BCmultiplyer)
                 scores["scores"][name] = str(Iscores)
@@ -49,11 +49,7 @@ class brewcoinCog(commands.Cog):
                 await context.send(f'You got {1*BCmultiplyer} brewcoins because of your {"{multiplyer name}"}!! You now have {Iscores}')
         else:
             try:
-              cs = TheColoursOfTheRainbow()
-              balEmbed = discord.Embed(title="No", description='You did not get brewcoin', color=discord.Color.from_rgb(*cs))
-              balEmbed.set_image(url = "https://thetechrobo.github.io/youtried.png")
-              balEmbed.set_footer(text="no brew coin for you")
-              await context.send(embed = balEmbed)
+                await context.send(embed=SetEmbed(title="No", description="You did not get brewcoin", img="https://thetechrobo.github.io/youtried.png", footer="no brew coin for you"))
             except Exception as ename:
                 await context.send(str(ename))
 
