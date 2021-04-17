@@ -19,9 +19,7 @@ class brewcoinCog(commands.Cog):
         name = context.author.name + "#" + context.author.discriminator
         name = name.lower()
         channel = context.channel
-        if channel.name == 'brewbot':
-            pass
-        else:
+        if channel.name != 'brewbot':
             print(f"wrong channel, user in {channel.name}") #logging
             await context.send('Please only use this command in the correct channel')
             mine.reset_cooldown(context)
@@ -48,6 +46,10 @@ class brewcoinCog(commands.Cog):
             else: #message if they have a multiplyer
                 await context.send(f'You got {1*BCmultiplyer} brewcoins because of your {"{multiplyer name}"}!! You now have {Iscores}')
         else:
+            try:
+                scores["scores"][name]
+            except KeyError:
+                scores["scores"][name] = "0"
             try:
                 await context.send(embed=SetEmbed(title="No", description="You did not get brewcoin", img="https://thetechrobo.github.io/youtried.png", footer="no brew coin for you"))
             except Exception as ename:
@@ -148,9 +150,14 @@ class brewcoinCog(commands.Cog):
 
             #<<<Actually gives them the brewcoins if they are deserving :smiling_imp:>>>
             if dailyDate != nowDate: #if it is not the same date as their last daily claim
-                dailyDate = scores["daily"][name]
-                dailyRoll = random.randint(0, 20)
-                Iscores = scores["scores"][name]
+                try:
+                    dailyDate = scores["daily"][name]
+                    Iscores = scores["scores"][name]
+                except KeyError:
+                    await context.send("You need to run `brew mine' before you claim a daily. This is a recording.")
+                    scores["daily"][name] = "0"
+                    return
+                dailyRoll = random.randint(0, 20)#Iscores = scores["scores"][name]
                 try: #todo: use floats instead of ints so that multiplyer 1.1, 0.9, etc work
                     Iscores = int(Iscores) #sets Iscores as ints rather than strings
                     BCmultiplyer = int(BCmultiplyer)
@@ -179,6 +186,7 @@ class brewcoinCog(commands.Cog):
             #<<<Done giving them brewcoins (or not)>>>
         except Exception as ename: #if it errors out
             print(f'ERROR: < {ename} >')
-            await context.send('There was an unexpected error. It\'s not you, it\'s us.')
+            await context.send(f'There was an unexpected error. It\'s not you, it\'s us. ({ename})')
+            raise
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
