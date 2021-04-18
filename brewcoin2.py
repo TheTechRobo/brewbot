@@ -102,13 +102,13 @@ class brewcoinCog(commands.Cog):
         await context.send("Loading balancers...")
         pos = 1
         for item in a:
-            if pos >= 5:
+            if pos > 5:
                 break
             print(item)
             g = item
             string += (f"{g}: {tops[g]}\n")
             pos += 1
-        await context.send(embed=SetEmbed(title="Top 5 Balancers", description=f'The top 5 contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
+        await context.send(embed=SetEmbed(title=f"Top {pos - 1} Balancers", description=f'The top {pos - 1} contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
 
     @commands.command(name="shop")
     async def shop(self, context):
