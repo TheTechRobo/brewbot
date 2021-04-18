@@ -66,10 +66,8 @@ async def setstats(ctx):
     await status()
 
 @bot.command("fff")
-async def TheClear_Wrapper(ctx, user: discord.Member):
-    await Clearchat(ctx, user)
-
-async def Clearchat(ctx, user: discord.Member):
+async def Clearchat(ctx):
+    user = ctx.author
     role = discord.utils.find(lambda r: r.name == 'Mega Brew', ctx.message.guild.roles)
     print(role)
     print(user.roles)
