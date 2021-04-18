@@ -106,7 +106,7 @@ class brewcoinCog(commands.Cog):
                 break
             print(item)
             g = item
-            string += (f"{g}: {tops[g]}\n")
+            string += (f"{pos}. **{g}**: {tops[g]}\n")
             pos += 1
         await context.send(embed=SetEmbed(title=f"Top {pos - 1} Balancers", description=f'The top {pos - 1} contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
 
