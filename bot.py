@@ -67,8 +67,7 @@ async def setstats(ctx):
 
 @bot.command("fff")
 async def TheClear_Wrapper(ctx, user: discord.Member):
-    try: await Clearchat(ctx, user)
-    except Exception as ename: await ctx.send(ename)
+    await Clearchat(ctx, user)
 
 async def Clearchat(ctx, user: discord.Member):
     role = discord.utils.find(lambda r: r.name == 'Mega Brew', ctx.message.guild.roles)

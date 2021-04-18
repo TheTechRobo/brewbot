@@ -20,9 +20,9 @@ class brewcoinCog(commands.Cog):
         name = name.lower()
         channel = context.channel
         if channel.name != 'brewbot':
-            print(f"wrong channel, user in {channel.name}") #logging
+            print(f"wrong channel, user in {channel.name}")
             await context.send('Please only use this command in the correct channel')
-            mine.reset_cooldown(context)
+            self.mine.reset_cooldown(context)
             return
         if random.randint(0,3) == 0:
             try: #tries to find their multiplyer
