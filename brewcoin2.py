@@ -190,5 +190,16 @@ class brewcoinCog(commands.Cog):
             print(f'ERROR: < {ename} >')
             await context.send(f'There was an unexpected error. It\'s not you, it\'s us. ({ename})')
             raise
+    @mine.error
+    async def on_command_error(self, ctx, error):
+        """
+        Does some stuff in case of cooldown error.
+        """
+        if isinstance(error, commands.CommandOnCooldown):
+            potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.', f'Searching for more coins to exvate... ({int(error.retry_after)}s)', f'The GPU overheated. Hopefully it did not die, or you may have a hard time finding a new one. {int(error.retry_after)}s.', f'You should not be greedy and mine too many brewcoins... Please try again in {int(error.retry_after )}s.', f'The drill is overheated. You cannot brewcoin yet. Please wait {int(error.retry_after)}s.', f'Bad things may happen if you do not wait {int(error.retry_after)} more seconds before mining again... :ghost:']
+            await ctx.send(random.choice(potentialMessages))
+            print('\nAn anonymous magcro tried to do a command that was on cooldown')
+        else:
+            raise(error)
 def setup(bot):
     bot.add_cog(brewcoinCog(bot))
