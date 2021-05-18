@@ -2,6 +2,7 @@ import discord, configparser, random, logging, datetime
 from discord.ext import commands
 from store_data import *
 from miscfunc import *
+from addBrewcoin import *
 
 scores = configparser.ConfigParser()
 
@@ -10,14 +11,11 @@ class brewcoinCog(commands.Cog):
         self.bot = bot
 
     @commands.cooldown(1, 45, commands.BucketType.guild)
-    @commands.command(name='mine')
+    @commands.command(name = 'mine')
     async def mine(self, context):
         """
         Small chance of getting a brewcoin! 45 second cooldown.
         """
-        scores.read("brewscores.ini")
-        name = context.author.name + "#" + context.author.discriminator
-        name = name.lower()
         channel = context.channel
         if channel.name != 'brewbot':
             print(f"wrong channel, user in {channel.name}")
@@ -25,35 +23,17 @@ class brewcoinCog(commands.Cog):
             self.mine.reset_cooldown(context)
             return
         if random.randint(0,3) == 0:
-            try: #tries to find their multiplyer
-                BCmultiplyer = int(scores["multiplyers"][name])
-            except KeyError as ename: #if they do not have a multiplyer, set one
-                scores["multiplyers"][str(name)] = "1"
-                BCmultiplyer = 1
-            try: #assigns 1 brewcoin UNLESS the user has none to begin with
-                Iscores = int(scores["scores"][name])
-                Iscores += (1 * BCmultiplyer)
-                scores["scores"][name] = str(Iscores)
-            except KeyError as ename: #if the user has no brewcoins, they will get 1
-                print(f'A stamblade assigned the value {BCmultiplyer*1} to {context.author.name}.')
-                scores["scores"][str(name)] = str(BCmultiplyer*1)
-                Iscores = BCmultiplyer*1
-            with open('brewscores.ini', 'w') as confs: #writes to file
-                scores.write(confs)
-                print("stamplar")
-            if BCmultiplyer == 1: #message for no multiplyer
-                await context.send(f'You got a brewcoin!! You now have {Iscores}')
+            user = context.author.name + "#" + context.author.discriminator
+            amount, userCoin, multiplyer = addbrewcoin(1, user)
+
+            if multiplyer == 1: #message for no multiplyer
+                await context.send(f'You got a brewcoin!! You now have {userCoin}')
             else: #message if they have a multiplyer
-                await context.send(f'You got {1*BCmultiplyer} brewcoins because of your {"{multiplyer name}"}!! You now have {Iscores}')
+                await context.send(f'You got {amount} brewcoins because of your {"{multiplyer name}"}!! You now have {userCoin}')
         else:
-            try:
-                scores["scores"][name]
-            except KeyError:
-                scores["scores"][name] = "0"
-            try:
-                await context.send(embed=SetEmbed(title="No", description="You did not get brewcoin", img="https://thetechrobo.github.io/youtried.png", footer="no brew coin for you"))
-            except Exception as ename:
-                await context.send(str(ename))
+            await context.send(embed=SetEmbed(title="No", description="You did not get brewcoin", img="https://thetechrobo.github.io/youtried.png", footer="no brew coin for you"))
+
+
 
     @commands.cooldown(1,4,commands.BucketType.guild)
     @commands.command(name='bal')
@@ -124,21 +104,14 @@ class brewcoinCog(commands.Cog):
             q += 1
         await context.send(embed=em)
 
+
     @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
         try:
             nowDate = datetime.datetime.now().strftime("%Y%m%d") #nowdate is the date right now
             name = context.author.name + "#" + context.author.discriminator
             name = name.lower() #lowercases the name
-            scores.read("brewscores.ini") #reads the ini file into ram
-
-            #<<<MULTIPLYER>>>
-            try: #tries to find their multiplyer
-                BCmultiplyer = int(scores["multiplyers"][name])
-            except KeyError as ename: #if they do not have a multiplyer, set one
-                scores["multiplyers"][str(name)] = "1"
-                BCmultiplyer = 1
-            #<<<MULTIPLYER>>>
+            scores.read("brewscores.ini") #reads the ini file
 
             #<<<GETS DATE>>>
             try: #tries to find their last date
@@ -152,35 +125,22 @@ class brewcoinCog(commands.Cog):
 
             #<<<Actually gives them the brewcoins if they are deserving :smiling_imp:>>>
             if dailyDate != nowDate: #if it is not the same date as their last daily claim
-                try:
-                    dailyDate = scores["daily"][name]
-                    Iscores = scores["scores"][name]
-                except KeyError:
-                    await context.send("You need to run `brew mine' before you claim a daily. This is a recording.")
-                    scores["daily"][name] = "0"
-                    return
                 dailyRoll = random.randint(0, 20)#Iscores = scores["scores"][name]
-                try: #todo: use floats instead of ints so that multiplyer 1.1, 0.9, etc work
-                    Iscores = int(Iscores) #sets Iscores as ints rather than strings
-                    BCmultiplyer = int(BCmultiplyer)
-                    if dailyRoll in (0, 1, 2, 4, 5, 6, 7, 8, 9):
-                        bc2Get = 1
-                        await context.send(f"You got {1 * BCmultiplyer} brewcoin!!")
-                    elif dailyRoll in (3, 10, 11, 12, 13) :
-                        bc2Get = 2
-                        await context.send(f"You got {2 * BCmultiplyer} brewcoins!!")
-                    elif dailyRoll == 14 :
-                        bc2Get = 3
-                        await context.send(f"You got {3 * BCmultiplyer} brewcoins!!")
-                    else:
-                        bc2Get = 0
-                        await context.send("You did not get any brewcoins... :cry:")
-                    Iscores += (int(bc2Get) * BCmultiplyer)
-                    print(f"{bc2Get} brewcoin for the magplar\n")
-                    scores["scores"][name] = str(Iscores) #Adds their scores to the brewscores.ini
-                    scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
-                except KeyError as ename: #if the user has no brewcoins, they will need to mine to get one
-                    await context.send("You need to mine before claiming a daily...\nPlease use the command `brew mine' before you claim a daily.")
+                if dailyRoll in (0, 1, 2, 4, 5, 6, 7, 8, 9):
+                    amount = addbrewcoin(1, name)
+                    await context.send(f"You got {amount[0]} brewcoin!!")
+                elif dailyRoll in (3, 10, 11, 12, 13) :
+                    amount = addbrewcoin(2, name)
+                    await context.send(f"You got {amount[0]} brewcoins!!")
+                elif dailyRoll == 14 :
+                    amount = addbrewcoin(3, name)
+                    await context.send(f"You got {amount[0]} brewcoins!!")
+                else:
+                    amount = 0
+                    await context.send("You did not get any brewcoins... :cry:")
+                print(f"{amount[0]} brewcoin for the magplar\n")
+                scores.read("brewscores.ini") #reads the ini file
+                scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
                 with open('brewscores.ini', 'w') as confs: #writes to file
                     scores.write(confs)
             else:
@@ -188,8 +148,9 @@ class brewcoinCog(commands.Cog):
             #<<<Done giving them brewcoins (or not)>>>
         except Exception as ename: #if it errors out
             print(f'ERROR: < {ename} >')
-            await context.send(f'There was an unexpected error. It\'s not you, it\'s us. ({ename})')
+            await context.send(f'There was an unexpected error. It\'s not you, it\'s us. \nPlease contact @TheRuntingMuumuu or @TheTechRobo with this information : <<{ename}>>')
             raise
+
     @mine.error
     async def on_command_error(self, ctx, error):
         """

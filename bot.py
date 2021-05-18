@@ -38,6 +38,8 @@ async def status(): #function for changing the status
 @bot.event
 async def on_ready():
     print("\n-----------------------------------------------\n<----Hits-Head-on-Cabinet has logged in...---->\n-----------------------------------------------") #tell console bot is logged in
+    await bot.change_presence(activity=discord.Game(name="Bot has Started"))
+    await asyncio.sleep(5)
     while True: #repeat forever
         await status()
         await asyncio.sleep(15)
