@@ -42,7 +42,6 @@ class brewcoinCog(commands.Cog):
         Check your balance!
         """
         name = context.author.name + "#" + context.author.discriminator
-        name = name.lower()
         scores.read("brewscores.ini")
         if user is None:
             try:
@@ -61,7 +60,6 @@ class brewcoinCog(commands.Cog):
         Check your BrewCoin multiplyer
         """
         name = context.author.name + "#" + context.author.discriminator
-        name = name.lower()
         scores.read("brewscores.ini")
         try:
             multiplyerBal = int(scores["multiplyers"][name])
@@ -110,7 +108,6 @@ class brewcoinCog(commands.Cog):
         try:
             nowDate = datetime.datetime.now().strftime("%Y%m%d") #nowdate is the date right now
             name = context.author.name + "#" + context.author.discriminator
-            name = name.lower() #lowercases the name
             scores.read("brewscores.ini") #reads the ini file
 
             #<<<GETS DATE>>>
@@ -136,7 +133,7 @@ class brewcoinCog(commands.Cog):
                     amount = addbrewcoin(3, name)
                     await context.send(f"You got {amount[0]} brewcoins!!")
                 else:
-                    amount = 0
+                    amount = [0]
                     await context.send("You did not get any brewcoins... :cry:")
                 print(f"{amount[0]} brewcoin for the magplar\n")
                 scores.read("brewscores.ini") #reads the ini file

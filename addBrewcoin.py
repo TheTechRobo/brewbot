@@ -1,6 +1,5 @@
 import configparser
 def addbrewcoin(amount, user):
-    user = user.lower() #Lowers the user name so easier to work with
     amount = int(amount)
     scores = configparser.ConfigParser()
 
