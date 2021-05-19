@@ -26,20 +26,17 @@ class beeedleCog(commands.Cog):
             while not confirmation:
                 confirmation = await self.bot.wait_for("reaction_add",check=self.check)
             laterTime = int(time.time())
-            if abs((laterTime - currentTime) - times) == (laterTime - currentTime) - times:
-                await ctx.send(f"You got it by {(laterTime - currentTime) - times} seconds!")
-                if (laterTime - currentTime) - times) == 0:
+            if (laterTime - currentTime) <= times and confirmation:
+                await ctx.send(f"You got it by {abs((laterTime - currentTime) - times)} seconds! :beetle:")
+                if abs((laterTime - currentTime) - times) == 0:
                     await ctx.send("In other words, you got it by the skin of your teeth! Nice job.")
-            if (laterTime - currentTime) > times:
-                await ctx.send(f"Missed it by {abs((laterTime - currentTime) - times)}. :("}
-                confirmation = False
-            if confirmation:
-                await context.send("Nice, you got it!! :beetle:")
                 continue
-            await context.send(embed=SetEmbed(title=":(", description="You failed.", footer="Go to jail and do not collect $200"))
+            if (laterTime - currentTime) > times:
+                confirmation = False
+            await context.send(embed=SetEmbed(title="You failed.", description="Go to jail and do not collect $200.", footer=f"Missed it by {abs((laterTime - currentTime) - times)}. :("))
             raise RuntimeError("Fatal: User is a failure.")
         await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 1 brewcoin kind stranger"))
-        addbrewcoin(1, context.author)
+        addbrewcoin(1, context.author.name + "#" + context.author.discriminator)
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))
