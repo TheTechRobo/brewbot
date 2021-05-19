@@ -29,8 +29,16 @@ for extension in ('fun2', 'system', 'brewcoin2', 'beedle'): #runs the amount of 
     bot.load_extension(extension) #loads
     print(f'\n{extension} has loaded')
 
-async def status(): #function for changing the status
-    print("\nA stamden has changed the bot status") #console.log
+async def status(msg=None): #function for changing the status
+    print(f"\nSomeone changed the bot status to {msg}")
+    if msg is not None:
+        import requests
+        blockedWords = requests.get("http://www.bannedwordlist.com/lists/swearWords.txt").text.split("\n")
+        for item in blockedWords:
+            if item in msg:
+                raise Exception("*** BLOCKED STATUS CHANGE.")
+        await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=msg))
+        return
     choices = ("a river","brew out of the faucet", "your webcam to 3000 people") #what is can be changed to
     await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=random.choice(choices))) #changes it, link required for streaming status to work
 
@@ -62,11 +70,13 @@ async def on_command_error(ctx, error):
 #return
 
 @bot.command("status")
-async def setstats(ctx):
+async def setstats(ctx, msg=None):
+    print(f"{ctx.author.name + ctx.author.discriminator} requested a status change.")
     try:
-        await status()
+        await status(msg)
         await thumbsup(ctx)
     except Exception as ename:
+        print(f"{ctx.author.name + ctx.author.discriminator}'s new status ERRORED OUT!")
         await thumbsdown(ctx) #https://stackoverflow.com/a/62856886/9654083
         await ctx.send(ename)
     await asyncio.sleep(5)
