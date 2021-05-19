@@ -2,6 +2,7 @@ from discord.ext import commands
 import random, discord, asyncio, time
 from miscfunc import *
 from addBrewcoin import addbrewcoin
+import logging
 
 class beeedleCog(commands.Cog):
     def __init__(self, bot):
@@ -21,15 +22,22 @@ class beeedleCog(commands.Cog):
             await beetle.add_reaction("🔨")
             self.beetle = beetle
             currentTime = int(time.time())
-            confirmation = await self.bot.wait_for("reaction_add",check=self.check)
+            confirmation = False
+            while not confirmation:
+                confirmation = await self.bot.wait_for("reaction_add",check=self.check)
             laterTime = int(time.time())
-            await ctx.send(f"currentTime: {currentTime}; laterTime: {laterTime}")
-            if laterTime - currentTime > times:
+            if abs((laterTime - currentTime) - times) == (laterTime - currentTime) - times:
+                await ctx.send(f"You got it by {(laterTime - currentTime) - times} seconds!")
+                if (laterTime - currentTime) - times) == 0:
+                    await ctx.send("In other words, you got it by the skin of your teeth! Nice job.")
+            if (laterTime - currentTime) > times:
+                await ctx.send(f"Missed it by {abs((laterTime - currentTime) - times)}. :("}
                 confirmation = False
-            if confirmation is True:
+            if confirmation:
                 await context.send("Nice, you got it!! :beetle:")
                 continue
             await context.send(embed=SetEmbed(title=":(", description="You failed.", footer="Go to jail and do not collect $200"))
+            raise RuntimeError("Fatal: User is a failure.")
         await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 1 brewcoin kind stranger"))
         addbrewcoin(1, context.author)
 
