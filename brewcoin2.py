@@ -1,10 +1,8 @@
-import discord, configparser, random, logging, datetime
+import discord, json, random, logging, datetime
 from discord.ext import commands
 from store_data import *
 from miscfunc import *
 from addBrewcoin import *
-
-scores = configparser.ConfigParser()
 
 class brewcoinCog(commands.Cog):
     def __init__(self, bot):
@@ -42,10 +40,11 @@ class brewcoinCog(commands.Cog):
         Check your balance!
         """
         name = context.author.name + "#" + context.author.discriminator
-        scores.read("brewscores.ini")
+        with open("scores.json") as file:
+            scores = json.load(file)
         if user is None:
             try:
-                Iscores = int(scores["scores"][name])
+                Iscores = scores["scores"][name]
             except KeyError:
                 Iscores = 0
             colours = TheColoursOfTheRainbow()
@@ -71,10 +70,11 @@ class brewcoinCog(commands.Cog):
 
     @commands.command(name='top')
     async def top(self, context):
-        scores.read("brewscores.ini")
+        with open("scores.json") as file:
+            scores = json.load(file)
         tops = scores['scores']
         print('hi\n', tops)
-        print('sotred')
+        print('\tsotred')
         a = sorted(tops, key=lambda k: int(tops[k]), reverse=True)
         string = ""
         await context.send("Loading balancers...")
@@ -108,7 +108,8 @@ class brewcoinCog(commands.Cog):
         try:
             nowDate = datetime.datetime.now().strftime("%Y%m%d") #nowdate is the date right now
             name = context.author.name + "#" + context.author.discriminator
-            scores.read("brewscores.ini") #reads the ini file
+            with open("scores.json") as file:
+                scores = json.load(file)
 
             #<<<GETS DATE>>>
             try: #tries to find their last date
@@ -136,10 +137,11 @@ class brewcoinCog(commands.Cog):
                     amount = [0]
                     await context.send("You did not get any brewcoins... :cry:")
                 print(f"{amount[0]} brewcoin for the magplar\n")
-                scores.read("brewscores.ini") #reads the ini file
+                with open("scores.json") as file:
+                    scores = json.load(file)
                 scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
-                with open('brewscores.ini', 'w') as confs: #writes to file
-                    scores.write(confs)
+                with open('scores.json', 'w') as confs: #writes to file
+                    confs.write(json.dumps(scores))
             else:
                 await context.send("You have already claimed your daily today.")
             #<<<Done giving them brewcoins (or not)>>>

@@ -33,7 +33,7 @@ class beeedleCog(commands.Cog):
                 continue
             if (laterTime - currentTime) > times:
                 confirmation = False
-            await context.send(embed=SetEmbed(title="You failed.", description="Go to jail and do not collect $200.", footer=f"Missed it by {abs((laterTime - currentTime) - times)}. :("))
+            await context.send(embed=SetEmbed(title="You failed.", description="The beetle has already eaten you.\nGo to jail and do not collect $200.", footer=f"Missed it by {abs((laterTime - currentTime) - times)}. :("))
             raise RuntimeError("Fatal: User is a failure.")
         await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 1 brewcoin kind stranger"))
         addbrewcoin(1, context.author.name + "#" + context.author.discriminator)
