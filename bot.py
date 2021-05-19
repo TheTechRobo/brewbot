@@ -33,10 +33,11 @@ async def status(msg=None): #function for changing the status
     print(f"\nSomeone changed the bot status to {msg}")
     if msg is not None:
         import requests
-        blockedWords = requests.get("http://www.bannedwordlist.com/lists/swearWords.txt").text.split("\n")
-        for item in blockedWords:
-            if item in msg:
-                raise Exception("*** BLOCKED STATUS CHANGE.")
+        for url in ("https://github.com/RobertJGabriel/Google-profanity-words/raw/master/list.txt", "http://www.bannedwordlist.com/lists/swearWords.txt"):
+            blockedWords = requests.get(url).text.split("\n")
+            for item in blockedWords:
+                if item in msg:
+                    raise Exception("*** BLOCKED STATUS CHANGE.")
         await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=msg))
         return
     choices = ("a river","brew out of the faucet", "your webcam to 3000 people") #what is can be changed to
