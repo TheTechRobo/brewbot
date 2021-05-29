@@ -36,7 +36,8 @@ async def status(msg=None): #function for changing the status
         for url in ("https://github.com/RobertJGabriel/Google-profanity-words/raw/master/list.txt", "http://www.bannedwordlist.com/lists/swearWords.txt"):
             blockedWords = requests.get(url).text.split("\n")
             for item in blockedWords:
-                if item in msg:
+                if item in msg and msg.strip() != "":
+                    print(item)
                     raise Exception("*** BLOCKED STATUS CHANGE.")
         await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=msg))
         return

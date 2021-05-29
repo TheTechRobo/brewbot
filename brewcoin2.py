@@ -31,8 +31,6 @@ class brewcoinCog(commands.Cog):
         else:
             await context.send(embed=SetEmbed(title="No", description="You did not get brewcoin", img="https://thetechrobo.github.io/youtried.png", footer="no brew coin for you"))
 
-
-
     @commands.cooldown(1,4,commands.BucketType.guild)
     @commands.command(name='bal')
     async def bal(self, context, user=None):
@@ -59,13 +57,14 @@ class brewcoinCog(commands.Cog):
         Check your BrewCoin multiplyer
         """
         name = context.author.name + "#" + context.author.discriminator
-        scores.read("brewscores.ini")
+        with open("scores.json") as file:
+            scores = json.loads(file.read())
         try:
-            multiplyerBal = int(scores["multiplyers"][name])
+            multiplyerBal = float(scores["multiplyers"][name])
         except KeyError:
             multiplyerBal = 1
         colours = TheColoursOfTheRainbow()
-        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multipluer is {multiplyerBal} \nIt will last for {"{multiplyerTime}"}', color=discord.Color.from_rgb(*colours))
+        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last for {"{multiplyerTime}"}', color=discord.Color.from_rgb(*colours))
         await context.send(embed = multEmbed)
 
     @commands.command(name='top')
