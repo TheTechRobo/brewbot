@@ -1,4 +1,6 @@
 import json
+class NiceTry(Exception):
+    pass
 def addbrewcoin(amount, user):
     amount = int(amount)
 
@@ -27,7 +29,8 @@ def rembrewcoin(amount, user, usemultiplyer=True):
 
     with open("scores.json","r") as file:
         scores = json.load(file)
-
+    if amount < 0:
+        raise NiceTry("YOU GOT CAUGHT HAHHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA\nYou pay the person you stole from **1** brewcoin.")
     try: #gets the multiplyer
         multiplyer = float(scores["multiplyers"][user])
     except KeyError: #if none, assigns 0

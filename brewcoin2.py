@@ -151,13 +151,22 @@ class brewcoinCog(commands.Cog):
             raise
     @commands.command(name="give")
     async def give(self, ctx, user: discord.Member, amount: float):
-        msg = await ctx.send("REMOVING BREWCOIN... IF THE BOT CRASHES HERE, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
-        rembrewcoin(user=(ctx.author.name +"#"+ ctx.author.discriminator), amount=amount)
+        msg = await ctx.send("REMOVING BREWCOIN... If this message doesn't go away, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
+        try:
+            if ctx.author == user:
+                raise NiceTry("imagine giving money to yourself to feel important, i could never")
+            rembrewcoin(user=(ctx.author.name +"#"+ ctx.author.discriminator), amount=amount)
+        except NiceTry as ename:
+            await ctx.send(ename)
+            rembrewcoin(user=(ctx.author.name+"#"+ctx.author.discriminator),amount=1)
+            addbrewcoin(user=(user.name+"#"+user.discriminator),amount=1)
+            await msg.delete()
+            raise
         await msg.delete()
-        msg = await ctx.send("ADDING BREWCOIN... IF THE BOT CRASHES HERE, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
+        msg = await ctx.send("ADDING BREWCOIN... If this message doesn't go away, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
         addbrewcoin(user=(user.name + "#"+user.discriminator),amount=amount)
         await msg.delete()
-        await ctx.send(f"{user.member.mention}: You just got {amount} brewcoins from {ctx.user.mention}.\n{ctx.user.mention}: :thumbsup: All transactions should be received.")
+        await ctx.send(f"{user.mention}: You just got {amount} brewcoins from {ctx.author.mention}.\n{ctx.author.mention}: :thumbsup: All transactions should be received.")
     @mine.error
     async def on_command_error(self, ctx, error):
         """
