@@ -14,10 +14,10 @@ class beeedleCog(commands.Cog):
         ctx = context
         self.BeedleCtx = ctx
         await context.send("You have found the beedle game...")
-        beedleAmount = random.randint(2, 20)
+        beedleAmount = random.randint(10,30)
         for i in range(0, beedleAmount):
-            await asyncio.sleep(random.randint(1,20))
-            times = random.randint(3,12)
+            await asyncio.sleep(random.randint(10,20))
+            times = random.randint(3,6)
             beetle = await context.send(f"Oh no, there's an annoying beetle! **Swat it in the next {times} seconds!**")
             await beetle.add_reaction("🔨")
             self.beetle = beetle
