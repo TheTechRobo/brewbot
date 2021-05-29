@@ -7,7 +7,8 @@ SOURCE STATUS: Closed Source
 ABOUT: This is the random brewbot that TTR and TRM are making. It serves absolutely no purpose but it helps me learn about python, coding, and using APIs.
 SOURCES: in the comments or in sources.txt
 """
-
+class No(Exception):
+    pass
 #--Lots of module imports--
 from discord.ext import commands
 import sys, traceback
@@ -33,12 +34,12 @@ async def status(msg=None): #function for changing the status
     print(f"\nSomeone changed the bot status to {msg}")
     if msg is not None:
         import requests
-        for url in ("https://github.com/RobertJGabriel/Google-profanity-words/raw/master/list.txt", "http://www.bannedwordlist.com/lists/swearWords.txt"):
+        for url in ("https://github.com/RobertJGabriel/Google-profanity-words/raw/master/list.txt","http://www.bannedwordlist.com/lists/swearWords.txt"):
             blockedWords = requests.get(url).text.split("\n")
             for item in blockedWords:
-                if item in msg and msg.strip() != "":
+                if item in msg and item.strip() != "":
                     print(item)
-                    raise Exception("*** BLOCKED STATUS CHANGE.")
+                    raise No([item,msg])
         await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=msg))
         return
     choices = ("a river","brew out of the faucet", "your webcam to 3000 people") #what is can be changed to
@@ -52,7 +53,7 @@ async def on_ready():
     await asyncio.sleep(5)
     while True: #repeat forever
         await status()
-        await asyncio.sleep(15)
+        await asyncio.sleep(45)
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -72,11 +73,21 @@ async def on_command_error(ctx, error):
 #return
 
 @bot.command("status")
-async def setstats(ctx, msg=None):
+async def setstats(ctx, *args):
     print(f"{ctx.author.name + ctx.author.discriminator} requested a status change.")
+    thingy = ""
+    for item in args:
+        thingy += item
+        thingy += " "
+    if args == () or args == []:
+        thingy = None
     try:
-        await status(msg)
+        await status(thingy)
         await thumbsup(ctx)
+    except No as ename:
+        await ctx.message.delete()
+        await ctx.author.send(f"Your status change was blocked due to the presence of the following word:\n  {ename}")
+        raise Exception("*** BLOCKED STATUS CHANGE.")
     except Exception as ename:
         print(f"{ctx.author.name + ctx.author.discriminator}'s new status ERRORED OUT!")
         await thumbsdown(ctx) #https://stackoverflow.com/a/62856886/9654083
