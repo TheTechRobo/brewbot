@@ -149,7 +149,15 @@ class brewcoinCog(commands.Cog):
             print(f'ERROR: < {ename} >')
             await context.send(f'There was an unexpected error. It\'s not you, it\'s us. \nPlease contact @TheRuntingMuumuu or @TheTechRobo with this information : <<{ename}>>')
             raise
-
+    @commands.command(name="give")
+    async def give(self, ctx, user: discord.Member, amount: float):
+        msg = await ctx.send("REMOVING BREWCOIN... IF THE BOT CRASHES HERE, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
+        rembrewcoin(user=(ctx.author.name +"#"+ ctx.author.discriminator), amount=amount)
+        await msg.delete()
+        msg = await ctx.send("ADDING BREWCOIN... IF THE BOT CRASHES HERE, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
+        addbrewcoin(user=(user.name + "#"+user.discriminator),amount=amount)
+        await msg.delete()
+        await ctx.send(f"{user.member.mention}: You just got {amount} brewcoins from {ctx.user.mention}.\n{ctx.user.mention}: :thumbsup: All transactions should be received.")
     @mine.error
     async def on_command_error(self, ctx, error):
         """
