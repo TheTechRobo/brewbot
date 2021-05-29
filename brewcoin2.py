@@ -76,7 +76,7 @@ class brewcoinCog(commands.Cog):
         print('\tsotred')
         a = sorted(tops, key=lambda k: int(tops[k]), reverse=True)
         string = ""
-        await context.send("Loading balancers...")
+        load = await context.send("Loading balancers...")
         pos = 1
         for item in a:
             if pos > 5:
@@ -86,6 +86,7 @@ class brewcoinCog(commands.Cog):
             string += (f"{pos}. **{g}**: {tops[g]}\n")
             pos += 1
         await context.send(embed=SetEmbed(title=f"Top {pos - 1} Balancers", description=f'The top {pos - 1} contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
+        await load.delete()
 
     @commands.command(name="shop")
     async def shop(self, context):

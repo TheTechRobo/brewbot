@@ -15,6 +15,11 @@ class beeedleCog(commands.Cog):
 
     @commands.command(name='beedle')
     async def beedle(self, context):
+        """Type brew help beedle for more information!
+        When you run this command, it waits a few seconds. Then,
+        a beetle will appear! You must STOP! Hammertime in a few
+        seconds. This will destroy the beetle. Sorry, animal
+        rights activists."""
         ctx = context
         self.BeedleCtx = ctx
         await context.send("You have found the beedle game...")
