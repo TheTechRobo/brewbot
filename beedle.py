@@ -24,8 +24,13 @@ class beeedleCog(commands.Cog):
             currentTime = int(time.time())
             confirmation = False
             while not confirmation:
-                confirmation = await self.bot.wait_for("reaction_add",check=self.check)
+                try:
+                    confirmation = await self.bot.wait_for("reaction_add",check=self.check, timeout=times)
+                except asyncio.TimeoutError:
+                    failed = True
             laterTime = int(time.time())
+            if failed:
+                laterTime = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000
             if (laterTime - currentTime) <= times and confirmation:
                 await ctx.send(f"You got it by {abs((laterTime - currentTime) - times)} seconds! :beetle:")
                 if abs((laterTime - currentTime) - times) == 0:
