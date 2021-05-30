@@ -33,30 +33,32 @@ class brewcoinCog(commands.Cog):
 
     @commands.cooldown(1,4,commands.BucketType.guild)
     @commands.command(name='bal')
-    async def bal(self, context, user: discord.Member):
+    async def bal(self, context, user: discord.Member=None):
         """
         Check your balance!
         """
-        try:
-            name = user
-        except:
+        if user is None:
             name = context.author.name + "#" + context.author.discriminator
-            print('Hi')
-
+            user = context.author
+        else:
+            name = user.name +"#"+user.discriminator
         with open("scores.json") as file:
             scores = json.load(file)
-        if True:
+        try:
+            scores['config'][name]['ShowBal']
+        except KeyError:
+            scores['config'][name] = {"ShowBal":True} #won't be saved but that's fine, since this is just a default setting
+        if scores['config'][name]['ShowBal'] or user == context.author:
             try:
                 print(name)
                 Iscores = scores["scores"][str(name)]
             except KeyError:
                 Iscores = 0
             colours = TheColoursOfTheRainbow()
-            balEmbed = discord.Embed(title="Balance", description=f'{name.mention}\'s current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
-            await context.send(embed = balEmbed)
-
-
-
+            balEmbed = discord.Embed(title="Balance", description=f'{user.mention}\'s current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
+            await context.send(embed=balEmbed)
+        else:
+            await context.send(embed=SetEmbed(title="403 Forbidden",description="This user has disabled API access. You cannot view their balance.",footer="Want your API access to be disabled? Contact TheTechRobo or TheRuntingMuumuu! Configuration tool coming soon™"))
 
     @commands.command(name='mult', aliases=("multiplier",))
     async def multiplyer(self, context):
@@ -88,8 +90,14 @@ class brewcoinCog(commands.Cog):
         for item in a:
             if pos > 5:
                 break
-            print(item)
             g = item
+            try:
+                scores['config'][g]['ShowBal']
+            except KeyError:
+                scores['config'][g] = {"ShowBal":True} #default value; not saved to the file
+            if not scores['config'][g]['ShowBal']:
+                continue
+            print(item)
             string += (f"{pos}. **{g}**: {tops[g]}\n")
             pos += 1
         await context.send(embed=SetEmbed(title=f"Top {pos - 1} Balancers", description=f'The top {pos - 1} contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
