@@ -33,23 +33,30 @@ class brewcoinCog(commands.Cog):
 
     @commands.cooldown(1,4,commands.BucketType.guild)
     @commands.command(name='bal')
-    async def bal(self, context, user=None):
+    async def bal(self, context, user: discord.Member):
         """
         Check your balance!
         """
-        name = context.author.name + "#" + context.author.discriminator
+        try:
+            name = user
+        except:
+            name = context.author.name + "#" + context.author.discriminator
+            print('Hi')
+
         with open("scores.json") as file:
             scores = json.load(file)
-        if user is None:
+        if True:
             try:
-                Iscores = scores["scores"][name]
+                print(name)
+                Iscores = scores["scores"][str(name)]
             except KeyError:
                 Iscores = 0
             colours = TheColoursOfTheRainbow()
-            balEmbed = discord.Embed(title="Balance", description=f'{context.author.mention}\'s current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
+            balEmbed = discord.Embed(title="Balance", description=f'{name.mention}\'s current balance is {Iscores} brewcoins!', color=discord.Color.from_rgb(*colours))
             await context.send(embed = balEmbed)
-        else:
-            await context.send('Sorry, but specifying a user is not yet supported. Try again soon!')
+
+
+
 
     @commands.command(name='mult', aliases=("multiplier",))
     async def multiplyer(self, context):
