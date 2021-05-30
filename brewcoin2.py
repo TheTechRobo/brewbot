@@ -169,7 +169,8 @@ class brewcoinCog(commands.Cog):
         msg = await ctx.send("REMOVING BREWCOIN... If this message doesn't go away, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
         try:
             if ctx.author == user:
-                raise NiceTry("imagine giving money to yourself to feel important, i could never")
+                rembrewcoin(user=(ctx.author.name+"#"+ctx.author.discriminator),amount=0.1)
+                raise NiceTry(f"As you hand the money to {ctx.author.mention}, you realise that you are handing it to yourself.\nIn shock, You accidentally drop 0.1 brewcoin!")
             rembrewcoin(user=(ctx.author.name +"#"+ ctx.author.discriminator), amount=amount)
         except NiceTry as ename:
             await ctx.send(ename)

@@ -23,7 +23,7 @@ def addbrewcoin(amount, user, usemultiplyer=True):
         scores[scores][user] = multiplyer * amount
 
     with open('scores.json', 'w+') as confs:
-        confs.write(json.dumps(scores))
+        confs.write(json.dumps(scores, indent=4))
     return multiplyer*amount, userCoin, multiplyer
 
 def rembrewcoin(**kwargs):

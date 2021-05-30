@@ -1,1 +1,25 @@
-{"scores": {"TheRuntingMuumuu#1376": 54.0, "TheTechRobo#7420": 68.0, "donomic#7950": "2"}, "multiplyers": {"placeholder": 1, "TheTechRobo#7420": 1, "TheRuntingMuumuu#1376": 1}, "multiplyerTime": {"placeholder": 1}, "daily": {"placeholder": 1, "TheTechRobo#7420": "20210530", "TheRuntingMuumuu#1376": "20210529"},"config":{"TheRuntingMuumuu#1376":{"ShowBal":false}}}
+{
+    "scores": {
+        "TheRuntingMuumuu#1376": 55.0,
+        "TheTechRobo#7420": 66.9,
+        "donomic#7950": "2"
+    },
+    "multiplyers": {
+        "placeholder": 1,
+        "TheTechRobo#7420": 1,
+        "TheRuntingMuumuu#1376": 1
+    },
+    "multiplyerTime": {
+        "placeholder": 1
+    },
+    "daily": {
+        "placeholder": 1,
+        "TheTechRobo#7420": "20210530",
+        "TheRuntingMuumuu#1376": "20210529"
+    },
+    "config": {
+        "TheRuntingMuumuu#1376": {
+            "ShowBal": false
+        }
+    }
+}
