@@ -37,7 +37,10 @@ async def status(msg=None): #function for changing the status
         for url in ("https://github.com/RobertJGabriel/Google-profanity-words/raw/master/list.txt","http://www.bannedwordlist.com/lists/swearWords.txt"):
             blockedWords = requests.get(url).text.split("\n")
             for item in blockedWords:
-                if item in msg and item.strip() != "":
+                item = item.strip()
+                if item in msg and item != "" and item != "hell": #hell can destroy "hello" and it's not that bad of a word
+                    if "ass" in msg and item == "ass" and "ass" not in msg.replace("grass",""):
+                        continue #failsafe for "grass"
                     print(item)
                     raise No([item,msg])
         await bot.change_presence(activity=discord.Streaming(url="https://www.youtube.com/watch?v=ivSOrKAsPss", name=msg))
