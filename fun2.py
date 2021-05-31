@@ -36,7 +36,7 @@ class funCog(commands.Cog):
         wrathImage = ["https://th.bing.com/th/id/Rc930387dd1629d1285808a19da20c327?rik=9lR%2fB6vEbuFq3A&riu=http%3a%2f%2fvignette2.wikia.nocookie.net%2felderscrolls%2fimages%2f7%2f7c%2fWraith.png%2frevision%2flatest%3fcb%3d20160207025617&ehk=a0crJjrw3xwAap1mOQIXVJC73tfBiqhw%2fXEqvr2vJho%3d&risl=&pid=ImgRaw", "https://vignette.wikia.nocookie.net/romanticallyapocalyptic/images/7/7c/Wraith.png/revision/latest/scale-to-width-down/370?cb=20120724162754", "https://d1fs8ljxwyzba6.cloudfront.net/assets/article/2019/02/21/wraith-guide-header-apex-legends_feature.jpg", "https://th.bing.com/th/id/R95d593861a4fe9ed299da5a4bc934459?rik=Ubri%2bzVLbCmdTQ&pid=ImgRaw"]
         await context.send(embed = SetEmbed(title="Wraith", description=wrathText[wrathRand], img=wrathImage[wrathRand]))
 
-    @commands.command(name="tux", aliases="penguin")
+    @commands.command(name="tux", aliases=("penguin",))
     async def tux(self, context):
         """
         Fun and random

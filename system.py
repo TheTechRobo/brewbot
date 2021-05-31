@@ -46,8 +46,15 @@ class systemCog(commands.Cog):
     async def v(self, context):
         try:await context.send(embed=SetEmbed(title="brewbot 0.2-wip",footer="brewbot is closed source because of the rat TheRuntingMuumuu. Ping him a million times to get his attention! Or save up 1500 brewcoins and buy the perk! Whatever floats your boat!", description="0.2 is in progress! It's about two thirds done!"))
         except Exception as ename:await context.send(ename)
-
-
+    @commands.command(name='mega')
+    async def megamegamegamegamega(self,ctx,megaping:discord.Member):
+        if megaping.name + "#"+megaping.discriminator != "Mega#2723":
+            await ctx.send("Nice try, here is your punishment...")
+        for i in range(0,30):
+            if megaping.name + "#"+megaping.discriminator != "Mega#2723":
+                await ctx.author.send("Happy? :sweat_smile:")
+                continue
+            await ctx.send(f"{megaping.mention} DEATH HOUNDS ARE MOUNTS")
     @commands.command(name='sponsor')
     async def sponsor(self, context):
         await context.send(embed=SetEmbed(title="Sponsors", description="This bot is sponsored by TheRuntingMuumuu from trm.ddns.net, and TheTechRobo from thetechrobo.github.io. \nWell it is not actually sponsored by them but it is made by them, and hosted by them, and paid for by them (for the power for hosting, and time for deving) and so on."))
