@@ -156,9 +156,19 @@ class brewcoinCog(commands.Cog):
                     scores = json.load(file)
                 scores["daily"][name] = nowDate #Adds current date as last time daily was claimed
                 with open('scores.json', 'w') as confs: #writes to file
-                    confs.write(json.dumps(scores))
+                    confs.write(json.dumps(scores, indent=4))
             else:
-                await context.send("You have already claimed your daily today.")
+                last_date = scores["daily"]["serverwide"]
+                if last_date != nowDate and int(last_date) + 1 != nowDate:
+                    amount = addbrewcoin(5, name)
+                    with open("scores.json") as file:
+                        scores = json.load(file)
+                    scores["daily"]["serverwide"] = nowDate
+                    with open('scores.json', 'w') as confs: #writes to file
+                        confs.write(json.dumps(scores, indent=4))
+                    await context.send(f"{context.author.mention} you just got 5 brewcoins by claiming the serverwide 48h daily thing!!")
+                else:
+                    await context.send("You have already claimed your daily today.\nThe serverwide daily has been claimed within the last 48 hours.")
             #<<<Done giving them brewcoins (or not)>>>
         except Exception as ename: #if it errors out
             print(f'ERROR: < {ename} >')

@@ -1,7 +1,7 @@
 {
     "scores": {
-        "TheRuntingMuumuu#1376": 55.0,
-        "TheTechRobo#7420": 66.9,
+        "TheRuntingMuumuu#1376": 86.0,
+        "TheTechRobo#7420": 80.9,
         "donomic#7950": "2"
     },
     "multiplyers": {
@@ -14,12 +14,11 @@
     },
     "daily": {
         "placeholder": 1,
+        "serverwide": "20210530",
         "TheTechRobo#7420": "20210530",
-        "TheRuntingMuumuu#1376": "20210529"
+        "TheRuntingMuumuu#1376": "20210530"
     },
     "config": {
-        "TheRuntingMuumuu#1376": {
-            "ShowBal": false
-        }
+        "TheRuntingMuumuu#1376": {}
     }
 }
