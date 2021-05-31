@@ -20,7 +20,8 @@ def addbrewcoin(amount, user, usemultiplyer=True):
         userCoin += (amount * multiplyer)
         scores["scores"][user] = userCoin
     except KeyError: #if user has none, assigns the amount
-        scores[scores][user] = multiplyer * amount
+        userCoin = multiplyer * amount
+        scores["scores"][user] = userCoin
 
     with open('scores.json', 'w+') as confs:
         confs.write(json.dumps(scores, indent=4))
