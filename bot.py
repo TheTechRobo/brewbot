@@ -12,7 +12,6 @@ class No(Exception):
 #--Lots of module imports--
 from discord.ext import commands
 import sys, traceback
-from discord.ext.commands import Bot
 from store_data import *
 import asyncio, configparser, logging, discord, random
 from miscfunc import *
