@@ -32,9 +32,9 @@ class scores:
             return multiplyer*amount, userCoin, multiplyer
         def remBrewcoin(self, **kwargs):
             amount = float(kwargs['amount'])
-            if amount < 0:
+            if amount < 0 and random.randint(1,1000) != 1: #1 IN 1000 CHANCE!!! NOT CLICKBAIT!!! 4K!!!!! (ENDING WILL SHOCK YOU) (GONE WRONG)
                 raise NiceTry("YOU GOT CAUGHT HAHHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA\nYou pay the person you stole from **1** brewcoin.")
-            amount = 0 - amount ##https://stackoverflow.com/a/67205684/9654083, we know it's postive since, well... 1 line above
+            amount = 0 - amount #https://stackoverflow.com/a/67205684/9654083, we know it's postive since, well... 1 line above
             kwargs['amount'] = amount
             return self.addBrewcoin(**kwargs)
 def addbrewcoin(*args, **kwargs):
