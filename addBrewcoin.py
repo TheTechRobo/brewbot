@@ -40,15 +40,17 @@ class scores:
             amount = 0 - amount #https://stackoverflow.com/a/67205684/9654083, we know it's postive since, well... 1 line above
             kwargs['amount'] = amount
             return self.addBrewcoin(**kwargs)
-def addbrewcoin(*args, **kwargs):
+def addbrewcoin(**kwargs):
     obj = scores.json()
     obj.read()
+    obj.checkMultiplyer(kwargs['user'])
     a = obj.addBrewcoin(*args, **kwargs)
     obj.write()
     return a
 def rembrewcoin(**kwargs):
     obj = scores.json()
     obj.read()
+    obj.checkMultiplyer(kwargs['user'])
     a = obj.remBrewcoin(**kwargs)
     obj.write()
     return a
