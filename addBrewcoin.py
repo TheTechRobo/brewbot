@@ -43,14 +43,20 @@ class scores:
 def addbrewcoin(**kwargs):
     obj = scores.json()
     obj.read()
-    obj.checkMultiplyer(kwargs['user'])
+    try:
+        obj.checkMultiplyer(kwargs['user'])
+    except KeyError:
+        pass
     a = obj.addBrewcoin(*args, **kwargs)
     obj.write()
     return a
 def rembrewcoin(**kwargs):
     obj = scores.json()
     obj.read()
-    obj.checkMultiplyer(kwargs['user'])
+    try:
+        obj.checkMultiplyer(kwargs['user'])
+    except KeyError:
+        pass
     a = obj.remBrewcoin(**kwargs)
     obj.write()
     return a
