@@ -1,4 +1,4 @@
-import json
+import json, time
 class NiceTry(Exception):
     pass
 
@@ -7,6 +7,9 @@ class scores:
         def __init__(self, filename="scores.json"):
             self.filename = filename
             self.scores = {}
+        def checkMultiplyer(self, user):
+            if time.time() > self.scores['multiplyerTime'][user]:
+                self.scores['multiplyers'][user] = 1
         def read(self):
             with open(self.filename) as file:
                 self.scores = json.loads(file.read())
