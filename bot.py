@@ -17,7 +17,7 @@ import asyncio, configparser, logging, discord, random
 from miscfunc import *
 
 #--LOGGING TO SHOW ERRORS--
-ErrorsOn = True #CHANGE THAT TO FALSE TO ENABLE USER FRIENDLY ERRORS
+ErrorsOn = True
 if ErrorsOn:
     logging.basicConfig(level=logging.INFO, format='%(levelname)s @ %(asctime)s: %(message)s; Lineno %(lineno)d, func %(funcName)s, file %(filename)s.', datefmt='%d/%m/%Y %H:%M:%S')
 
@@ -68,6 +68,10 @@ async def on_command_error(ctx, error):
         potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.']
         await ctx.send(random.choice(potentialMessages))
         print('\nAn anonymous magcro tried to do a command that was on cooldown')
+    if isinstance(error, KeyboardInterrupt):
+        await status("Bot offline...")
+        await ctx.send("Code 882")
+        raise(error)
     else:
         raise(error)
 
@@ -112,4 +116,10 @@ async def Clearchat(ctx):
     print(string)
     await ctx.send(string)
 
-bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
+try:
+    bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
+except KeyboardInterrupt:
+    print("Caught KeyboardInterrupt")
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(bot.change_presence(status=discord.Status.offline))
+

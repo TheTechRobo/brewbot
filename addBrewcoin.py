@@ -16,8 +16,13 @@ class scores:
         def write(self):
             with open(self.filename, "w+") as file:
                 file.write(json.dumps(self.scores, indent=4))
-        def addBrewcoin(self, amount, user, usemultiplyer=True):
+        def addBrewcoin(self, amount, user, usemultiplyer=True, checkMultiplyer=True):
             amount = float(amount)
+            try:
+                if not checkMultiplyer: raise KeyError
+                self.checkMultiplyer(user)
+            except KeyError:
+                pass
             try:
                 multiplyer = float(self.scores['multiplyers'][user])
             except KeyError: #if their multiplyer doesn't exist they need to be reregistered
@@ -40,23 +45,15 @@ class scores:
             amount = 0 - amount #https://stackoverflow.com/a/67205684/9654083, we know it's postive since, well... 1 line above
             kwargs['amount'] = amount
             return self.addBrewcoin(**kwargs)
-def addbrewcoin(**kwargs):
+def addbrewcoin(*args, **kwargs):
     obj = scores.json()
     obj.read()
-    try:
-        obj.checkMultiplyer(kwargs['user'])
-    except KeyError:
-        pass
     a = obj.addBrewcoin(*args, **kwargs)
     obj.write()
     return a
-def rembrewcoin(**kwargs):
+def rembrewcoin(*args, **kwargs):
     obj = scores.json()
     obj.read()
-    try:
-        obj.checkMultiplyer(kwargs['user'])
-    except KeyError:
-        pass
-    a = obj.remBrewcoin(**kwargs)
+    a = obj.remBrewcoin(*args, **kwargs)
     obj.write()
     return a
