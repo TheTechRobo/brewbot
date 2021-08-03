@@ -22,3 +22,4 @@ def addMult(user, val, time):
     data.scores['multiplyers'][user] = val
     data.scores['multiplyerTime'][user] = time
 
+functions = {"role": addRole, "multiplyer": addMult, "dm": sendDm}
