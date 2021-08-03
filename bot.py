@@ -15,6 +15,7 @@ import sys, traceback
 from store_data import *
 import asyncio, configparser, logging, discord, random
 from miscfunc import *
+from store_data import SetupStoreItemsVar
 
 #--LOGGING TO SHOW ERRORS--
 ErrorsOn = True

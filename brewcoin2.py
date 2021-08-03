@@ -105,7 +105,7 @@ class brewcoinCog(commands.Cog):
 
     @commands.command(name="shop")
     async def shop(self, context):
-        shopItems = StoreItemsVar
+        shopItems = SetupStoreItemsVar(await self.bot.fetch_user(325368586988421121))
         print(shopItems)
         q = 0
         colours = TheColoursOfTheRainbow()
@@ -205,4 +205,5 @@ class brewcoinCog(commands.Cog):
         else:
             raise(error)
 def setup(bot):
+    brewcoinCog.bot = bot
     bot.add_cog(brewcoinCog(bot))
