@@ -13,6 +13,6 @@ def addMult(user, val, time):
     except KeyError:
         return "ALREADY"
     data.scores['multiplyers'][user] = val
-    data.scores['multiplyerTime'][user] =
+    data.scores['multiplyerTime'][user] = None
 
 TypeMap = {"x2 multiplyer (4h)": "multiplyer"}
