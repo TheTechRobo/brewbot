@@ -1,26 +1,27 @@
 {
     "scores": {
         "TheRuntingMuumuu#1376": 92.0,
-        "TheTechRobo#7420": 98.0,
+        "TheTechRobo#7420": 108.0,
         "donomic#7950": 3.8,
         "TRM3909#3251": 7.0,
         "Nundodo#6436": 6.9
     },
     "multiplyers": {
         "placeholder": 1,
-        "TheTechRobo#7420": 1,
+        "TheTechRobo#7420": 2,
         "TheRuntingMuumuu#1376": 1,
         "TRM3909#3251": 1,
         "Nundodo#6436": 1,
         "donomic#7950": 1
     },
     "multiplyerTime": {
-        "placeholder": 1
+        "placeholder": 1,
+        "TheTechRobo#7420": 1635130516
     },
     "daily": {
         "placeholder": 1,
-        "serverwide": "20210724",
-        "TheTechRobo#7420": "20210724",
+        "serverwide": "20211024",
+        "TheTechRobo#7420": "20211024",
         "TheRuntingMuumuu#1376": "20210530",
         "Nundodo#6436": "20210530",
         "TRM3909#3251": "20210530"

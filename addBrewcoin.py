@@ -8,6 +8,10 @@ class scores:
             self.filename = filename
             self.scores = {}
         def checkMultiplyer(self, user):
+            try:
+                self.scores['multiplyerTime'][user]
+            except KeyError:
+                self.scores['multiplyerTime'][user] = 1
             if time.time() > self.scores['multiplyerTime'][user]:
                 self.scores['multiplyers'][user] = 1
         def read(self):

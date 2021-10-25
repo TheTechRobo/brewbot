@@ -63,7 +63,8 @@ class brewcoinCog(commands.Cog):
     @commands.command(name='mult', aliases=("multiplier",))
     async def multiplyer(self, context):
         """
-        Check your BrewCoin multiplyer
+        Check your BrewCoin multiplyer.
+        Multiplyers coming soon!
         """
         name = context.author.name + "#" + context.author.discriminator
         with open("scores.json") as file:
@@ -105,18 +106,30 @@ class brewcoinCog(commands.Cog):
 
     @commands.command(name="shop")
     async def shop(self, context):
-        shopItems = StoreItemsVar
-        print(shopItems)
+        print(StoreItems)
         q = 0
         colours = TheColoursOfTheRainbow()
         em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n', color=discord.Color.from_rgb(*colours))
-        for i in shopItems:
-            price = shopItems[list(shopItems)[q]]
-            item = list(shopItems)[q]
-            em.add_field(name = item, value= price, inline = False)
+        for i in StoreItems:
+            price = i.price
+            name = i.name
+            #item = list(shopItems)[q]
+            em.add_field(name = name, value= price, inline = False)
             q += 1
         await context.send(embed=em)
 
+    @commands.command(name="buy")
+    async def purchase(self, ctx, item):
+        print(item)
+        for i in StoreItems: #im sure there's a better way to do this but im too lazy to implement one
+            if i.name == item:
+                status =await ctx.send("Purchasing Item...")
+                data = scores.json()
+                data.read()
+                data.scores['scores'][ctx.author.name +"#"+ ctx.author.discriminator] -= i.price
+                await status.edit(content="Subtracted coins. Running command...")
+                i.run(ctx.author.name + "#"+ctx.author.discriminator)
+                await status.delete()
 
     @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
