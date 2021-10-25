@@ -1,4 +1,4 @@
-import discord, json, random, logging, datetime
+import discord, json, random, logging, datetime, datetime
 from discord.ext import commands
 from store_data import *
 from miscfunc import *
@@ -70,11 +70,11 @@ class brewcoinCog(commands.Cog):
         data.read()
         try:
             multiplyerBal = float(data.scores["multiplyers"][name])
-            multiplyerTime = int(data.scores["multiplyers"][name]) - int(time.time())
+            multiplyerTime = int(data.scores["multiplyerTime"][name])
         except KeyError:
             multiplyerBal = 1
         colours = TheColoursOfTheRainbow()
-        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last for {multiplyerTime}', color=discord.Color.from_rgb(*colours))
+        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last until {datetime.datetime.fromtimestamp(multiplyerTime)}', color=discord.Color.from_rgb(*colours))
         await context.send(embed = multEmbed)
 
     @commands.command(name='top')
@@ -179,7 +179,7 @@ class brewcoinCog(commands.Cog):
                     scores["daily"]["serverwide"] = nowDate
                     with open('scores.json', 'w') as confs: #writes to file
                         confs.write(json.dumps(scores, indent=4))
-                    await context.send(f"{context.author.mention} you just got 5 brewcoins by claiming the serverwide 48h daily thing!!")
+                    await context.send(f"{context.author.mention} you just got a bunch of brewcoins by claiming the serverwide 48h daily thing!!")
                 else:
                     await context.send("You have already claimed your daily today.\nThe serverwide daily has been claimed within the last 48 hours.")
             #<<<Done giving them brewcoins (or not)>>>
