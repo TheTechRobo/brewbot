@@ -60,21 +60,21 @@ class brewcoinCog(commands.Cog):
         else:
             await context.send(embed=SetEmbed(title="403 Forbidden",description="This user has disabled API access. You cannot view their balance.",footer="Want your API access to be disabled? Contact TheTechRobo or TheRuntingMuumuu! Configuration tool coming soon™"))
 
-    @commands.command(name='mult', aliases=("multiplier",))
+    @commands.command(name='mult', aliases=("multiplyer",))
     async def multiplyer(self, context):
         """
         Check your BrewCoin multiplyer.
-        Multiplyers coming soon!
         """
         name = context.author.name + "#" + context.author.discriminator
-        with open("scores.json") as file:
-            scores = json.loads(file.read())
+        data = scores.json()
+        data.read()
         try:
-            multiplyerBal = float(scores["multiplyers"][name])
+            multiplyerBal = float(data.scores["multiplyers"][name])
+            multiplyerTime = int(data.scores["multiplyers"][name]) - int(time.time())
         except KeyError:
             multiplyerBal = 1
         colours = TheColoursOfTheRainbow()
-        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last for {"{multiplyerTime}"}', color=discord.Color.from_rgb(*colours))
+        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last for {multiplyerTime}', color=discord.Color.from_rgb(*colours))
         await context.send(embed = multEmbed)
 
     @commands.command(name='top')
