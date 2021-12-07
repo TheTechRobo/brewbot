@@ -9,6 +9,10 @@ class scores:
             self.scores = {}
         def checkMultiplyer(self, user):
             try:
+                int(user)
+            except Exception as ename:
+                raise ValueError("You passed a Username instead of an UserID. Usernames functionality has been removed. Please update your code. Thank you!")
+            try:
                 self.scores['multiplyerTime'][user]
             except KeyError:
                 self.scores['multiplyerTime'][user] = 1
@@ -21,6 +25,10 @@ class scores:
             with open(self.filename, "w+") as file:
                 file.write(json.dumps(self.scores, indent=4))
         def addBrewcoin(self, amount, user, usemultiplyer=True, checkMultiplyer=True):
+            try:
+                int(user)
+            except Exception as ename:
+                raise ValueError("You passed a Username instead of an UserID. Usernames functionality has been removed. Please update your code. Thank you!")
             amount = float(amount)
             try:
                 if not checkMultiplyer: raise KeyError
@@ -34,12 +42,13 @@ class scores:
                 multiplyer = 1
             if not usemultiplyer:
                 multiplyer = 1
+            amount = amount * multiplyer
             try:
                 userCoin = float(self.scores['scores'][user])
-                userCoin += (amount * multiplyer)
+                userCoin += amount
                 self.scores['scores'][user] = userCoin
             except KeyError: #if user has none they need to be registered
-                userCoin = multiplyer * amount
+                userCoin = amount
                 self.scores['scores'][user] = userCoin
             return multiplyer*amount, userCoin, multiplyer
         def remBrewcoin(self, **kwargs):

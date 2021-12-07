@@ -21,7 +21,7 @@ class brewcoinCog(commands.Cog):
             self.mine.reset_cooldown(context)
             return
         if random.randint(0,3) == 0:
-            user = context.author.name + "#" + context.author.discriminator
+            user = str(context.author.id)
             amount, userCoin, multiplyer = addbrewcoin(1, user)
 
             if multiplyer == 1: #message for no multiplyer
@@ -38,10 +38,8 @@ class brewcoinCog(commands.Cog):
         Check your balance!
         """
         if user is None:
-            name = context.author.name + "#" + context.author.discriminator
             user = context.author
-        else:
-            name = user.name +"#"+user.discriminator
+        name = user.id
         with open("scores.json") as file:
             scores = json.load(file)
         try:
@@ -65,7 +63,7 @@ class brewcoinCog(commands.Cog):
         """
         Check your BrewCoin multiplyer.
         """
-        name = context.author.name + "#" + context.author.discriminator
+        name = context.author.id
         data = scores.json()
         data.read()
         try:
@@ -126,16 +124,16 @@ class brewcoinCog(commands.Cog):
                 status =await ctx.send("Purchasing Item...")
                 data = scores.json()
                 data.read()
-                data.scores['scores'][ctx.author.name +"#"+ ctx.author.discriminator] -= i.price
+                data.scores['scores'][ctx.author.id] -= i.price
                 await status.edit(content="Subtracted coins. Running command...")
-                i.run(ctx.author.name + "#"+ctx.author.discriminator)
+                i.run(ctx.author.id)
                 await status.delete()
 
     @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
         try:
             nowDate = datetime.datetime.now().strftime("%Y%m%d") #nowdate is the date right now
-            name = context.author.name + "#" + context.author.discriminator
+            name = str(context.author.id)
             with open("scores.json") as file:
                 scores = json.load(file)
 
@@ -194,7 +192,7 @@ class brewcoinCog(commands.Cog):
             if ctx.author == user:
                 rembrewcoin(user=(ctx.author.name+"#"+ctx.author.discriminator),amount=0.1)
                 raise NiceTry(f"As you hand the money to {ctx.author.mention}, you realise that you are handing it to yourself.\nIn shock, You accidentally drop 0.1 brewcoin!")
-            rembrewcoin(user=(ctx.author.name +"#"+ ctx.author.discriminator), amount=amount)
+            rembrewcoin(user=ctx.author.id, amount=amount)
         except NiceTry as ename:
             await ctx.send(ename)
             rembrewcoin(user=(ctx.author.name+"#"+ctx.author.discriminator),amount=1)
@@ -203,7 +201,7 @@ class brewcoinCog(commands.Cog):
             raise
         await msg.delete()
         msg = await ctx.send("ADDING BREWCOIN... If this message doesn't go away, CONTACT @TheRuntingMuumuu and @TheTechRobo to get your coins back!")
-        addbrewcoin(user=(user.name + "#"+user.discriminator),amount=amount)
+        addbrewcoin(user=user.id,amount=amount)
         await msg.delete()
         await ctx.send(f"{user.mention}: You just got {amount} brewcoins from {ctx.author.mention}.\n{ctx.author.mention}: :thumbsup: All transactions should be received.")
     @mine.error
