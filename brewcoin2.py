@@ -79,8 +79,8 @@ class brewcoinCog(commands.Cog):
     async def top(self, context):
         s = scores.json()
         s.read()
-        scores = s.scores
-        tops = scores['scores']
+        scoress = s.scores
+        tops = scoress['scores']
         print('hi\n', tops)
         print('\tsotred')
         a = sorted(tops, key=lambda k: int(tops[k]), reverse=True)
@@ -91,15 +91,17 @@ class brewcoinCog(commands.Cog):
             if pos > 5:
                 break
             ga = item
-            g = s.lookUpById(ga)
             try:
-                scores['config'][g]['ShowBal']
+                g = s.lookUpById(ga)
+            except KeyError: continue
+            try:
+                scoress['config'][g]['ShowBal']
             except KeyError:
-                scores['config'][g] = {"ShowBal":True} #default value; not saved to the file
-            if not scores['config'][g]['ShowBal']:
+                scoress['config'][g] = {"ShowBal":True} #default value; not saved to the file
+            if not scoress['config'][g]['ShowBal']:
                 continue
             print(item)
-            string += (f"{pos}. **{g}**: {tops[g]}\n")
+            string += (f"{pos}. **{g}**: {tops[ga]}\n")
             pos += 1
         await load.edit(embed=SetEmbed(title=f"Top {pos - 1} Balancers", description=f'The top {pos - 1} contestants are!:\n{string}', footer=random.choice(("Powered by TheTechRobo, not hanks to TheRuntingMuumuu", "balance on my head", "Rats are better than people. **Change my mind.**"))))
 
