@@ -2,11 +2,29 @@ import discord
 from discord.ext import commands
 import random
 from miscfunc import *
+from addBrewcoin import scores
 
 class systemCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
+    @commands.command()
+    async def map(self, ctx, user: discord.Member):
+        """
+        Command is DISABLED. Do not use.
+        """
+        raise Exception("CommandDisabled")
+        e = await ctx.send("Mapping Commenced")
+        a = scores.json()
+        a.read()
+        try:
+            a.scores['mapping']
+            await e.edit(content="Checked for Mapping Dict")
+        except KeyError:
+            await e.edit(content="Creating Mapping Dict")
+            a.scores['mapping'] = {}
+        a.scores['mapping'][user.id] = user.name + "#" + user.discriminator
+        a.write()
+        await e.edit(content="Mapped Successful")
     @commands.command(name='ping')
     @commands.cooldown(1,1,commands.BucketType.user)
     async def test(self, context):
