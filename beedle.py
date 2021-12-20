@@ -46,8 +46,8 @@ class beeedleCog(commands.Cog):
             if (laterTime - currentTime) > times:
                 confirmation = False
             await self.fail(ctx)
-        await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 1 brewcoin kind stranger"))
-        addbrewcoin(1, context.author.name + "#" + context.author.discriminator)
+        await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 3 brewcoin kind stranger"))
+        addbrewcoin(3, context.author.id)
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))
