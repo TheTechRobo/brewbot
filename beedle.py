@@ -11,7 +11,7 @@ class beeedleCog(commands.Cog):
         return user == self.BeedleCtx.author and str(reaction.emoji) in ["🔨"] and reaction.message == self.beetle
     async def fail(self, context, laterTime, currentTime, times):
         await context.send(embed=SetEmbed(title="You failed.", description="The beetle has already eaten you.\nGo to jail and do not collect $200.", footer=f"Missed it by {abs((laterTime - currentTime) - times)}. :("))
-        raise RuntimeError("Fatal: User is a failure.")
+        #raise RuntimeError("Fatal: User is a failure.")
 
     @commands.command(name='beedle')
     async def beedle(self, context):
@@ -23,6 +23,8 @@ class beeedleCog(commands.Cog):
         ctx = context
         self.BeedleCtx = ctx
         await context.send("You have found the beedle game...")
+        score = 0
+        current = 0
         beedleAmount = random.randint(10,30)
         for i in range(0, beedleAmount):
             await asyncio.sleep(random.randint(10,20))
@@ -37,17 +39,21 @@ class beeedleCog(commands.Cog):
                     confirmation = await self.bot.wait_for("reaction_add",check=self.check, timeout=times)
                 except asyncio.TimeoutError:
                     await self.fail(ctx, currentTime, int(time.time()), times)
+                    addbrewcoin(score, context.author)
+                    return "Awwww.... I'm a failure!"
             laterTime = int(time.time())
             if (laterTime - currentTime) <= times and confirmation:
                 await ctx.send(f"You got it by {abs((laterTime - currentTime) - times)} seconds! :beetle:")
                 if abs((laterTime - currentTime) - times) == 0:
                     await ctx.send("In other words, you got it by the skin of your teeth! Nice job.")
+                current += 1
+                if current % 3 == 0:
+                    score += 1
                 continue
             if (laterTime - currentTime) > times:
                 confirmation = False
-            await self.fail(ctx)
-        await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer="Take 1 brewcoin kind stranger"))
-        addbrewcoin(1, context.author.name + "#" + context.author.discriminator)
+        if not fail: await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer=f"Take {score} brewcoin kind stranger"))
+        addbrewcoin(score, context.author)
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))
