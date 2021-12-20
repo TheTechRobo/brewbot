@@ -1,4 +1,4 @@
-import discord, json, random, logging, datetime
+import discord, json, random, logging, datetime, datetime
 from discord.ext import commands
 from store_data import *
 from miscfunc import *
@@ -60,20 +60,21 @@ class brewcoinCog(commands.Cog):
         else:
             await context.send(embed=SetEmbed(title="403 Forbidden",description="This user has disabled API access. You cannot view their balance.",footer="Want your API access to be disabled? Contact TheTechRobo or TheRuntingMuumuu! Configuration tool coming soon™"))
 
-    @commands.command(name='mult', aliases=("multiplier",))
+    @commands.command(name='mult', aliases=("multiplyer",))
     async def multiplyer(self, context):
         """
-        Check your BrewCoin multiplyer
+        Check your BrewCoin multiplyer.
         """
         name = context.author.name + "#" + context.author.discriminator
-        with open("scores.json") as file:
-            scores = json.loads(file.read())
+        data = scores.json()
+        data.read()
         try:
-            multiplyerBal = float(scores["multiplyers"][name])
+            multiplyerBal = float(data.scores["multiplyers"][name])
+            multiplyerTime = int(data.scores["multiplyerTime"][name])
         except KeyError:
             multiplyerBal = 1
         colours = TheColoursOfTheRainbow()
-        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last for {"{multiplyerTime}"}', color=discord.Color.from_rgb(*colours))
+        multEmbed = discord.Embed(title="Multiplyer", description=f'{context.author.mention} \nYour multiplyer is {multiplyerBal} \nIt will last until {datetime.datetime.fromtimestamp(multiplyerTime)}', color=discord.Color.from_rgb(*colours))
         await context.send(embed = multEmbed)
 
     @commands.command(name='top')
@@ -105,18 +106,30 @@ class brewcoinCog(commands.Cog):
 
     @commands.command(name="shop")
     async def shop(self, context):
-        shopItems = StoreItemsVar
-        print(shopItems)
+        print(StoreItems)
         q = 0
         colours = TheColoursOfTheRainbow()
         em = discord.Embed(title="Shop", description=f'The items availible at the shop are:\n', color=discord.Color.from_rgb(*colours))
-        for i in shopItems:
-            price = shopItems[list(shopItems)[q]]
-            item = list(shopItems)[q]
-            em.add_field(name = item, value= price, inline = False)
+        for i in StoreItems:
+            price = i.price
+            name = i.name
+            #item = list(shopItems)[q]
+            em.add_field(name = name, value= price, inline = False)
             q += 1
         await context.send(embed=em)
 
+    @commands.command(name="buy")
+    async def purchase(self, ctx, item):
+        print(item)
+        for i in StoreItems: #im sure there's a better way to do this but im too lazy to implement one
+            if i.name == item:
+                status =await ctx.send("Purchasing Item...")
+                data = scores.json()
+                data.read()
+                data.scores['scores'][ctx.author.name +"#"+ ctx.author.discriminator] -= i.price
+                await status.edit(content="Subtracted coins. Running command...")
+                i.run(ctx.author.name + "#"+ctx.author.discriminator)
+                await status.delete()
 
     @commands.command(name="daily") #wow this is a big one...
     async def daily(self, context):
@@ -166,7 +179,7 @@ class brewcoinCog(commands.Cog):
                     scores["daily"]["serverwide"] = nowDate
                     with open('scores.json', 'w') as confs: #writes to file
                         confs.write(json.dumps(scores, indent=4))
-                    await context.send(f"{context.author.mention} you just got 5 brewcoins by claiming the serverwide 48h daily thing!!")
+                    await context.send(f"{context.author.mention} you just got a bunch of brewcoins by claiming the serverwide 48h daily thing!!")
                 else:
                     await context.send("You have already claimed your daily today.\nThe serverwide daily has been claimed within the last 48 hours.")
             #<<<Done giving them brewcoins (or not)>>>
