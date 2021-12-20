@@ -9,8 +9,8 @@ class beeedleCog(commands.Cog):
         self.bot = bot
     def check(self, reaction, user): #https://stackoverflow.com/questions/63171531/how-do-you-check-if-a-specific-user-reacts-to-a-specific-message-discord-py
         return user == self.BeedleCtx.author and str(reaction.emoji) in ["🔨"] and reaction.message == self.beetle
-    async def fail(self, context, laterTime, currentTime, times):
-        await context.send(embed=SetEmbed(title="You failed.", description="The beetle has already eaten you.\nGo to jail and do not collect $200.", footer=f"Missed it by {abs((laterTime - currentTime) - times)}. :("))
+    async def fail(self, context, laterTime, currentTime, times, scores):
+        await context.send(embed=SetEmbed(title="You failed.", description=f"The beetle has already eaten you.\nGo to jail and do not collect $200. (But do collect {scores} brewcoin.)", footer=f"Missed it by {abs((laterTime - currentTime) - times) / 2}. :("))
         #raise RuntimeError("Fatal: User is a failure.")
 
     @commands.command(name='beedle')
@@ -25,10 +25,9 @@ class beeedleCog(commands.Cog):
         await context.send("You have found the beedle game...")
         score = 0
         current = 0
-        beedleAmount = random.randint(10,30)
-        for i in range(0, beedleAmount):
-            await asyncio.sleep(random.randint(10,20))
-            times = random.randint(3,6)
+        while True:
+            await asyncio.sleep(random.randint(5,18))
+            times = random.randint(3,7)
             beetle = await context.send(f"Oh no, there's an annoying beetle! **Swat it in the next {times} seconds!**")
             await beetle.add_reaction("🔨")
             self.beetle = beetle
@@ -38,7 +37,7 @@ class beeedleCog(commands.Cog):
                 try:
                     confirmation = await self.bot.wait_for("reaction_add",check=self.check, timeout=times)
                 except asyncio.TimeoutError:
-                    await self.fail(ctx, currentTime, int(time.time()), times)
+                    await self.fail(ctx, currentTime, int(time.time()), times, score)
                     addbrewcoin(score, context.author)
                     return "Awwww.... I'm a failure!"
             laterTime = int(time.time())
@@ -52,8 +51,8 @@ class beeedleCog(commands.Cog):
                 continue
             if (laterTime - currentTime) > times:
                 confirmation = False
-        if not fail: await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer=f"Take {score} brewcoin kind stranger"))
-        addbrewcoin(score, context.author)
+        await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer=f"Take {score} brewcoin kind stranger"))
+        addbrewcoin(score, context.author.id)
 
 def setup(bot):
     bot.add_cog(beeedleCog(bot))

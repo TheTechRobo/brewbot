@@ -7,6 +7,10 @@ SOURCE STATUS: Closed Source
 ABOUT: This is the random brewbot that TTR and TRM are making. It serves absolutely no purpose but it helps me learn about python, coding, and using APIs.
 SOURCES: in the comments or in sources.txt
 """
+
+def _(s): return s # futureproofing
+
+PREFIX = "brew "
 class No(Exception):
     pass
 #--Lots of module imports--
@@ -115,6 +119,32 @@ async def Clearchat(ctx):
         string = "Permission denied."
     print(string)
     await ctx.send(string)
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    """
+    Does some stuff in case of cooldown error.
+    Stolen from hypixel-stats-bot, where it was stolen from brewbot :thinking:
+    """
+    if hasattr(ctx.command, 'on_error'): #https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
+        return
+    error = getattr(error, 'original', error)
+    if isinstance(error, commands.CommandOnCooldown):
+        potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.']
+        message = (random.choice(potentialMessages))
+        print('\nSomeone tried to do a command that was on cooldown')
+    elif isinstance(error, commands.MissingRequiredArgument):
+        strerror = str(error).split(' ')[0]
+        message = _("You seem to be missing a required argument \"{strerror}\". Run `{PREFIX}help [command]` for more information.").format(PREFIX=PREFIX, strerror=strerror)
+    elif isinstance(error, commands.errors.CommandNotFound):
+        message = _("Unknown command. Try {PREFIX}help for a list!").format(PREFIX=PREFIX)
+    else:
+        message = "Unknown error !"
+    em = discord.Embed(title=_("⚠️ Oops! ⚠️"), description=message)
+    em.set_footer(text=error)
+    await ctx.send(embed=em)
+    raise(error)
 
 try:
     bot.run('ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20')
