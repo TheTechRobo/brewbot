@@ -28,10 +28,13 @@ if ErrorsOn:
 #--The prefix for the bot--
 bot = commands.Bot(command_prefix=prefix)
 
+print("\nLoading extensions...")
+
 #--Loads all the additional files using cogs--
 for extension in ('fun2', 'system', 'brewcoin2', 'beedle'): #runs the amount of times of files to load
     bot.load_extension(extension) #loads
-    print(f'\n{extension} has loaded')
+    print(f'{extension} has loaded')
+print()
 
 async def status(msg=None): #function for changing the status
     print(f"\nSomeone changed the bot status to {msg}")
@@ -130,7 +133,9 @@ async def on_command_error(ctx, error):
     if hasattr(ctx.command, 'on_error'): #https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
         return
     error = getattr(error, 'original', error)
-    if isinstance(error, commands.CommandOnCooldown):
+    if isinstance(error, UnreachableCodeError):
+        message = _("Unreachable code was run. Contact TheTechRobo for help.")
+    elif isinstance(error, commands.CommandOnCooldown):
         potentialMessages = [f'This command is on cooldown, please wait {int(error.retry_after)}s.']
         message = (random.choice(potentialMessages))
         print('\nSomeone tried to do a command that was on cooldown')
@@ -139,6 +144,8 @@ async def on_command_error(ctx, error):
         message = _("You seem to be missing a required argument \"{strerror}\". Run `{PREFIX}help [command]` for more information.").format(PREFIX=PREFIX, strerror=strerror)
     elif isinstance(error, commands.errors.CommandNotFound):
         message = _("Unknown command. Try {PREFIX}help for a list!").format(PREFIX=PREFIX)
+    elif isinstance(error, KeyError):
+        message = _("Dubious error checking. Contact TheTechRobo for help.")
     else:
         message = "Unknown error !"
     em = discord.Embed(title=_("⚠️ Oops! ⚠️"), description=message)

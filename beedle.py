@@ -9,8 +9,8 @@ class beeedleCog(commands.Cog):
         self.bot = bot
     def check(self, reaction, user): #https://stackoverflow.com/questions/63171531/how-do-you-check-if-a-specific-user-reacts-to-a-specific-message-discord-py
         return user == self.BeedleCtx.author and str(reaction.emoji) in ["🔨"] and reaction.message == self.beetle
-    async def fail(self, context, laterTime, currentTime, times, scores):
-        await context.send(embed=SetEmbed(title="You failed.", description=f"The beetle has already eaten you.\nGo to jail and do not collect $200. (But do collect {scores} brewcoin.)", footer=f"Missed it by {abs((laterTime - currentTime) - times) / 2}. :("))
+    async def fail(self, context, scores):
+        await context.send(embed=SetEmbed(title="You failed.", description="The beetle has already eaten you.\nGo to jail and do not collect $200.", footer=f"But do collect {scores} brewcoin. {':D' if scores > 5 else ':)'}"))
         #raise RuntimeError("Fatal: User is a failure.")
 
     @commands.command(name='beedle')
@@ -37,7 +37,7 @@ class beeedleCog(commands.Cog):
                 try:
                     confirmation = await self.bot.wait_for("reaction_add",check=self.check, timeout=times)
                 except asyncio.TimeoutError:
-                    await self.fail(ctx, currentTime, int(time.time()), times, score)
+                    await self.fail(ctx, score)
                     addbrewcoin(score, context.author)
                     return "Awwww.... I'm a failure!"
             laterTime = int(time.time())
@@ -51,6 +51,7 @@ class beeedleCog(commands.Cog):
                 continue
             if (laterTime - currentTime) > times:
                 confirmation = False
+        raise UnreachableCodeError("Unreachable code in beedle function!")
         await context.send(embed=SetEmbed(title="YOU WIN!", description="The beetles realised that this wasn't helping them in the slightest. You Win :D", footer=f"Take {score} brewcoin kind stranger"))
         addbrewcoin(score, context.author.id)
 
