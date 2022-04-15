@@ -5,6 +5,9 @@ def TheColoursOfTheRainbow(): #to choose a random RGB value
         colours.append(random.randint(0,255))
     return colours
 
+class UnreachableCodeError(Exception):
+    pass
+
 def SetEmbed(title, description, url=False, colour=False, img=False, footer=False):
     """
     params are self explanatory.
