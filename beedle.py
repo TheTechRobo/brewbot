@@ -1,5 +1,5 @@
 from discord.ext import commands
-import random, discord, asyncio, time
+import random, asyncio, time
 from miscfunc import *
 from addBrewcoin import addbrewcoin
 import logging

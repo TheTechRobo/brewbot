@@ -22,9 +22,11 @@ class No(Exception):
 
 # --Lots of module imports--
 from discord.ext import commands
-import sys, traceback
+import asyncio
+import logging
+import random
 from store_data import *
-import asyncio, configparser, logging, discord, random
+import discord
 from miscfunc import *
 
 # --LOGGING TO SHOW ERRORS--
