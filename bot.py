@@ -7,13 +7,19 @@ SOURCE STATUS: Closed Source
 ABOUT: This is version 2 of the brewbot that I am making. It is mostly remember how to write code and stuff. The bot itself will serve absolutely no purpose, but it will be fun!!! 😀
 SOURCES: in the comments or in sources.txt
 """
-#--- → Modifying Variables ← ---
-# This is the token used for linking the bot
-TOKEN = "ODIzNzIyNDk5MDU3Mzg1NDkz.YFk9Ww.7np2a793tTK4H061CXbu2O_Yh20"
-
 
 #--- → Imports ← ---
+import os
+
+import arrow
 import discord
+
+#--- → Modifying Variables ← ---
+# This is the token used for linking the bot
+
+TOKEN = os.getenv('TOKEN')
+if not TOKEN: # if TOKEN is None or empty
+    raise ValueError('Missing environment variable TOKEN for Discord token!')
 
 #--- → Setting up the bot ← ---
 #Intents, this is the connection to discord
@@ -30,6 +36,10 @@ async def on_ready():
 #--- → When any message is sent ← ---
 @client.event
 async def on_message(message):
+    timestamp = arrow.get(message.created_at).replace(tzinfo='local') \
+            .format('YYYY-MM-DD HH:mm:ss ZZ')
+    print(f'<{message.author}>\t@ [{timestamp}]:\t{message.content}')
+
     #checks if it is the bot sending the message
     if message.author == client.user:
         return
